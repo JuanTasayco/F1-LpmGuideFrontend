@@ -1,1 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+@use "./app/app.component";
+@use "./app/lpm/pages/home/home.component";
+@use "./app/shared/navbar/navbar.component";
+@use "./app/shared/sidenav/sidenav.component";
+@use "./app/lpm/components/data/data.component";

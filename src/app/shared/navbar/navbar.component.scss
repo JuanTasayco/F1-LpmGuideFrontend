@@ -1,0 +1,34 @@
+@use "src/_custom" as *;
+
+
+.Header {
+
+    font-size: $font-mayuscula;
+    background-color: #151515;
+
+    &-logo {
+
+        height: 2.2rem;
+        filter: brightness(1.1);
+        background-color: white;
+        opacity: .8;
+        border-radius: .2rem;
+
+        &.hamburguer {
+            border-radius: 50%;
+        }
+    }
+
+
+    &-nav {
+        &--click{
+            display: flex;
+            align-items: center;
+            &:hover{
+                opacity: 0.5;
+            }
+        
+        }
+
+    }
+}

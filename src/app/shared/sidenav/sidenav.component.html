@@ -1,0 +1,66 @@
+<div class="Sidenav m-0 h-100 overflow-auto" #sidenav>
+    <div class="accordion p-2" id="accordionSidenav">
+
+        <div class="accordion-item">
+
+            <h2 class="accordion-header" id="itemKeys.key"> <!-- id button -->
+                <button class="Sidenav-button accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <!-- 2 collapseOne +i+idata-bs aria-controls -->
+                    Introduccion
+                </button>
+            </h2><!-- collapse one -->
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="itemKeys.key">
+                <div class="accordion-body">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a routerLink="/lpm/principal/resumen" class="Sidenav-a nav-link text-dark">Ruta
+                                introductoria</a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/lpm/principal/procesos" class="Sidenav-a nav-link text-dark">Valores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/lpm/principal/reportes" class="Sidenav-a nav-link text-dark">Procesos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/lpm/principal/valores" class="Sidenav-a nav-link text-dark">Reportes</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="accordion-item" *ngFor="let itemKeys of itemsSidenav | keyvalue; let i = index">
+
+            <h2 class="accordion-header" [id]="itemKeys.key"> <!-- id button -->
+                <button class="Sidenav-button accordion-button" type="button" data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#collapseOne'+i" aria-expanded="true"
+                    [attr.aria-controls]="'collapseOne'+i">
+                    <!-- 2 collapseOne +i+idata-bs aria-controls -->
+                    {{itemKeys.key}}
+                </button>
+            </h2><!-- collapse one -->
+            <div [id]="'collapseOne'+i" class="accordion-collapse collapse show" [attr.aria-labelledby]="itemKeys.key">
+                <div class="accordion-body">
+                    <ul class="nav flex-column">
+                        <li class="nav-item" *ngFor="let secciones of itemKeys.value | keyVal">
+                            <a [routerLink]="['/lpm/',itemsSidenavKeys[i],secciones]"
+                                class="Sidenav-a nav-link text-dark">{{secciones}}</a>
+                        </li>
+
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>

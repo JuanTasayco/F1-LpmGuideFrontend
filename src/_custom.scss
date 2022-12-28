@@ -1,0 +1,31 @@
+:root {
+    --main-bg-color: red;
+}
+
+/* font */
+$family : 'Inter',
+sans-serif;
+
+$colorsito: black;
+$font-mayuscula: 14px;
+$font-family-sans-serif: $family;
+
+/* nav */
+$nav-link-color: white;
+$nav-link-padding-y: .2rem;
+/* input */
+$input-bg: #151515;
+$input-height-border: 0;
+$input-border-width: 0;
+$input-color: white;
+
+/* acordion */
+$accordion-border-width: 0;
+$accordion-border-color: 0;
+$accordion-bg: #F5F5F5;
+$accordion-button-active-color: black;
+$accordion-button-focus-border-color: #F5F5F5;
+$accordion-button-focus-box-shadow: red;
+$accordion-icon-color: red;
+
+@import "node_modules/bootstrap/scss/bootstrap.scss";

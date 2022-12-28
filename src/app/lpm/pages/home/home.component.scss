@@ -1,0 +1,43 @@
+@use "src/_custom" as *;
+
+
+.Home {
+    display: flex;
+    flex-direction: column;
+
+
+    &-container {
+        flex-grow: 1;
+        position: relative;
+        display: flex;
+        transition: transform 20s ease;
+    }
+
+    &-sidenav {
+        height: 100%;
+        width: 16rem;
+    }
+
+    &-content {
+        flex-grow: 1;
+    }
+
+    .expand {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+    }
+
+
+
+
+
+
+}
+
+.Button-over {
+
+
+    right: 0;
+
+}
