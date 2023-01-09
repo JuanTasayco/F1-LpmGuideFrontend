@@ -1,1 +1,48 @@
-<p>valores works!</p>
+<div class="Valores container p-5">
+
+    <h5 class="Valores-h5 text-dark fw-bold fs-4">Valores</h5>
+
+    <p class="Valores-p mt-1">Los valores se insertan seleccionando "Insertar registros Automáticos" y traerá toda la
+        información actual que se tiene en las fichas y en el panel de asistencias, si se actualiza información en
+        estas, los cambios se tendrán que llenar manualmente desde aquí.</p>
+
+
+    <h4 class="Valores-h4 fw-bold fs-4 mt-5 text-center">Ir a la sección valores</h4>
+    <div class="Valores-section d-flex justify-content-center p-3">
+
+        <p-image src="assets/Flujo-principal/Valores/1.valores.png" alt="Image" width="100%" [preview]="true">
+            <ng-template pTemplate="indicator">
+                Presiona para Ver
+            </ng-template>
+        </p-image>
+    </div>
+
+    <h4 class="Valores-h4 fw-bold fs-4 mt-5 text-center">Insertar Valores</h4>
+    <div class="Valores-img d-flex justify-content-center p-3">
+        <p-image src="assets/Flujo-principal/Valores/10.insert.png" alt="Image" width="100%" [preview]="true">
+            <ng-template pTemplate="indicator">
+                Presiona para Ver
+            </ng-template>
+        </p-image>
+    </div>
+
+
+  <hr>
+    <div class="Valores-row row text-center gy-4 mt-2">
+       
+        <h4 class="Valores-h4 fw-bold fs-4 mt-4 text-start">Descripción conceptos de tabla</h4>
+        <p class="Valores-p mt-1 text-start">A continuación se explica cada columna de la tabla de valores, recordar seguir cada paso
+            y cada forma de colocar datos, no seguir correctamente el procedimiento puede generar dobles descuentos entre
+            otros. </p>
+        <div class="Valores-col col-12 p-5 m-auto" *ngFor="let valores of valoresConceptos">
+            <h4 class="fs-5  fw-bold">{{valores.title}}</h4>
+            <p>{{valores.description}}</p>
+            <p-image [src]="valores.urlImage" class="Valores-img img-fluid" alt="Image" [preview]="true" width="100%"
+                height="100%">
+                <ng-template pTemplate="indicator">
+                    Presiona para Ver
+                </ng-template>x
+            </p-image>
+        </div>
+    </div>
+</div>

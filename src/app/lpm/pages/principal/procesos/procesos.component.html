@@ -1,1 +1,87 @@
-<p>procesos works!</p>
+<div class="Procesos container p-5">
+    <h5 class="Procesos-h5 text-dark fw-bold fs-4">Procesos</h5>
+
+    <p class="Procesos-p mt-1">El panel de Procesos recibe información de la tabla de valores, y además de las sección
+        de
+        Registros, si existe un cambio en relación al cálculo, se debe ingresar a este panel que crea el esquema de
+        información para la planilla.</p>
+
+
+    <div class="text-center">
+        <h5 class="Procesos-h5 fw-bold fs-4 mt-5">Ir a la sección procesos</h5>
+        <div class="Procesos-section text-center p-3">
+            <p-image src="assets/Flujo-principal/Procesos/0.procesos.png" class="Procesos-img img-fluid" alt="Image"
+                [preview]="true" width="100%">
+                <ng-template pTemplate="indicator">
+                    Presiona para Ver
+                </ng-template>x
+            </p-image>
+        </div>
+    </div>
+    <hr>
+    <div class="Procesos-row row text-center  mt-2 ">
+        <h5 class="Procesos-h5 fw-bold fs-4 mt-4 text-start">Planilla Mensual</h5>
+        <p class="text-start">A continuación se muestran los tres tipos de procesos principales: por trabajador, todos
+            en general y por último, procesar solo a los que se insertaron en valores después del primer proceso (
+            pueden ser trabajadores nuevos, o alguno que se borró de valores y se volvió a insertar para actualizar data
+            de asistencias), o se eliminaron desde el mismo panel
+            de procesos.</p>
+        <div class="Procesos-col col-lg-12 m-auto">
+            <h4 class="fs-5  fw-bold">Procesar a todos</h4>
+            <p>Procesa a todos los trabajadores disponibles en la tabla de Procesos</p>
+            <p-image src="assets/Flujo-principal/Procesos/1p.todos.png" class="Procesos-img img-fluid" alt="Image"
+                [preview]="true" width="100%" height="100%">
+                <ng-template pTemplate="indicator">
+                    Presiona para Ver
+                </ng-template>x
+            </p-image>
+        </div>
+
+        <div class="Procesos-col col-lg-12 m-auto">
+            <h4 class="fs-5  fw-bold">Procesar personal individualmente</h4>
+            <p>Solo toma en cuenta a los trabajadores seleccionados en el panel procesos</p>
+            <p-image src="assets/Flujo-principal/Procesos/2p.individual.png" class="Procesos-img img-fluid" alt="Image"
+                [preview]="true" width="100%" height="100%">
+                <ng-template pTemplate="indicator">
+                    Presiona para Ver
+                </ng-template>x
+            </p-image>
+        </div>
+
+        <div class="Procesos-col col-lg-12 m-auto">
+            <h4 class="fs-5  fw-bold">Procesar personal pendiente</h4>
+            <p>Permite traer trabajadores que fueron ingresados a la tabla de procesos después de ya haber procesado
+                trabajadores al menos una vez ( comunmente suele pasar con trabajadores nuevos que se ingresaron después
+                de insertar procesos</p>
+            <p-image src="assets/Flujo-principal/Procesos/3p.pendientes.png" class="Procesos-img img-fluid" alt="Image"
+                [preview]="true" width="100%" height="100%">
+                <ng-template pTemplate="indicator">
+                    Presiona para Ver
+                </ng-template>x
+            </p-image>
+        </div>
+
+    </div>
+
+
+    <hr>
+    <div class="Procesos-row row text-center gy-4 mt-2">
+        <h5 class="Procesos-h5 fw-bold fs-4 mt-5 text-start">Planilla Manual</h5>
+
+        <p class="Procesos-p mt-1 text-start">Planilla que permite realizar modificaciones especificas, limitada a
+            algunos conceptos.
+            Si tienes que procesar a uno y por casualidad, es probable que se haya hecho más de un cambio</p>
+
+        <div class="Procesos-col col-lg-12 m-auto" *ngFor="let manual of manualConceptos">
+            <h4 class="fs-5  fw-bold">{{manual.title}}</h4>
+            <p>{{manual.description}}</p>
+            <p-image [src]="manual.urlImage" class="Procesos-img img-fluid" alt="Image" [preview]="true" width="100%"
+                height="100%">
+                <ng-template pTemplate="indicator">
+                    Presiona para Ver
+                </ng-template>x
+            </p-image>
+        </div>
+    </div>
+
+</div>

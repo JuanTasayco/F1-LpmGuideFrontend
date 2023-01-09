@@ -1,0 +1,30 @@
+@use "src/_custom" as *;
+
+
+.Search {
+    &-ul {
+        background-color: #396FA1;
+        border-radius: 1rem;
+        padding: 1rem;
+        z-index: 3;
+        color: white !important;
+        width: 100%;
+        font-weight: none;
+    }
+
+
+    &-a {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &-input {
+        z-index: 4;
+
+        &::placeholder {
+            color: white;
+        }
+    }
+
+}

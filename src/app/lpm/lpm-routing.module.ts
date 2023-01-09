@@ -27,6 +27,7 @@ import { IngresosComponent } from './pages/registro/ingresos/ingresos.component'
 import { RentaComponent } from './pages/registro/renta/renta.component';
 
 const routes: Routes = [
+
   {
     path: "",
     component: HomeComponent,
@@ -47,9 +48,9 @@ const routes: Routes = [
       { path: "especiales/gratificacion", component: GratificacionComponent },
       { path: "especiales/rentaExterna", component: RentaeComponent },
 
-      { path: "mantenimientoPersonal/ceses", component: CesesComponent },
-      { path: "mantenimientoPersonal/ingresar", component: IngresarComponent },
-      { path: "mantenimientoPersonal/modificar", component: ModificarComponent },
+      { path: "mantenimiento/ceses", component: CesesComponent },
+      { path: "mantenimiento/ingresarPersonal", component: IngresarComponent },
+      { path: "mantenimiento/modificar", component: ModificarComponent },
 
       { path: "registros/adelantos", component: AdelantosComponent },
       { path: "registros/horasExtras", component: HorextComponent },
@@ -57,9 +58,10 @@ const routes: Routes = [
       { path: "registros/otrosIngresos", component: IngresosComponent },
       { path: "registros/reporteRenta", component: RentaComponent },
 
-      { path: "**", redirectTo: "principal/resumen" }
+      { path: "**", redirectTo: "principal/procesos" }
     ]
   }
+
 ];
 
 @NgModule({

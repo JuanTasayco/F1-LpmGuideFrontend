@@ -1,4 +1,21 @@
-export interface Secciones {
+
+export interface Seccion {
+  titulo: string,
+  titulo2?: string,
+  subtitulo: string,
+  panel: string,
+  seccion: string,
+  ingreso: Content[],
+  contenido: Content[]
+}
+
+export interface Content {
+  subtitles: string,
+  imagesUrl: string
+}
+
+
+/* export interface Secciones {
     asistencias: Asistencia[];
     especiales: Especiales[];
     mantenimientoPersonal: MantenimientoPersonal[];
@@ -43,4 +60,4 @@ export interface Secciones {
     otrosIngresos?: Info;
     reporteRenta?: Info;
   }
-  
+   */

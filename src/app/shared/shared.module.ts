@@ -6,6 +6,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { NgPrimeModule } from '../ng-prime/ng-prime.module';
 import { KeyValuesPipe } from '../lpm/pipes/key-values.pipe';
 import { RouterModule } from '@angular/router';
+import { SearchComponent } from './search/search.component';
 
 
 
@@ -15,7 +16,8 @@ import { RouterModule } from '@angular/router';
     ErrorComponent,
     NavbarComponent,
     SidenavComponent,
-    KeyValuesPipe
+    KeyValuesPipe,
+    SearchComponent
   ],
   imports: [
     CommonModule,

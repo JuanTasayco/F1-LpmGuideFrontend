@@ -1,0 +1,15 @@
+@use "src/_custom" as *;
+
+
+.Procesos {
+
+    &-col {
+        padding: 1rem;
+
+    }
+
+    &-img {
+        height: 100%;
+
+    }
+}

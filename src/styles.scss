@@ -3,3 +3,10 @@
 @use "./app/shared/navbar/navbar.component";
 @use "./app/shared/sidenav/sidenav.component";
 @use "./app/lpm/components/data/data.component";
+@use "./app/lpm/pages/principal/procesos/procesos.component";
+@use "./app/lpm/pages/principal/valores/valores.component";
+
+
+@use "./app/auth/pages/login/login.component";
+@use "./app/auth/pages/register/register.component";
+@use "./app/shared/search/search.component";

@@ -19,25 +19,17 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
   declarations: [],
   imports: [
     MenubarModule,
-    PanelMenuModule,
+    ImageModule,
     TimelineModule,
     CardModule,
-    ButtonModule,
-    ImageModule,
-    DividerModule,
-    FieldsetModule,
-    ScrollPanelModule
+    ButtonModule
   ],
   exports: [
     MenubarModule,
-    PanelMenuModule,
+    ImageModule,
     TimelineModule,
     CardModule,
-    ButtonModule,
-    ImageModule,
-    DividerModule,
-    FieldsetModule,
-    ScrollPanelModule
+    ButtonModule
 
   ]
 })

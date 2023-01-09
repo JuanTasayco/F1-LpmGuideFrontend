@@ -2,13 +2,14 @@
 
 
 .Header {
-
+ 
     font-size: $font-mayuscula;
-    background-color: #151515;
+    /*     background-color: red; */
+    background-color: #396FA1;
 
     &-logo {
 
-        height: 2.2rem;
+        height: 2.0rem;
         filter: brightness(1.1);
         background-color: white;
         opacity: .8;
@@ -21,13 +22,14 @@
 
 
     &-nav {
-        &--click{
+        &--click {
             display: flex;
             align-items: center;
-            &:hover{
+
+            &:hover {
                 opacity: 0.5;
             }
-        
+
         }
 
     }

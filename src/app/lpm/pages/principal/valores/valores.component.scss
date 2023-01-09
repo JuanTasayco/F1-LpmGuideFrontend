@@ -1,0 +1,12 @@
+@use "src/_custom" as *;
+
+.Valores {
+
+    &-col {
+        padding: 1rem
+    }
+
+    &-img {
+        height: 100%;
+    }
+}

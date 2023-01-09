@@ -1,4 +1,4 @@
-<header class="Header d-flex position-relative">
+<header class="Header d-flex  w-100">
 
     <div class="Header-nav Header-nav--click" #hamburguer (click)="clickOpenMenu($event)">
         <a class="Header-a navbar-brand px-3"> <img src="assets/hamburguer.png" class="Header-logo hamburguer"
@@ -8,17 +8,18 @@
     <nav class="Header-nav navbar py-3 flex-grow-1">
         <div class="Header-container container-fluid ">
             <div class="Header-logos" #restHamburger>
-                <a class="Header-a navbar-brand px-5"><img src="assets/logo.jpg" alt="" class="Header-logo"></a>
+                <a class="Header-a navbar-brand"><img src="assets/logo.jpg" alt="" class="Header-logo"></a>
             </div>
 
-            <ul class="nav fw-bold">
+            <ul class="nav fw-bold  d-none d-lg-flex">
                 <li class="nav-item">
-                    <form class="Header-form d-flex" role="search">
-                        <input class="Header-input form-control form-control-sm me-2 border-bottom" type="search"
-                            placeholder="Search..." aria-label="Search">
-                    </form>
+                
+                    <app-search></app-search>
                 </li>
-                <li class="nav-item"><a href="" class="nav-link">{{"preguntas" | uppercase}}</a></li>
+                <li class="nav-item">
+                    <a routerLink="/auth/login" class="nav-link">
+                        {{"iniciar" | uppercase}}</a>
+                </li>
                 <li class="nav-item"><a href="" class="nav-link">DESCRIPCIONES</a></li>
 
             </ul>

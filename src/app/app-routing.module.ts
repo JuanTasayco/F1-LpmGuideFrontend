@@ -8,6 +8,10 @@ const routes: Routes = [
     loadChildren: () => import("./lpm/lpm.module").then(m => m.LpmModule)
   },
   {
+    path: "auth",
+    loadChildren: () => import("./auth/auth.module").then(m => m.AuthModule)
+  },
+  {
     path: "**",
     redirectTo: "lpm"
   }

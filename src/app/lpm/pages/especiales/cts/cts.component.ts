@@ -1,11 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { Seccion } from 'src/app/lpm/interfaces/secciones.interface';
+import { LpmService } from 'src/app/lpm/services/lpm.service';
 
 @Component({
   selector: 'app-cts',
   templateUrl: './cts.component.html',
-  styleUrls: ['./cts.component.scss']
+
 })
 export class CtsComponent implements OnInit {
-  ngOnInit(): void { }
+  nameSection: string = "cts";
+  ctsContent!: Seccion;
+
+  ngOnInit(): void {
+    this.lpmService.getSectionesByTitle(this.nameSection).subscribe(infoSection => {
+      this.ctsContent = infoSection;
+    })
+  }
+  constructor(private lpmService: LpmService) {
+  }
 
 }

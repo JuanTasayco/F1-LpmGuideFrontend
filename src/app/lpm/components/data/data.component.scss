@@ -1,6 +1,21 @@
 @use "src/_custom" as *;
 
 
-.Data{
-    background-color: var(--bs-primary);
+.Data {
+    &-img {}
+
+    &-p {
+        font-size: 16px;
+    }
+
+    &-cspinner {
+        max-height: 20rem;
+        max-width: 20rem;
+        position: relative;
+    }
+
+    &-spinner {
+        height: 10rem;
+        width: 10rem;
+    }
 }

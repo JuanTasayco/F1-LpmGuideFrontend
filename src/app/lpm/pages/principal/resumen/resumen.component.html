@@ -1,4 +1,33 @@
+<div class="Intro container h-100 p-5" data-bs-theme="dark">
 
-<div class="text-light">
-    <app-data></app-data>
+    <h5 class="Valores-h5 text-dark fw-bold fs-4">Runta introductoria</h5>
+
+    <p class="Valores-p mt-1">Es importante saber como funciona el flujo del sistema para comprender a donde ir y el
+        porqué del problema. Para esto el sistema 2 ofrece tres vías principales de información.</p>
+
+    <h2 class="text-muted my-2 fs-4 mt-4">Flujo principal del sistema</h2>
+    <div class="my-4">
+        <p-timeline [value]="cardsDescription" align="alternate">
+            <ng-template pTemplate="marker" let-event>
+                <span class="custom-marker shadow-2" [style.backgroundColor]="event.color">
+                    <i [ngClass]="event.icon"></i>
+                </span>
+            </ng-template>
+            <ng-template pTemplate="content" let-event>
+                <p-card [header]="event.status" [subheader]="event.date">
+                    <p *ngIf="event.text"> {{event.text}}</p>
+                    <button [routerLink]="event.link" pButton label="Leer más" class="p-button-text"></button>
+                </p-card>
+            </ng-template>
+        </p-timeline>
+    </div>
+    <h2 class="text-muted my-2">Ruta común a seguir</h2>
+    <div class="my-5">
+        <p-timeline [value]="timelineDescription" align="alternate">
+            <ng-template pTemplate="content" let-event>
+                <a [routerLink]="event.step" class="text-decoration-none text-black">{{event.status}}</a>
+            </ng-template>
+        </p-timeline>
+    </div>
+
 </div>

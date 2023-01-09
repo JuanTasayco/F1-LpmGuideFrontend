@@ -1,3 +1,55 @@
-<div class="Data">
-    <h3>FirsStep</h3>
+<div class="Data container p-5 w-100" *ngIf="content;else noContent">
+
+    <h5 *ngIf="content.titulo2; else primerTitulo" class="Data-h5 text-dark fw-bold fs-4">{{content.titulo2 |titlecase}}
+    </h5>
+    <ng-template #primerTitulo>
+        <h5 class="Data-h5 text-dark fw-bold fs-4">{{content.titulo | titlecase}}</h5>
+    </ng-template>
+
+    <p class="Data-p mt-1">{{content.subtitulo}}</p>
+
+    <h5 class="Data-h5 fw-bold fs-4 mt-5 text-center">Ir a la sección {{content.panel}}</h5>
+    <div class="Data-section col-lg-12 m-auto text-center pb-4" *ngFor="let contIntro of content.ingreso">
+
+        <p>{{contIntro.subtitles}}</p>
+        <p-image [src]="contIntro.imagesUrl" class="Data-img img-fluid" alt="Image" [preview]="true" width="100%"
+            height="100%">
+            <ng-template pTemplate="indicator">
+                Presiona para Ver
+            </ng-template>x
+        </p-image>
+    </div>
+
+    <hr>
+
+
+    <div class="Data row h-100 p-md-5 m-0 p-0">
+
+        <div class="Data-row row text-center ">
+            <h5 class="Data-h5 fw-bold fs-4  text-md-start">Procedimiento</h5>
+
+            <div class="Data-col col-lg-12 m-auto pt-4" *ngFor="let contenido of content.contenido">
+                <p>{{contenido.subtitles}}</p>
+
+
+                <p-image [src]="contenido.imagesUrl" class="Data-img" alt="Image" [preview]="true" #image width="100%"
+                    height="100%">
+                    <ng-template pTemplate="indicator">
+                        Presiona para Ver
+                    </ng-template>
+                </p-image>
+
+
+
+            </div>
+        </div>
+
+    </div>
 </div>
+
+
+<ng-template #noContent>
+    <div class="Data-cspinner m-auto d-flex justify-content-center">
+        <div class="Data-spinner spinner-border text-primary" role="status"></div>
+    </div>
+</ng-template>

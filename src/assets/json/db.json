@@ -1,12 +1,13 @@
 {
- 
     "asistencias": [
         {
             "faltas": {
                 "titulo": "Faltas",
                 "subtitulo": "Las faltas se agregan antes de la inserción de valores, recordar NO descontar dias de pago, solo el dato informativo del mes se reduce, ejm: Si tiene un día de falta, se le calcula en base a 30 días, no colocar 29 de lo contario se le descontará el doble",
                 "panel": "Panel Faltas",
-                "id": "faltas",
+                "seccion": "faltas",
+                "titulo2": "Problemas comunes",
+                "subtitulo2": "Si no aparecen las faltas puede que se hayan saltado el paso de colocar correctamente la jornada laboral, como se indica en los pasos a trabajar, otro problema comun de faltas es que no se haya colocado el concepto en la ficha del trabajador,Otro problema comun de faltas es que no se haya colocado el concepto en la ficha del trabajador",
                 "contenido": [
                     {
                         "subtitles": "Para registrar las faltas ir a Asistencia y Registro de faltas",
@@ -44,7 +45,7 @@
                 "titulo": "Tardanzas",
                 "subtitulo": "Las tardanzas se agregan en la tabla de valores, van en minutos y requieren tener la jornada laboral (en la ficha) correctamente configurada",
                 "panel": "Panel Tardanzas",
-                "id": "tardanzas",
+                "seccion": "tardanzas",
                 "contenido": [
                     {
                         "subtitles": "Para agregar tardanzas ir a Procesos  y luego a valores",
@@ -78,7 +79,7 @@
                 "titulo": "Licencias",
                 "subtitulo": "Las licencias y subsidios se llenan desde el mismo panel, y se colocan antes de la inserción de valores, si se hace después, no se asignarán de manera automática después",
                 "panel": "Panel Licencias",
-                "id": "licencias",
+                "seccion": "licencias",
                 "contenido": [
                     {
                         "subtitles": "Dirigirse a Asistencia/licencias",
@@ -124,7 +125,7 @@
                 "titulo": "Vacaciones",
                 "subtitulo": "El llenado de vacaciones va antes de la inserción de valores, si se hace después, no se asignarán los días de manera automática después",
                 "panel": "Panel Vacaciones",
-                "id": "vacaciones",
+                "seccion": "vacaciones",
                 "contenido": [
                     {
                         "subtitles": "Para las vacaciones ir a Asistencia y luego a Vacaciones.",
@@ -180,7 +181,7 @@
                 "titulo": "CTS",
                 "subtitulo": "En el panel CTS solo trabajar de manera semestral, hay opciones mensuales, pero no están aplicadas para este sistema.",
                 "panel": "Panel CTS",
-                "id": "cts",
+                "seccion": "cts",
                 "contenido": [
                     {
                         "subtitles": "Activar CTS",
@@ -223,10 +224,10 @@
         },
         {
             "gratificacion": {
-                "titulo": "Gratificaciones",
+                "titulo": "Gratificacion",
                 "subtitulo": "Es necesario entender que las las gratificaciones toman cada periodo de los últimos 6 meses, estos abarcan un contenedor especificado por un número, y al lado el periodo en curso. Si uno de estos no tiene número equivalente al de sus hermanos, ese mes no será tomado en cuenta.",
                 "panel": "Panel Gratificacion",
-                "id": "gratificacion",
+                "seccion": "gratificacion",
                 "contenido": [
                     {
                         "subtitles": "Ir a periodos para habilitar el proceso de gratificación",
@@ -269,10 +270,10 @@
         },
         {
             "rentaExterna": {
-                "titulo": "Renta Externa",
+                "titulo": "RentaExterna",
                 "subtitulo": "La renta aquí se calcula en base al mes declarado por primera vez y el total anual. Teniendo en cuenta que son 14 sueldos, si declaramos por primera vez en Enero, tendríamos total-anual/14, si declaramos en Febrero sería total/13, para Marzo total/12 etc, el resultado se va declarando mes a mes desde ese punto en adelante. Si estamos en Julio, el salto es de 2, es decir si en Junio es /9, para Julio será /7.",
                 "panel": "Panel Renta Externa",
-                "id": "renta-externa",
+                "seccion": "renta-externa",
                 "contenido": [
                     {
                         "subtitles": "Es indispensable primero, ir a la ficha del trabajador y habilitar su renta externa, posteriormente guardar.",
@@ -302,13 +303,13 @@
             }
         }
     ],
-    "mantenimientoPersonal": [
+    "mantenimiento": [
         {
             "modificar": {
-                "titulo": "Modificar Trabajadores",
+                "titulo": "ModificarTrabajadores",
                 "subtitulo": "Recuerda que si modificas la ficha de un trabajador después de haber insertado valores, estos datos no se actualizarán automáticamente. Puedes borrar el valor y volverlo a insertar en tabla de valores siempre y cuando no hayas ingresado registros ya que se borrarán, lo recomendable es ajustar los valores manualmente.",
                 "panel": "Panel Usuarios",
-                "id": "modificar-trabajador",
+                "seccion": "modificar-trabajador",
                 "contenido": [
                     {
                         "subtitles": "Para modificar un trabajador debemos ir al panel de fichas de trabajadores",
@@ -326,11 +327,89 @@
             }
         },
         {
+            "ingresarPersonal": {
+                "titulo": "Ingresar Trabajadores",
+                "subtitulo": "Antes de ingresar algún trabajador nuevo. Verificar si ya ha formado parte de la plantilla anteriormente, recuerda que cuando un trabajador es cesado no se borra de manera permanente, solo va al contenedor de BAJAS.",
+                "panel": "Panel Usuarios",
+                "seccion": "ingresar-trabajador",
+                "contenido": [
+                    {
+                        "subtitles": "Seleccionar la opción de trabajadores en el icono de la parte superior izquierda.",
+                        "imagesUrl": "assets/Mantenimiento-personal/Ingresar-trabajadores/1.1.png"
+                    },
+                    {
+                        "subtitles": "Verificar trabajadores, para modificarlos solo debe dar doble clic al trabajador. De ser necesario filtrar su situación (activo, baja o todos)",
+                        "imagesUrl": "assets/Mantenimiento-personal/Borrar-trabajadores/1.1.png"
+                    },
+                    {
+                        "subtitles": "Aquí se encuentran las opciones de agregar y eliminar trabajadores. Para agregar trabajadores es necesario darle añadir para ir a la nueva ficha, de lo contrario si es eliminar basta con seleccionar al trabajador en la lista de trabajadores registrados en la parte inferior",
+                        "imagesUrl": "assets/Mantenimiento-personal/Borrar-trabajadores/1.2.png"
+                    },
+                    {
+                        "subtitles": "El software cuenta con multiples ventanas para pasar a la siguientes es necesario llenar la información obligatoria que esta marcada con * de lo contrario no podrá pasar a la siguiente ventana. No es necesario llenar las ventanas de Datos familiares, Estudios, Otros estudios y Prestadores de servicio.",
+                        "imagesUrl": "assets/Mantenimiento-personal/Ingresar-trabajadores/1.1.png"
+                    },
+                    {
+                        "subtitles": "Si se agrega a un nuevo trabajador se debe colocar como código el Documento de identidad, se debe tener enfásis en este paso porque mediante este campo se realizan los filtros en procesos posteriores.",
+                        "imagesUrl": "assets/Mantenimiento-personal/Borrar-trabajadores/1.1.png"
+                    },
+                    {
+                        "subtitles": "Ahora en datos generales llenar los campos inferiores. Si hay información no especificada como el numero del interior se puede optar por usar el número 0,en caso de los nombres de vía y zona (colocar - - - - - -)",
+                        "imagesUrl": "assets/Mantenimiento-personal/Borrar-trabajadores/1.2.png"
+                    },
+                    {
+                        "subtitles": "En Datos del Empleo llenar la información del trabajador(si falta información relevante no se pasará a la siguiente ventana).",
+                        "imagesUrl": "assets/Mantenimiento-personal/Ingresar-trabajadores/1.1.png"
+                    },
+                    {
+                        "subtitles": "Si no cuenta la información Años a desc, Moneda,Porc Jud, entre otras, no son necesarios rellenarlos, solo pasar a la siguiente sección.",
+                        "imagesUrl": "assets/Mantenimiento-personal/Borrar-trabajadores/1.1.png"
+                    },
+                    {
+                        "subtitles": "En la siguiente ventana de afiliación elegir el tipo de trabajador y su regimen, tanto para ONP como para AFP es necesario una fecha de ingreso y se debe seguir llenando información en la parte inferior, a excepción de Datos EPs y Datos Essalud.",
+                        "imagesUrl": "assets/Mantenimiento-personal/Borrar-trabajadores/1.2.png"
+                    },
+                    {
+                        "subtitles": "Si existe un problema con los datos EPS.Se especifica con énfasis presionar ALT+255 en datos de ESSALUD-Número de Carnet, además en la parte inferior en Datos de EPS ( por más que no tenga) colocar en situación ACTIVO O SUBSIDIDADO.",
+                        "imagesUrl": "assets/Mantenimiento-personal/Borrar-trabajadores/1.1.png"
+                    },
+                    {
+                        "subtitles": "En Cuentas Bancarias indicar el banco al que pertenece en Deposito de planilla, si no especifican información dejar en blanco. No es necesario llenar la parte derecha Cuenta de CTS, aunque es recomendable.",
+                        "imagesUrl": "assets/Mantenimiento-personal/Borrar-trabajadores/1.2.png"
+                    },
+                    {
+                        "subtitles": "En la ventana Conceptos se especifican los conceptos tanto de ingresos, descuentos y aportes. Solo se pueden modificar los valores en la parte de ingresos, los descuentos y los aportes son calculados por el sistema. Conceptos como Asignación familiar no son calculados por el sistema por lo tanto indicar 93.00.",
+                        "imagesUrl": "assets/Mantenimiento-personal/Ingresar-trabajadores/1.1.png"
+                    },
+                    {
+                        "subtitles": "En horarios de trabajo especificar los días y las horas POR SEMANA no es necesario especificar nada en turno, ni agregar más información.",
+                        "imagesUrl": "assets/Mantenimiento-personal/Borrar-trabajadores/1.1.png"
+                    },
+                    {
+                        "subtitles": "Agregar información de Dias periodos y Horas por día. Esta parte es sumamente importante, de lo contrario no se calcularan horas extras, tardanzas o faltas",
+                        "imagesUrl": "assets/Mantenimiento-personal/Borrar-trabajadores/1.2.png"
+                    },
+                    {
+                        "subtitles": "Crear nuevo contrato en el siguiente ícono.",
+                        "imagesUrl": "assets/Mantenimiento-personal/Ingresar-trabajadores/1.1.png"
+                    },
+                    {
+                        "subtitles": "Especificar la fecha de inicio, cargo y tipo contrato previamente insertada en la ventana de datos del empleo y darle a aceptar.",
+                        "imagesUrl": "assets/Mantenimiento-personal/Borrar-trabajadores/1.1.png"
+                    },
+                    {
+                        "subtitles": "Marcar ambas casillas ubicadas en Sucursales asignados y Sucursal principal, si sale un error al guardar, volver a darle check a ambas, y guardar.",
+                        "imagesUrl": "assets/Mantenimiento-personal/Borrar-trabajadores/1.2.png"
+                    }
+                ]
+            }
+        },
+        {
             "ceses": {
                 "titulo": "Cesar trabajadores",
                 "subtitulo": "Es probable que se haya intentado cesar al trabajador directamente desde su ficha antes de insertar valores,esto es un error. Ya que si se cesa antes, este no aparecerá en la planilla del mes. Pero también si no se hace después, seguirá apareciendo en meses posteriores.",
                 "panel": "Panel Cese",
-                "id": "ceses",
+                "seccion": "ceses",
                 "contenido": [
                     {
                         "subtitles": "Para agregar la fecha de cese a un trabajador ir a valores.",
@@ -358,7 +437,7 @@
                 "titulo": "Adelantos",
                 "subtitulo": "El panel de adelantos para la gratificación y los datos del mes son el mismo",
                 "panel": "Panel Adelantos",
-                "id": "adelanto",
+                "seccion": "adelanto",
                 "contenido": [
                     {
                         "subtitles": "Ir a Registro / Prestamos/Adelantos / Registro de Prestamos / Adelantos",
@@ -392,7 +471,7 @@
                 "titulo": "Horas Extras",
                 "subtitulo": "Para el calculo de horas extras, debe tener la jornada laboral del trabajador correctamente configurado en su ficha, y además tienen que haber valores insertados",
                 "panel": "Panel HorExt",
-                "id": "horext",
+                "seccion": "horext",
                 "contenido": [
                     {
                         "subtitles": "Para agregar horas extras ir a Registro, Rol de Horas Extras",
@@ -422,7 +501,7 @@
                 "titulo": "Otros conceptos",
                 "subtitulo": "Abarca la gran mayoría de conceptos a utilizar, no solo para los datos del mes, si no también permite agregar liquidaciones, bonificaciones relacionadas a la grati, entre otros.",
                 "panel": "Panel Otros Conceptos",
-                "id": "otros-conceptos",
+                "seccion": "otros-conceptos",
                 "contenido": [
                     {
                         "subtitles": "Para insertar ir a Registro/Otros conceptos/Insertar conceptos.",
@@ -460,7 +539,7 @@
                 "titulo": "Otros Ingresos",
                 "subtitulo": "Este panel es equivalente al valor que se puede obtener en Otros conceptos I049, aunque se recomienda usar este para evitar problemas.",
                 "panel": "Panel Otros Ingresos",
-                "id": "otros-ingresos",
+                "seccion": "otros-ingresos",
                 "contenido": [
                     {
                         "subtitles": "Ir a Registro/ Otros ingresos",
@@ -486,7 +565,7 @@
                 "titulo": "Renta 5ta",
                 "subtitulo": "La renta de 5ta no es un monto que vamos a modificar, esto lo hace únicamente el sistema de manera automática.Existen formas para modificarla manualmente, pero no se recomienda, por lo tanto no se enseñará.",
                 "panel": "Panel Renta",
-                "id": "reporte-renta",
+                "seccion": "reporte-renta",
                 "contenido": [
                     {
                         "subtitles": "Vamos a Procesos/ calculo renta 5ta",

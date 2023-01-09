@@ -1,4 +1,4 @@
-<div class="Sidenav m-0 h-100 overflow-auto" #sidenav>
+<div class="Sidenav m-0 h-100 " #sidenav>
     <div class="accordion p-2" id="accordionSidenav">
 
         <div class="accordion-item">
@@ -18,13 +18,13 @@
                                 introductoria</a>
                         </li>
                         <li class="nav-item">
-                            <a routerLink="/lpm/principal/procesos" class="Sidenav-a nav-link text-dark">Valores</a>
+                            <a routerLink="/lpm/principal/valores" class="Sidenav-a nav-link text-dark">Valores</a>
                         </li>
                         <li class="nav-item">
-                            <a routerLink="/lpm/principal/reportes" class="Sidenav-a nav-link text-dark">Procesos</a>
+                            <a routerLink="/lpm/principal/procesos" class="Sidenav-a nav-link text-dark">Procesos</a>
                         </li>
                         <li class="nav-item">
-                            <a routerLink="/lpm/principal/valores" class="Sidenav-a nav-link text-dark">Reportes</a>
+                            <a routerLink="/lpm/principal/reportes" class="Sidenav-a nav-link text-dark">Reportes</a>
                         </li>
 
                     </ul>
@@ -35,7 +35,6 @@
 
 
         <div class="accordion-item" *ngFor="let itemKeys of itemsSidenav | keyvalue; let i = index">
-
             <h2 class="accordion-header" [id]="itemKeys.key"> <!-- id button -->
                 <button class="Sidenav-button accordion-button" type="button" data-bs-toggle="collapse"
                     [attr.data-bs-target]="'#collapseOne'+i" aria-expanded="true"
@@ -51,8 +50,6 @@
                             <a [routerLink]="['/lpm/',itemsSidenavKeys[i],secciones]"
                                 class="Sidenav-a nav-link text-dark">{{secciones}}</a>
                         </li>
-
-
                     </ul>
                 </div>
 
