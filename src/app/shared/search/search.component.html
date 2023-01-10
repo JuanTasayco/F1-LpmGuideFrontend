@@ -1,11 +1,23 @@
 <form class="Search-form d-flex position-relative" role="search">
-    <input class="Search-input form-control form-control-sm me-2 border-bottom" type="search" placeholder="Buscar..."
-        aria-label="Search" #search (input)="getSearch(search)">
+    <input class="Search-input form-control form-control-sm me-2 border-bottom" type="text" placeholder="Buscar..."
+        aria-label="Search" list="searchResults" #search (input)="getSearch(search)">
 
-    <ul class="Search-ul nav nav-pills position-absolute flex-column pt-5 " *ngIf="resultsSearch.length>0">
-        <li class="nav-item  pt-2" *ngFor="let result of resultsSearch">
+    <form action="">
+        <datalist id="searchResults" name="product" [(ngModel)]="currentProduct" [ngModelOptions]="{standalone:true}"
+            class="Search-ul">
+            <option *ngFor="let result of searchResults" [value]="result.titulo2 | titlecase">
+                {{result.titulo2 | titlecase}}
+            </option>
+        </datalist>
+    </form>
+
+</form>
+
+
+<!-- <ul id="searchResults" class="Search-ul nav nav-pills position-absolute flex-column pt-5 "
+      
+        <li class="nav-item  pt-2" *ngFor="let result of searchResults">
             <a class="Search-a nav-link" (click)="navigateToRoute(result)">
                 {{result.titulo2 | titlecase}}</a>
         </li>
-    </ul>
-</form>
+    </ul> -->

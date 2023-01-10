@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { debounceTime, Subject, switchMap } from 'rxjs';
 import { Seccion } from 'src/app/lpm/interfaces/secciones.interface';
@@ -12,34 +13,35 @@ export class SearchComponent implements OnInit {
 
   private searchDebounce: Subject<string> = new Subject;
 
-  constructor(private lpmService: LpmService, private route: Router) { }
+  /*  miDataListFormulary = this.fb. */
 
   existSearch: boolean = false;
-  resultsSearch: any[] = [];
+  searchResults: any[] = [];
+
+  currentProduct!: any;
+
+
+
 
   ngOnInit(): void {
+    this.lpmService.getSectionAll().subscribe(data => {
+      this.searchResults = data;
+    })
 
-    this.searchDebounce
-      .pipe(
-        debounceTime(400),
-        switchMap(value => this.lpmService.getSectionsBySearch(value)))
-      .subscribe(results => {
-        if (!results) { this.existSearch = false; } else {
-          this.existSearch = true;
-          this.resultsSearch = results;
-        };
-      })
   }
 
   getSearch(event: HTMLInputElement) {
     if (event.value.length === 0) return;
     this.searchDebounce.next(event.value.trim().toLocaleLowerCase());
-    console.log(this.resultsSearch.length)
+    console.log(this.searchResults.length)
   }
 
   navigateToRoute(results: any) {
-    this.route.navigate([`/lpm/${results.seccion}/${results.titulo}`])
+    console.log(results)
+    /*  this.route.navigate([`/lpm/${results.seccion}/${results.titulo}`]) */
 
   }
+
+  constructor(private lpmService: LpmService, private route: Router) { }
 
 }

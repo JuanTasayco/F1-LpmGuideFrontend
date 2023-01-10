@@ -6,7 +6,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { TimelineModule } from 'primeng/timeline';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 import { ImageModule } from 'primeng/image';
 import { DividerModule } from 'primeng/divider';
@@ -22,14 +22,16 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     ImageModule,
     TimelineModule,
     CardModule,
-    ButtonModule
+    ButtonModule,
+    AutoCompleteModule
   ],
   exports: [
     MenubarModule,
     ImageModule,
     TimelineModule,
     CardModule,
-    ButtonModule
+    ButtonModule,
+    AutoCompleteModule
 
   ]
 })

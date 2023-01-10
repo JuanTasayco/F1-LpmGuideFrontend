@@ -17,8 +17,6 @@ export class HomeComponent implements AfterViewInit {
   openSidenav() {
     this.tl.to(this.sidenav.nativeElement, {
       xPercent: -100, duration: 0,
-
-
     })
   }
 

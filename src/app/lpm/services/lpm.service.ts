@@ -28,6 +28,10 @@ export class LpmService {
       }))))
   }
 
+  getSectionAll(): Observable<Seccion[]> {
+    return this.http.get<Seccion[]>(`${this.url}/lpm`);
+  }
+
 
   /* evento click del menu, para que funcione en cualquier componente */
   private clickNavbarObs: Subject<MouseEvent> = new Subject();

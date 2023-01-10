@@ -5,8 +5,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { NgPrimeModule } from '../ng-prime/ng-prime.module';
 import { KeyValuesPipe } from '../lpm/pipes/key-values.pipe';
-import { RouterModule } from '@angular/router';
 import { SearchComponent } from './search/search.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -21,7 +21,8 @@ import { SearchComponent } from './search/search.component';
   ],
   imports: [
     CommonModule,
-    NgPrimeModule
+    NgPrimeModule,
+    FormsModule
   ],
   exports: [
     NavbarComponent,
