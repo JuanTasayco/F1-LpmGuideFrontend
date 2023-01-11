@@ -2,13 +2,12 @@
 
 
 .Header {
- 
+
     font-size: $font-mayuscula;
     /*     background-color: red; */
     background-color: #396FA1;
 
     &-logo {
-
         height: 2.0rem;
         filter: brightness(1.1);
         background-color: white;
@@ -20,14 +19,22 @@
         }
     }
 
+    &-svg {
+        width: 5rem;
+        height: 2rem;
+    }
 
     &-nav {
+
         &--click {
             display: flex;
             align-items: center;
+            z-index: 99;
+            background: linear-gradient(90deg, rgba(19, 38, 54, 1) 6%, rgba(57, 111, 161, 1) 47%, rgba(19, 38, 54, 1) 97%);
 
             &:hover {
                 opacity: 0.5;
+                cursor: pointer;
             }
 
         }

@@ -1,4 +1,4 @@
-<div class="Data container p-5 w-100" *ngIf="content;else noContent">
+<div class="Data container p-5 w-100" *ngIf="content;else noContent" #dataComponent>
 
     <h5 *ngIf="content.titulo2; else primerTitulo" class="Data-h5 text-dark fw-bold fs-4">{{content.titulo2 |titlecase}}
     </h5>
@@ -19,12 +19,9 @@
             </ng-template>x
         </p-image>
     </div>
-
     <hr>
 
-
     <div class="Data row h-100 p-md-5 m-0 p-0">
-
         <div class="Data-row row text-center ">
             <h5 class="Data-h5 fw-bold fs-4  text-md-start">Procedimiento</h5>
 
@@ -38,9 +35,6 @@
                         Presiona para Ver
                     </ng-template>
                 </p-image>
-
-
-
             </div>
         </div>
 

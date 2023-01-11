@@ -6,7 +6,6 @@
     flex-direction: column;
     height: 100%;
 
-
     &-container {
         flex-grow: 1;
         position: relative;
@@ -18,9 +17,9 @@
     &-sidenav {
         height: 100%;
         width: 16rem;
+        z-index: 99;
 
         @include media-breakpoint-down(md) {
-            z-index: 99;
             position: absolute;
             width: 70%;
             inset: 0;
@@ -31,6 +30,7 @@
     &-content {
         flex-grow: 1;
         height: 100vh;
+        transition: all 2s;
 
         @include media-breakpoint-down(md) {
             /*   z-index: -1; */
@@ -44,8 +44,8 @@
         width: 100%;
         position: absolute;
         inset: 0;
+        transition: transform 2s;
     }
-
 
 }
 

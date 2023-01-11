@@ -1,12 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Flujo } from 'src/app/lpm/interfaces/flujo.interface';
+import { gsap } from 'gsap';
 
 @Component({
   selector: 'app-valores',
   templateUrl: './valores.component.html'
 })
-export class ValoresComponent implements OnInit {
-  ngOnInit(): void { }
+export class ValoresComponent implements AfterViewInit {
+
+  @ViewChild("valores") valoresComponent!: ElementRef<HTMLDivElement>
+
+  ngAfterViewInit(): void {
+    gsap.from(this.valoresComponent.nativeElement, {
+      opacity: 0
+    })
+  }
 
   valoresConceptos: Flujo[] = [
     {

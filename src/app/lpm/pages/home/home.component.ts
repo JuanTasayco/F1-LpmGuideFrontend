@@ -12,29 +12,26 @@ export class HomeComponent implements AfterViewInit {
   @ViewChild("sidenav") sidenav!: ElementRef<HTMLDivElement>;
 
 
+
   sidenavOpenIsActive: boolean = false;
 
   openSidenav() {
     this.tl.to(this.sidenav.nativeElement, {
-      xPercent: -100, duration: 0,
+      xPercent: -100, duration: .3, ease: "none"
     })
   }
 
   private tl = gsap.timeline({ duration: 0 });
 
-
   ngAfterViewInit(): void {
-
     this.lpmService.getsharingObservableEvent().subscribe(() => {
       this.sidenavOpenIsActive = !this.sidenavOpenIsActive;
       this.content.nativeElement.classList.toggle("expand")
       if (this.sidenavOpenIsActive) { this.tl.reverse(); } else { this.tl.play(); }
     })
-
     this.openSidenav();
+
   }
-
-
 
   constructor(private lpmService: LpmService) { }
 }

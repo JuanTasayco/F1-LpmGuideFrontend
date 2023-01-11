@@ -1,6 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { PrimeIcons } from 'primeng/api';
 
+interface carsDesc {
+  status: string,
+  date: string,
+  icon: any,
+  image: string,
+  text: string,
+  link: string
+}
+
+interface timeLineDesc {
+  status: string,
+  step?: string
+}
+
 @Component({
   selector: 'app-resumen',
   templateUrl: './resumen.component.html',
@@ -8,11 +22,11 @@ import { PrimeIcons } from 'primeng/api';
 })
 export class ResumenComponent implements OnInit {
 
-  timelineDescription: any[] = [];
-  cardsDescription: any[] = [];
+  timelineDescription: timeLineDesc[] = [];
+  cardsDescription: carsDesc[] = [];
   dateSection = new Date().getFullYear();
-  ngOnInit(): void {
 
+  ngOnInit(): void {
 
     this.cardsDescription = [
       {
@@ -37,9 +51,5 @@ export class ResumenComponent implements OnInit {
       { status: 'Valores' }, { status: 'Ceses' }, { status: 'Registros' },
       { status: 'Procesar planilla' }, { status: 'Reportes' }
     ]
-
-
-
-
   }
 }

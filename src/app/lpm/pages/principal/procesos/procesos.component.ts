@@ -1,11 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Flujo } from 'src/app/lpm/interfaces/flujo.interface';
-
+import { gsap } from 'gsap';
 @Component({
   selector: 'app-procesos',
   templateUrl: './procesos.component.html'
 })
-export class ProcesosComponent implements OnInit {
+export class ProcesosComponent implements AfterViewInit {
+  @ViewChild("procesosComponent") procesosComponent!: ElementRef<HTMLDivElement>;
+
+  ngAfterViewInit(): void {
+    gsap.from(this.procesosComponent.nativeElement, {
+      opacity: 0
+    })
+  }
 
   manualConceptos: Flujo[] = [
     {
@@ -45,5 +52,4 @@ export class ProcesosComponent implements OnInit {
 
   ]
 
-  ngOnInit(): void { }
 }

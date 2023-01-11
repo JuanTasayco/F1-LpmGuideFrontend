@@ -1,6 +1,6 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { LpmService } from 'src/app/lpm/services/lpm.service';
-import { gsap } from 'gsap';
+
 ; @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -11,13 +11,12 @@ export class SidenavComponent implements OnInit {
   sidenavOpenIsActive: boolean = false;
 
   itemsSidenav!: any;
-  itemsSidenavKeys: any[] = [];
-
+  itemsSidenavKeys: string[] | any = [];
 
   ngOnInit(): void {
     this.lpmService.getDataJson().subscribe(itemsSection => {
       this.itemsSidenav = itemsSection;
-      this.itemsSidenavKeys.push(Object.keys(itemsSection))
+      this.itemsSidenavKeys.push(Object.keys(itemsSection));
       this.itemsSidenavKeys = this.itemsSidenavKeys.flat();
     })
   }

@@ -4,17 +4,18 @@
   <app-navbar></app-navbar>
 
 
-  <div class="Home-container m-0 ">
+  <!-- widthSidenav -->
 
-      <div class="Home-sidenav m-0 p-0" #sidenav>
-        <app-sidenav></app-sidenav>
-      </div>
-  
-      <div class="Home-content h-100 p-0 m-0 expand " #content>
-        <router-outlet></router-outlet>
-      </div>
 
+  <div class="Home-container m-0">
+
+    <div class="Home-sidenav m-0 p-0" #sidenav style="border:2px solid red">
+      <app-sidenav></app-sidenav>
+    </div>
+
+    <div class="Home-content h-100 p-0 m-0 expand " #content>
+      <router-outlet></router-outlet>
+    </div>
 
   </div>
-
 </div>
