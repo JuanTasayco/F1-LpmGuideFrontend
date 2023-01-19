@@ -1,0 +1,21 @@
+.Asidenav {
+
+    /* hay estilos del logo que jala del headerNavBar del shared navBar, como el tamaño */
+    &-button {
+        height: 100%;
+        border: none;
+        border-radius: none;
+    }
+
+    & .accordion {
+        &-li {
+            &:hover {
+                background-color: aqua;
+
+            }
+        }
+
+
+        &-body {}
+    }
+}

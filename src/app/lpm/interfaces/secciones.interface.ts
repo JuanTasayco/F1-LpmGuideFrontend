@@ -1,5 +1,6 @@
 
 export interface Seccion {
+  id?: string,
   titulo: string,
   titulo2?: string,
   subtitulo: string,

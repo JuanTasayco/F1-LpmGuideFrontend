@@ -1,0 +1,16 @@
+.Aheader {
+
+    &-collapse {
+        justify-content: end;
+    }
+
+
+    &-li {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+
+
+}

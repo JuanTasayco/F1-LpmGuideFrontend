@@ -10,21 +10,14 @@ export class DataComponent implements AfterViewInit, OnInit {
 
   @ViewChild("image") pImage !: any;
   @ViewChild("dataComponent") dataComponent !: ElementRef;
+  @Input() content!: Seccion;
 
-
-  ngOnInit(): void {
-
-
-  }
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
-
     gsap.from(this.dataComponent.nativeElement, {
       opacity: 0
     })
-
   }
-
-  @Input() content!: Seccion;
 
 }

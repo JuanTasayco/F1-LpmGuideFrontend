@@ -1,5 +1,5 @@
 import { ThisReceiver } from '@angular/compiler';
-import { AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { gsap } from 'gsap';
 import { LpmService } from '../../services/lpm.service';
 @Component({
@@ -11,7 +11,7 @@ export class HomeComponent implements AfterViewInit {
   @ViewChild("content") content!: ElementRef<HTMLDivElement>;
   @ViewChild("sidenav") sidenav!: ElementRef<HTMLDivElement>;
 
-
+  widthSidenav: number = 250;
 
   sidenavOpenIsActive: boolean = false;
 
@@ -30,8 +30,10 @@ export class HomeComponent implements AfterViewInit {
       if (this.sidenavOpenIsActive) { this.tl.reverse(); } else { this.tl.play(); }
     })
     this.openSidenav();
-
+    this.widthSidenav = this.sidenav.nativeElement.clientWidth;
+    this.cdr.detectChanges();
   }
 
-  constructor(private lpmService: LpmService) { }
+  constructor(private lpmService: LpmService, private cdr: ChangeDetectorRef) { }
+
 }

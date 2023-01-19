@@ -1,7 +1,7 @@
 @use "./app/app.component";
-@use "./app/lpm/pages/home/home.component";
-@use "./app/shared/navbar/navbar.component";
-@use "./app/shared/sidenav/sidenav.component";
+@use "./app/lpm/pages/home/home.component" as lpmHome;
+@use "./app/shared/navbar/navbar.component" as lpmNavbar;
+@use "./app/shared/sidenav/sidenav.component" as lpmSidenav;
 @use "./app/lpm/components/data/data.component";
 @use "./app/lpm/pages/principal/procesos/procesos.component";
 @use "./app/lpm/pages/principal/valores/valores.component";
@@ -10,3 +10,8 @@
 @use "./app/auth/pages/login/login.component";
 @use "./app/auth/pages/register/register.component";
 @use "./app/shared/search/search.component";
+
+@use "./app/admin/pages/home/home.component" as adminHome;
+@use "./app/admin/shared/sidenav/sidenav.component" as adminSidenav;
+@use "./app/admin/shared/navbar/navbar.component" as adminNavbar;
+@use "./app/admin/pages/agregar/agregar.component" as adminAgregar;

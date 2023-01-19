@@ -20,7 +20,7 @@ export class LpmService {
   }
 
   getSectionsBySearch(terms: string): Observable<Seccion[] | any> {
-    return this.http.get<Seccion[]>(`${this.url}/lpm/section/${terms}`)
+    return this.http.get<Seccion[]>(`${this.url}/lpm/titles/${terms}`)
       .pipe(map(seccion => seccion.map(sec => ({
         titulo: sec.titulo,
         seccion: sec.seccion,

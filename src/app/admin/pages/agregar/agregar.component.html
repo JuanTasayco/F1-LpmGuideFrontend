@@ -1,0 +1,81 @@
+<div class="Banner my-5 text-dark p-5 bg-light rounded-3 shadow-sm">
+    <h1 class="Banner-h1 text-dark fw-bold">Guía</h1>
+    <p class="Banner-p lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa autem ratione impedit.
+        Blanditiis libero dicta rem, unde voluptatibus, fugiat porro quibusdam, reiciendis harum animi excepturi? Eaque
+        soluta incidunt alias corrupti?</p>
+</div>
+
+<form (ngSubmit)="send()" action="" class="Agregar row p-3 gy-4">
+
+    <div class="Agregar-group form-group col-md-4" *ngFor="let formgroup of formGroups">
+        <label [for]="formgroup.labelId" class="Agregar-label">{{formgroup.titulo}}</label>
+        <div><small class="Agregar-small">{{formgroup.subtitle}}</small></div>
+        <input class="Agregar-input form-control" type="text">
+    </div>
+
+    <div class="Agregar-group form-group col-11" #agregarGroupIntro>
+        <label for="" class="Agregar-label">Introducción </label>
+        <!--Agregar más introducción -->
+        <svg (click)="addIntroContent()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="Agregar-svg bi bi-plus-circle-fill mx-2" viewBox="0 0 16 16">
+            <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+        </svg>
+        <small> <---Presiona +, para agregar más contenido introductorio</small>
+                <div class="mt-2"><small class="Agregar-small">- Introducción sobre como ir a la sección </small></div>
+
+                <div class="Agregar-adicional">
+                    <input class="Agregar-input form-control" type="text">
+                    <input class="Agregar-input form-control mt-3" type="file">
+                </div>
+
+                <!-- Lo que tiene que agregarse con cada click en el svg -->
+                <div class="Agregar-adicional mb-3 px-5 py-2" #ref *ngFor="let element of introduContent">
+                    <div><small class="Agregar-small mx-2"> - Contenido, adicional </small>
+                        <svg (click)="deleteElementIntro(ref)" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" class="Agregar-svg bi bi-dash-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </div>
+                    <div [innerHtml]="element | safeHtml"></div>
+                </div>
+
+    </div>
+
+
+
+    <div class="Agregar-group form-group col-11" #agregarGroupContent>
+        <label for="" class="Agregar-label">*Contenido</label>
+        <!--Agregar más contenido -->
+        <svg (click)="addContent()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="Agregar-svg bi bi-plus-circle-fill mx-2" viewBox="0 0 16 16">
+            <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+        </svg>
+        <small> <---Presiona +, para agregar más contenido</small>
+                <div><small class="Agregar-small ">- Contenido, procedimientos </small></div>
+
+                <div class="Agregar-adicional mb-2">
+                    <input class="Agregar-input form-control" type="text">
+                    <input class="Agregar-input form-control mt-3" type="file">
+                </div>
+
+                <!-- Lo que tiene que agregarse con cada click en el svg-->
+                <div class="Agregar-adicional mb-3 px-5 py-2" #ref *ngFor="let element of elementsContent">
+                    <div><small class="Agregar-small mx-2"> - Contenido, adicional </small>
+                        <svg (click)="deleteElementContent(ref)" xmlns="http://www.w3.org/2000/svg" width="16"
+                            height="16" fill="currentColor" class="Agregar-svg bi bi-dash-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </div>
+                    <div [innerHtml]="element | safeHtml"></div>
+                </div>
+    </div>
+
+    <div class="Agregar-group d-flex justify-content-center">
+        <button class="btn btn-dark px-5 py-2" type="button">Agregar</button>
+    </div>
+
+</form>
