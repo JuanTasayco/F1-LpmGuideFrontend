@@ -5,17 +5,20 @@
         soluta incidunt alias corrupti?</p>
 </div>
 
-<form (ngSubmit)="send()" action="" class="Agregar row p-3 gy-4">
+<form (ngSubmit)="send()" class="Agregar row p-3 gy-4" [formGroup]="formLogin">
 
+    <!-- first properties -->
     <div class="Agregar-group form-group col-md-4" *ngFor="let formgroup of formGroups">
         <label [for]="formgroup.labelId" class="Agregar-label">{{formgroup.titulo}}</label>
         <div><small class="Agregar-small">{{formgroup.subtitle}}</small></div>
-        <input class="Agregar-input form-control" type="text">
+        <input class="Agregar-input form-control" type="text" [formControlName]="formgroup.labelId">
     </div>
 
-    <div class="Agregar-group form-group col-11" #agregarGroupIntro>
+
+
+    <!-- introducContent -->
+    <div class="Agregar-group form-group col-11" #agregarGroupIntro formArrayName="introduccion">
         <label for="" class="Agregar-label">Introducción </label>
-        <!--Agregar más introducción -->
         <svg (click)="addIntroContent()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
             class="Agregar-svg bi bi-plus-circle-fill mx-2" viewBox="0 0 16 16">
             <path
@@ -40,14 +43,14 @@
                     </div>
                     <div [innerHtml]="element | safeHtml"></div>
                 </div>
-
     </div>
 
 
 
-    <div class="Agregar-group form-group col-11" #agregarGroupContent>
+    <!-- contentC -->
+    <div class="Agregar-group form-group col-11" #agregarGroupContent formArrayName="contenido">
         <label for="" class="Agregar-label">*Contenido</label>
-        <!--Agregar más contenido -->
+
         <svg (click)="addContent()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
             class="Agregar-svg bi bi-plus-circle-fill mx-2" viewBox="0 0 16 16">
             <path
@@ -62,7 +65,9 @@
                 </div>
 
                 <!-- Lo que tiene que agregarse con cada click en el svg-->
-                <div class="Agregar-adicional mb-3 px-5 py-2" #ref *ngFor="let element of elementsContent">
+                <div class="Agregar-adicional mb-3 px-5 py-2" #ref
+                    *ngFor="let element of contentArray.controls; let i = index">
+
                     <div><small class="Agregar-small mx-2"> - Contenido, adicional </small>
                         <svg (click)="deleteElementContent(ref)" xmlns="http://www.w3.org/2000/svg" width="16"
                             height="16" fill="currentColor" class="Agregar-svg bi bi-dash-circle" viewBox="0 0 16 16">
@@ -74,8 +79,12 @@
                 </div>
     </div>
 
+
+
+
+    <!-- button send -->
     <div class="Agregar-group d-flex justify-content-center">
-        <button class="btn btn-dark px-5 py-2" type="button">Agregar</button>
+        <button class="btn btn-dark px-5 py-2" type="submit">Agregar</button>
     </div>
 
 </form>

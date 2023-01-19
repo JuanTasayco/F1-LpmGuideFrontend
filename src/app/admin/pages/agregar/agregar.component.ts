@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
-import { ControlContainer, DefaultValueAccessor, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ControlContainer, DefaultValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
@@ -9,7 +9,8 @@ import { AdminService } from '../../services/admin.service';
 interface AddForm {
   titulo: string,
   subtitle: string,
-  labelId?: string,
+  labelId: string,
+  attribute: string,
   inputId?: string
 }
 
@@ -24,38 +25,34 @@ export class AgregarComponent implements AfterViewInit, OnInit {
     {
       titulo: "*Titulo",
       subtitle: "- Principal title(no usar comillas, ni espacios)",
+      attribute: "formControlName",
       labelId: "titulo"
     },
     {
       titulo: "Titulo 2",
       subtitle: "- Titulo adicional capitalizado (Titulo Cap..)",
+      attribute: "formControlName",
       labelId: "titulo2"
     },
     {
       titulo: "*Subtitulo",
       subtitle: "Descripción del concepto es cuestión",
+      attribute: "formControlName",
       labelId: "subtitulo"
     },
     {
       titulo: "*Panel",
       subtitle: "- Panel al que pertenece ",
+      attribute: "formControlName",
       labelId: "panel"
     },
     {
       titulo: " *Seccion",
       subtitle: "- Sección a la que pertenece",
+      attribute: "formControlName",
       labelId: "seccion"
-    },
-    {
-      titulo: "Introducción",
-      subtitle: "- Introducción sobre como ir a la sección",
-      labelId: "introduccion"
-    },
-    {
-      titulo: "*Contenido",
-      subtitle: "- Contenido, procedimientos",
-      labelId: "contenido"
-    },
+    }
+
   ]
 
 
@@ -70,12 +67,6 @@ export class AgregarComponent implements AfterViewInit, OnInit {
   introduContent: SafeHtml[] = [];
   elementsContent: SafeHtml[] = [];
 
-  introduCont: number = 0;
-  addIntroContent() {
-    this.introduCont += 1;
-    const text = "- Introduccion, adicional"
-    this.functionAddHtml(this.introduCont, text, this.introduContent)
-  }
 
 
   ngAfterViewInit(): void {
@@ -87,7 +78,9 @@ export class AgregarComponent implements AfterViewInit, OnInit {
     titulo2: new FormControl(''),
     subtitulo: new FormControl(''),
     panel: new FormControl(''),
-    seccion: new FormControl('')
+    seccion: new FormControl(''),
+    introduccion: new FormControl(''),
+    contenido: new FormControl('')
   })
 
   /* method for router, info that fills info and form builder declaration*/
@@ -101,35 +94,53 @@ export class AgregarComponent implements AfterViewInit, OnInit {
     }
 
     this.formLogin = this.formBuilder.group({
-      titulo: ["", [Validators.required]],
-      titulo2: ["", [Validators.required]],
-      subtitulo: ["", [Validators.required]],
-      panel: ["", [Validators.required]],
-      seccion: ["", [Validators.required]],
+      titulo: ["s", [Validators.required]],
+      titulo2: ["s", [Validators.required]],
+      subtitulo: ["s", [Validators.required]],
+      panel: ["s", [Validators.required]],
+      seccion: ["s", [Validators.required]],
+      introduccion: this.formBuilder.array([], Validators.required),
+      contenido: this.formBuilder.array([], Validators.required)
     })
 
-
-
   }
 
-  send() {
-
-  }
+  subtitles: FormControl = new FormControl("", Validators.required);
+  imagesUrl: FormControl = new FormControl("", Validators.required);
   /* end logic form */
 
-
-
-
   /* logic add block intro and content  */
-  contentCont: number = 0;
-  addContent() {
-    this.contentCont += 1;
-    const text = "- Contenido, adicional"
-    this.functionAddHtml(this.contentCont, text, this.elementsContent);
+
+  get contentArray() {
+    return this.formLogin.get("introduccion") as FormArray;
+  }
+
+  get introducArray() {
+    return this.formLogin.get("contenido") as FormArray;
   }
 
 
-  functionAddHtml(contador: number, text: string, contenedor: any[]) {
+  addContent() {
+
+    this.functionAddHtml(this.elementsContent);
+    console.log(this.elementsContent)
+  }
+
+  addIntroContent() {
+    this.functionAddHtml(this.introduContent)
+    console.log(this.introduContent)
+  }
+
+
+
+  send() {
+    console.log(this.contentArray)
+
+  }
+
+  functionAddHtml(contenedor: any[]) {
+
+
     const element = `<input class="Agregar-input form-control" type="text">
     <input class="Agregar-input form-control mt-3" type="file">`;
     contenedor.push(element);
