@@ -123,7 +123,7 @@ export class AgregarComponent implements AfterViewInit, OnInit {
   addContent() {
 
     this.functionAddHtml(this.elementsContent);
-    console.log(this.elementsContent)
+
   }
 
   addIntroContent() {
@@ -134,7 +134,9 @@ export class AgregarComponent implements AfterViewInit, OnInit {
 
 
   send() {
-    console.log(this.contentArray)
+
+    console.log(this.subtitles.value)
+    console.log(this.imagesUrl.value)
 
   }
 
