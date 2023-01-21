@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { ControlContainer, DefaultValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -79,9 +80,10 @@ export class AgregarComponent implements AfterViewInit, OnInit {
     subtitulo: new FormControl(''),
     panel: new FormControl(''),
     seccion: new FormControl(''),
-    introduccion: new FormControl(''),
-    contenido: new FormControl('')
+    introduccion: new FormArray([]),
+    contenido: new FormArray([])
   })
+
 
   /* method for router, info that fills info and form builder declaration*/
   ngOnInit(): void {
@@ -105,48 +107,56 @@ export class AgregarComponent implements AfterViewInit, OnInit {
 
   }
 
-  subtitles: FormControl = new FormControl("", Validators.required);
-  imagesUrl: FormControl = new FormControl("", Validators.required);
+
+  contentForm: FormGroup = new FormGroup({
+    subtitles: new FormControl(''),
+    imagesUrl: new FormControl('')
+  })
+
   /* end logic form */
 
   /* logic add block intro and content  */
 
-  get contentArray() {
-    return this.formLogin.get("introduccion") as FormArray;
-  }
-
-  get introducArray() {
+  get contenido() {
     return this.formLogin.get("contenido") as FormArray;
   }
 
-
-  addContent() {
-
-    this.functionAddHtml(this.elementsContent);
-
+  get introduccion() {
+    return this.formLogin.get("introduccion") as FormArray;
   }
 
   addIntroContent() {
-    this.functionAddHtml(this.introduContent)
-    console.log(this.introduContent)
+    console.log(this.introduccion.controls)
+    /*    const introForm = this.formBuilder.group({
+         subtitles: ["", Validators.required],
+         imagesUrl: ["", Validators.required]
+       }) */
+    this.contentForm = this.formBuilder.group({
+      subtitles: ["", Validators.required],
+      imagesUrl: ["", Validators.required]
+    })
+    this.introduccion.push(new FormGroup(this.contentForm.value));
+    console.log(this.formLogin.value)
   }
 
+  addContent() {
+    /*  if (this.subtitles.valid) {
+       this.contenido.push(new FormControl(this.subtitles.value, Validators.required));
+       console.log(this.formLogin.value)
+     } else {
+       console.log("falta agregar información antes de llenar más")
+     }
+  */
+    /*   this.functionAddHtml(this.elementsContent); */
+  }
 
+  /*   @ViewChild("elementsCont") elementsCont !: ElementRef; */
+  @ViewChild("elementsIntro") elementsIntro !: ElementRef;
 
   send() {
-
-    console.log(this.subtitles.value)
-    console.log(this.imagesUrl.value)
-
+    console.log(this.formLogin.value)
   }
 
-  functionAddHtml(contenedor: any[]) {
-
-
-    const element = `<input class="Agregar-input form-control" type="text">
-    <input class="Agregar-input form-control mt-3" type="file">`;
-    contenedor.push(element);
-  }
 
   deleteElementIntro(refe: HTMLElement) {
     this.renderer.removeChild(this.introdContainerGroup.nativeElement, refe)
