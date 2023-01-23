@@ -34,7 +34,12 @@ export class RegisterComponent implements OnInit {
 
 
 
-  send() { }
+  send() {
+
+    this.formRegister.markAllAsTouched();
+
+
+  }
 
   detectErrors(controlName: any) {
     return this.formRegister.get(controlName)?.invalid && this.formRegister.get(controlName)?.touched;

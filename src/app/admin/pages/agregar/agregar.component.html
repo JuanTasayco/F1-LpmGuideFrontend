@@ -19,14 +19,12 @@
     <!-- introducContent -->
     <div class="Agregar-group form-group col-11">
         <label for="" class="Agregar-label">Introducción </label>
-        <svg (click)="addIntroContent()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+        <svg (click)="addIntroSection()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
             class="Agregar-svg bi bi-plus-circle-fill mx-2" viewBox="0 0 16 16">
             <path
                 d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
         </svg>
         <small> <---Presiona +, para agregar más contenido introductorio</small>
-
-
                 <div [formGroup]="contentForm">
                     <input class="Agregar-input form-control" type="text" formControlName="subtitles">
                     <input class="Agregar-input form-control mt-3" type="file" formControlName="imagesUrl">
@@ -39,18 +37,16 @@
                 <!-- Lo que tiene que agregarse con cada click en el svg -->
 
                 <div formArrayName="introduccion">
-                    <div class="Agregar-adicional mb-3 px-5 py-2" #ref
+                    <div class="Agregar-adicional mb-3 px-5 py-2"
                         *ngFor="let element of introduccion.controls; let i = index" [formGroupName]="i">
-
                         <div><small class="Agregar-small mx-2"> - Contenido, adicional </small>
-                            <svg (click)="deleteElementIntro(ref)" xmlns="http://www.w3.org/2000/svg" width="16"
+                            <svg (click)="deleteIntroSection(i)" xmlns="http://www.w3.org/2000/svg" width="16"
                                 height="16" fill="currentColor" class="Agregar-svg bi bi-dash-circle"
                                 viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                                 <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
                             </svg>
                         </div>
-
                         <input class="Agregar-input form-control" type="text" formControlName="subtitles">
                         <input class="Agregar-input form-control mt-3" type="file" formControlName="imagesUrl">
                     </div>
@@ -59,45 +55,41 @@
 
 
     <!-- contentC -->
-    <!--    <div class="Agregar-group form-group col-11" formArrayName="contenido">
+    <div class="Agregar-group form-group col-11">
         <label for="" class="Agregar-label">*Contenido</label>
-
-        <svg (click)="addContent()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-            class="Agregar-svg bi bi-plus-circle-fill mx-2" viewBox="0 0 16 16">
+        <svg (click)="addContenidoSection()" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+            fill="currentColor" class="Agregar-svg bi bi-plus-circle-fill mx-2" viewBox="0 0 16 16">
             <path
                 d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
         </svg>
         <small> <---Presiona +, para agregar más contenido </small>
 
-                <div class="Agregar-adicional mb-2">
-                    <input class="Agregar-input form-control" type="text" [formControl]="subtitles">
-                         <input class="Agregar-input form-control mt-3" type="file" [formControl]="imagesUrl">
+                <div [formGroup]="contentForm">
+                    <input class="Agregar-input form-control" type="text" formControlName="subtitles">
+                    <input class="Agregar-input form-control mt-3" type="file" formControlName="imagesUrl">
                 </div>
 
                 <small class="text-danger">-Para seguir agregando información, primero llena los recuadros anteriores de
                     contenido-</small>
                 <div><small class="Agregar-small ">- Contenidos, agregados </small></div>
-             
 
-                <div class="Agregar-adicional mb-3 px-5 py-2" #ref
-                    *ngFor="let element of contentArray.controls; let i = index">
+                <div formArrayName="contenido">
+                    <div class="Agregar-adicional mb-3 px-5 py-2"
+                        *ngFor="let element of contenido.controls; let i = index" [formGroupName]="i">
+                        <div><small class="Agregar-small mx-2"> - Contenido, adicional </small>
+                            <svg (click)="deleteContenidoSection(i)" xmlns="http://www.w3.org/2000/svg" width="16"
+                                height="16" fill="currentColor" class="Agregar-svg bi bi-dash-circle"
+                                viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                            </svg>
 
-                    <div><small class="Agregar-small mx-2"> - Contenido, adicional </small>
-                        <svg (click)="deleteElementContent(ref)" xmlns="http://www.w3.org/2000/svg" width="16"
-                            height="16" fill="currentColor" class="Agregar-svg bi bi-dash-circle" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
-                        </svg>
-
-
-                        <input class="Agregar-input form-control" type="text" [formControlName]="i">
-                            <input class="Agregar-input form-control mt-3" type="file">
-
-
+                            <input class="Agregar-input form-control" type="text" formControlName="subtitles">
+                            <input class="Agregar-input form-control mt-3" type="file" formControlName="imagesUrl">
+                        </div>
                     </div>
                 </div>
-
-    </div> -->
+    </div>
 
 
 

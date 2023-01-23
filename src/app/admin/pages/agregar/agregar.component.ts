@@ -61,10 +61,6 @@ export class AgregarComponent implements AfterViewInit, OnInit {
   constructor(private renderer: Renderer2, private adminService: AdminService,
     private activatedRouter: ActivatedRoute, private route: Router, private formBuilder: FormBuilder) { }
 
-
-  @ViewChild("agregarGroupContent") containerGroup!: ElementRef<HTMLDivElement>;
-  @ViewChild("agregarGroupIntro") introdContainerGroup!: ElementRef<HTMLDivElement>;
-
   introduContent: SafeHtml[] = [];
   elementsContent: SafeHtml[] = [];
 
@@ -72,6 +68,8 @@ export class AgregarComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit(): void {
   }
+
+
 
   /* logic form */
   formLogin: FormGroup = new FormGroup({
@@ -95,6 +93,8 @@ export class AgregarComponent implements AfterViewInit, OnInit {
       console.log("Im add ")
     }
 
+
+
     this.formLogin = this.formBuilder.group({
       titulo: ["s", [Validators.required]],
       titulo2: ["s", [Validators.required]],
@@ -109,13 +109,9 @@ export class AgregarComponent implements AfterViewInit, OnInit {
 
 
   contentForm: FormGroup = new FormGroup({
-    subtitles: new FormControl(''),
-    imagesUrl: new FormControl('')
+    subtitles: new FormControl("", Validators.required),
+    imagesUrl: new FormControl("", Validators.required)
   })
-
-  /* end logic form */
-
-  /* logic add block intro and content  */
 
   get contenido() {
     return this.formLogin.get("contenido") as FormArray;
@@ -125,48 +121,28 @@ export class AgregarComponent implements AfterViewInit, OnInit {
     return this.formLogin.get("introduccion") as FormArray;
   }
 
-  addIntroContent() {
-    console.log(this.introduccion.controls)
-    /*    const introForm = this.formBuilder.group({
-         subtitles: ["", Validators.required],
-         imagesUrl: ["", Validators.required]
-       }) */
-    this.contentForm = this.formBuilder.group({
-      subtitles: ["", Validators.required],
-      imagesUrl: ["", Validators.required]
-    })
-    this.introduccion.push(new FormGroup(this.contentForm.value));
+  addIntroSection() {
+    this.introduccion.push(this.contentForm);
     console.log(this.formLogin.value)
   }
 
-  addContent() {
-    /*  if (this.subtitles.valid) {
-       this.contenido.push(new FormControl(this.subtitles.value, Validators.required));
-       console.log(this.formLogin.value)
-     } else {
-       console.log("falta agregar información antes de llenar más")
-     }
-  */
-    /*   this.functionAddHtml(this.elementsContent); */
+  addContenidoSection() {
+    this.contenido.push(this.contentForm);
   }
-
-  /*   @ViewChild("elementsCont") elementsCont !: ElementRef; */
-  @ViewChild("elementsIntro") elementsIntro !: ElementRef;
 
   send() {
     console.log(this.formLogin.value)
   }
 
 
-  deleteElementIntro(refe: HTMLElement) {
-    this.renderer.removeChild(this.introdContainerGroup.nativeElement, refe)
+  deleteIntroSection(pos: number) {
+    this.introduccion.removeAt(pos);
   }
 
-  deleteElementContent(refe: HTMLElement) {
-    this.renderer.removeChild(this.containerGroup.nativeElement, refe);
+  deleteContenidoSection(pos: number) {
+    this.contenido.removeAt(pos);
   }
 
-  /* end methods for introduct and content */
 
 
 
