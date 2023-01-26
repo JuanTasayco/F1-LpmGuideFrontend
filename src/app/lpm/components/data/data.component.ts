@@ -12,7 +12,8 @@ export class DataComponent implements AfterViewInit, OnInit {
   @ViewChild("dataComponent") dataComponent !: ElementRef;
   @Input() content!: Seccion;
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+  }
 
   ngAfterViewInit(): void {
     gsap.from(this.dataComponent.nativeElement, {

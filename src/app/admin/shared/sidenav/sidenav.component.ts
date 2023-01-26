@@ -14,12 +14,13 @@ export class SidenavComponent implements OnInit {
   async ngOnInit() {
     let resultado: any[] = await this.adminService.getSectionsAvailable()
     const [...secciones] = new Set(resultado);
-    for (let seccion of secciones) {
+
+    secciones.forEach(seccion => {
       this.adminService.getDataSidenav(seccion)
         .subscribe(resultSeccion => {
           this.resultsBySeccion.push(resultSeccion);
         })
-    }
+    })
   }
 
   constructor(private adminService: AdminService) {

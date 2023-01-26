@@ -1,9 +1,10 @@
 import { ThisReceiver } from '@angular/compiler';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
-import { ControlContainer, DefaultValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
+import { Content, Register } from '../../interfaces/register-interface';
 import { AdminService } from '../../services/admin.service';
 
 
@@ -19,7 +20,7 @@ interface AddForm {
   selector: 'app-agregar',
   templateUrl: './agregar.component.html'
 })
-export class AgregarComponent implements AfterViewInit, OnInit {
+export class AgregarComponent implements OnInit {
 
 
   formGroups: AddForm[] = [
@@ -61,88 +62,148 @@ export class AgregarComponent implements AfterViewInit, OnInit {
   constructor(private renderer: Renderer2, private adminService: AdminService,
     private activatedRouter: ActivatedRoute, private route: Router, private formBuilder: FormBuilder) { }
 
+
   introduContent: SafeHtml[] = [];
   elementsContent: SafeHtml[] = [];
-
-
-
-  ngAfterViewInit(): void {
-  }
-
-
+  buttonSection: string = "";
 
   /* logic form */
   formLogin: FormGroup = new FormGroup({
+    id: new FormControl(),
     titulo: new FormControl(''),
     titulo2: new FormControl(''),
     subtitulo: new FormControl(''),
     panel: new FormControl(''),
     seccion: new FormControl(''),
-    introduccion: new FormArray([]),
+    ingreso: new FormArray([]),
     contenido: new FormArray([])
   })
 
-
+  completeSection !: Register;
+  sectionSubscription !: Subscription;
   /* method for router, info that fills info and form builder declaration*/
   ngOnInit(): void {
-    if (this.route.url.includes("editar")) {
-      this.activatedRouter.params.
-        pipe(switchMap(({ id }) => this.adminService.getDataById(id)))
-        .subscribe(console.log)
-    } else {
-      console.log("Im add ")
-    }
-
-
 
     this.formLogin = this.formBuilder.group({
-      titulo: ["s", [Validators.required]],
-      titulo2: ["s", [Validators.required]],
-      subtitulo: ["s", [Validators.required]],
-      panel: ["s", [Validators.required]],
-      seccion: ["s", [Validators.required]],
-      introduccion: this.formBuilder.array([], Validators.required),
+      id: [],
+      titulo: ["a", [Validators.required]],
+      titulo2: ["a", [Validators.required]],
+      subtitulo: ["a", [Validators.required]],
+      panel: ["a", [Validators.required]],
+      seccion: ["a", [Validators.required]],
+      ingreso: this.formBuilder.array([], Validators.required),
       contenido: this.formBuilder.array([], Validators.required)
     })
 
+
+    if (this.route.url.includes("editar")) {
+      this.buttonSection = "Editar"
+      this.sectionSubscription = this.activatedRouter.params.
+        pipe(switchMap(({ id }) => this.adminService.getDataByIdForEdit(id)))
+        .subscribe(section => {
+          this.deleteAll();
+          this.completeSection = section;
+          this.formLogin.patchValue({
+            id: this.completeSection.id,
+            titulo: this.completeSection.titulo,
+            titulo2: this.completeSection.titulo2,
+            subtitulo: this.completeSection.subtitulo,
+            panel: this.completeSection.panel,
+            seccion: this.completeSection.seccion,
+          });
+          this.editInsertData(this.ingreso, this.completeSection.ingreso);
+          this.editInsertData(this.contenido, this.completeSection.contenido);
+        })
+
+    } else {
+      this.buttonSection = "Agregar";
+    }
+
   }
 
+  editInsertData(formArrayName: FormArray, nameArrayValue: Content[]) {
+    nameArrayValue?.forEach(a => {
+      formArrayName.push(new FormGroup({
+        subtitles: new FormControl(a.subtitles),
+        imagesUrl: new FormControl("")
+      }))
+    })
+  }
 
   contentForm: FormGroup = new FormGroup({
-    subtitles: new FormControl("", Validators.required),
-    imagesUrl: new FormControl("", Validators.required)
+    subtitles: new FormControl(""),
+    imagesUrl: new FormControl("")
   })
 
   get contenido() {
     return this.formLogin.get("contenido") as FormArray;
   }
 
-  get introduccion() {
-    return this.formLogin.get("introduccion") as FormArray;
+  get ingreso() {
+    return this.formLogin.get("ingreso") as FormArray;
   }
 
   addIntroSection() {
-    this.introduccion.push(this.contentForm);
-    console.log(this.formLogin.value)
+    this.ingreso.push(new FormGroup({
+      subtitles: new FormControl(this.contentForm.get("subtitles")?.value, Validators.required),
+      imagesUrl: new FormControl(this.contentForm.get("imagesUrl")?.value)
+    }));
+    this.contentForm.reset();
   }
 
   addContenidoSection() {
-    this.contenido.push(this.contentForm);
+    this.contenido.push(new FormGroup({
+      subtitles: new FormControl(this.contentForm.get("subtitles")?.value, Validators.required),
+      imagesUrl: new FormControl(this.contentForm.get("imagesUrl")?.value)
+    }));
+    this.contentForm.reset();
   }
 
   send() {
-    console.log(this.formLogin.value)
+    if (this.formLogin.get("id")?.value) {
+      console.log("editando")
+    } else {
+      console.log(this.formLogin.value);
+      if (this.formLogin.valid) {
+        const { id, ...rest } = this.formLogin.value;
+
+        rest.ingreso.forEach((ing: Content) => {
+          if (!ing.imagesUrl) ing.imagesUrl = "";
+        });
+        rest.contenido.forEach((cont: Content) => {
+          if (!cont.imagesUrl) cont.imagesUrl = "";
+        })
+
+        console.log(rest)
+        this.adminService.createSection(rest).subscribe(console.log);
+
+      } else {
+        console.log("no es valido")
+      }
+    }
+
+
   }
 
 
   deleteIntroSection(pos: number) {
-    this.introduccion.removeAt(pos);
+    this.ingreso.removeAt(pos);
   }
 
   deleteContenidoSection(pos: number) {
     this.contenido.removeAt(pos);
   }
 
+  deleteAll() {
+
+    while (this.ingreso.controls.length !== 0) {
+      this.ingreso.removeAt(0);
+    }
+    while (this.contenido.controls.length !== 0) {
+      this.contenido.removeAt(0);
+    }
+
+  }
 
 
 

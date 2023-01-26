@@ -1,5 +1,15 @@
-.Agregar {
+@use "src/_custom" as *;
 
+.Banner {
+    @include media-breakpoint-down(lg) {
+        overflow-y: scroll;
+        max-height: 30rem;
+    }
+
+}
+
+
+.Agregar {
 
     &-svg {
 

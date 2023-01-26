@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { firstValueFrom, map, Observable } from 'rxjs';
+import { catchError, firstValueFrom, map, Observable } from 'rxjs';
 import { Seccion } from 'src/app/lpm/interfaces/secciones.interface';
 import { environment } from 'src/environments/environment';
+import { Register } from '../interfaces/register-interface';
 
 
 
@@ -29,10 +30,14 @@ export class AdminService {
       .pipe(map(results => results.map(block => block.seccion))))
   }
 
-  getDataById(id: string) {
-    return this.http.get<Seccion[]>(`${this.url}/lpm/${id}`)
+  getDataByIdForEdit(id: string) { /* antes tenía [] por si algo ocurre */
+    return this.http.get<any>(`${this.url}/lpm/${id}`)
   }
 
+
+  createSection(section: any): Observable<Register> {
+    return this.http.post<Register>(`${this.url}/lpm`, section)
+  }
 
 
   constructor(private http: HttpClient) { }

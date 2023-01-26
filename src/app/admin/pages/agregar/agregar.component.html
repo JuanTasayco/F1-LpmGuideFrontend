@@ -1,8 +1,20 @@
 <div class="Banner my-5 text-dark p-5 bg-light rounded-3 shadow-sm">
     <h1 class="Banner-h1 text-dark fw-bold">Guía</h1>
-    <p class="Banner-p lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa autem ratione impedit.
-        Blanditiis libero dicta rem, unde voluptatibus, fugiat porro quibusdam, reiciendis harum animi excepturi? Eaque
-        soluta incidunt alias corrupti?</p>
+    <p class="Banner-p lead fs-5">*Título : Indica el nombre principal de la sección, por ejemplo : valores, procesos,
+        faltas, tardanzas,licencias, etc. </p>
+    <p class="Banner-p lead fs-5">*Título2 : Por lo general es igual al título 1, solo que permite a los desarrolladores
+        poder mostrar este encabezado en lugar del principal por si tenemos valores que lleven caracteres especiales o
+        espaciado. por ejemplo: Horas extras, Ingresar Trabajador, etc </p>
+    <p class="Banner-p lead fs-5">*Subtitulo : Indica el nombre principal de la sección, por ejemplo : valores,
+        procesos, faltas, tardanzas,licencias, etc. </p>
+    <p class="Banner-p lead fs-5">*Panel : Es basicamente la palabra panel + el título, por ejemplo Panel Valores, Panel
+        Faltas </p>
+    <p class="Banner-p lead fs-5">*Seccion :Tal vez la parte más importante, permite identificar a que sección
+        pertenece, por ejemplo: mantenimiento, registros, asistencias etc </p>
+    <p class="Banner-p lead fs-5">*Introducción : Descripción e imagen de como llegar a la sección del título
+        específicamente. </p>
+    <p class="Banner-p lead fs-5">*Contenido : Descripción e imagenes de como se llevará a cabo el procedimiento de la
+        sección. </p>
 </div>
 
 <form (ngSubmit)="send()" class="Agregar row p-3 gy-4" [formGroup]="formLogin">
@@ -24,22 +36,20 @@
             <path
                 d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
         </svg>
-        <small> <---Presiona +, para agregar más contenido introductorio</small>
+        <small> <---Presiona +, para agregar contenido introductorio</small>
                 <div [formGroup]="contentForm">
                     <input class="Agregar-input form-control" type="text" formControlName="subtitles">
                     <input class="Agregar-input form-control mt-3" type="file" formControlName="imagesUrl">
                 </div>
-
-                <small class="text-danger">-Para seguir agregando información, primero llena los recuadros anteriores de
-                    contenido-</small>
+                <small class="text-danger">Esta sección debe tener contenido</small>
 
                 <div class="mt-2"><small class="Agregar-small">- Introducciones, agregadas </small></div>
                 <!-- Lo que tiene que agregarse con cada click en el svg -->
 
-                <div formArrayName="introduccion">
+                <div formArrayName="ingreso">
                     <div class="Agregar-adicional mb-3 px-5 py-2"
-                        *ngFor="let element of introduccion.controls; let i = index" [formGroupName]="i">
-                        <div><small class="Agregar-small mx-2"> - Contenido, adicional </small>
+                        *ngFor="let element of ingreso.controls.reverse(); let i = index" [formGroupName]="i">
+                        <div><small class="Agregar-small mx-2"> - Introduccion {{i+1}} </small>
                             <svg (click)="deleteIntroSection(i)" xmlns="http://www.w3.org/2000/svg" width="16"
                                 height="16" fill="currentColor" class="Agregar-svg bi bi-dash-circle"
                                 viewBox="0 0 16 16">
@@ -62,21 +72,23 @@
             <path
                 d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
         </svg>
-        <small> <---Presiona +, para agregar más contenido </small>
+        <small> <---Presiona +, para agregar contenido </small>
 
                 <div [formGroup]="contentForm">
                     <input class="Agregar-input form-control" type="text" formControlName="subtitles">
+
                     <input class="Agregar-input form-control mt-3" type="file" formControlName="imagesUrl">
                 </div>
 
-                <small class="text-danger">-Para seguir agregando información, primero llena los recuadros anteriores de
-                    contenido-</small>
+                <small class="text-danger">Esta sección debe tener contenido</small>
+
+
                 <div><small class="Agregar-small ">- Contenidos, agregados </small></div>
 
                 <div formArrayName="contenido">
                     <div class="Agregar-adicional mb-3 px-5 py-2"
-                        *ngFor="let element of contenido.controls; let i = index" [formGroupName]="i">
-                        <div><small class="Agregar-small mx-2"> - Contenido, adicional </small>
+                        *ngFor="let element of contenido.controls.reverse(); let i = index" [formGroupName]="i">
+                        <div><small class="Agregar-small mx-2"> - Contenido {{i+1}} </small>
                             <svg (click)="deleteContenidoSection(i)" xmlns="http://www.w3.org/2000/svg" width="16"
                                 height="16" fill="currentColor" class="Agregar-svg bi bi-dash-circle"
                                 viewBox="0 0 16 16">
@@ -96,7 +108,8 @@
 
     <!-- button send -->
     <div class="Agregar-group d-flex justify-content-center">
-        <button class="btn btn-dark px-5 py-2" type="submit">Agregar</button>
+        <button class="btn btn-dark px-5 py-2" type="submit">{{buttonSection}}</button>
     </div>
 
+    {{formLogin.valid | json}}
 </form>
