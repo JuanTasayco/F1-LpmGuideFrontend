@@ -1,6 +1,6 @@
 import { ThisReceiver } from '@angular/compiler';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
@@ -57,11 +57,10 @@ export class AgregarComponent implements OnInit {
 
   ]
 
-
-
-  constructor(private renderer: Renderer2, private adminService: AdminService,
-    private activatedRouter: ActivatedRoute, private route: Router, private formBuilder: FormBuilder) { }
-
+  constructor(private adminService: AdminService,
+    private activatedRouter: ActivatedRoute,
+    private route: Router,
+    private formBuilder: FormBuilder) { }
 
   introduContent: SafeHtml[] = [];
   elementsContent: SafeHtml[] = [];
@@ -78,30 +77,27 @@ export class AgregarComponent implements OnInit {
     ingreso: new FormArray([]),
     contenido: new FormArray([])
   })
-
   completeSection !: Register;
-  sectionSubscription !: Subscription;
+
   /* method for router, info that fills info and form builder declaration*/
   ngOnInit(): void {
-
     this.formLogin = this.formBuilder.group({
       id: [],
-      titulo: ["a", [Validators.required]],
-      titulo2: ["a", [Validators.required]],
-      subtitulo: ["a", [Validators.required]],
-      panel: ["a", [Validators.required]],
-      seccion: ["a", [Validators.required]],
+      titulo: ["", [Validators.required]],
+      titulo2: ["", [Validators.required]],
+      subtitulo: ["", [Validators.required]],
+      panel: ["", [Validators.required]],
+      seccion: ["", [Validators.required]],
       ingreso: this.formBuilder.array([], Validators.required),
       contenido: this.formBuilder.array([], Validators.required)
-    })
-
+    });
 
     if (this.route.url.includes("editar")) {
-      this.buttonSection = "Editar"
-      this.sectionSubscription = this.activatedRouter.params.
+      this.buttonSection = "Editar";
+      this.activatedRouter.params.
         pipe(switchMap(({ id }) => this.adminService.getDataByIdForEdit(id)))
         .subscribe(section => {
-          this.deleteAll();
+          this.deleteAllOnChange();
           this.completeSection = section;
           this.formLogin.patchValue({
             id: this.completeSection.id,
@@ -113,14 +109,14 @@ export class AgregarComponent implements OnInit {
           });
           this.editInsertData(this.ingreso, this.completeSection.ingreso);
           this.editInsertData(this.contenido, this.completeSection.contenido);
-        })
+        });
 
     } else {
       this.buttonSection = "Agregar";
     }
-
   }
 
+  /* Fill the arrays obtained from http request  */
   editInsertData(formArrayName: FormArray, nameArrayValue: Content[]) {
     nameArrayValue?.forEach(a => {
       formArrayName.push(new FormGroup({
@@ -143,7 +139,20 @@ export class AgregarComponent implements OnInit {
     return this.formLogin.get("ingreso") as FormArray;
   }
 
-  addIntroSection() {
+  errorArrayIng(pos: number) {
+    return this.ingreso.get(pos.toString())?.invalid;
+  }
+
+  errorArrayCont(pos: number) {
+    return this.contenido.get(pos.toString())?.invalid;
+  }
+
+  errorForm(name: string) {
+    return this.formLogin.get(name)?.touched && this.formLogin.get(name)?.invalid;
+  }
+
+
+  addIntroBlock() {
     this.ingreso.push(new FormGroup({
       subtitles: new FormControl(this.contentForm.get("subtitles")?.value, Validators.required),
       imagesUrl: new FormControl(this.contentForm.get("imagesUrl")?.value)
@@ -151,7 +160,7 @@ export class AgregarComponent implements OnInit {
     this.contentForm.reset();
   }
 
-  addContenidoSection() {
+  addContenidoBlock() {
     this.contenido.push(new FormGroup({
       subtitles: new FormControl(this.contentForm.get("subtitles")?.value, Validators.required),
       imagesUrl: new FormControl(this.contentForm.get("imagesUrl")?.value)
@@ -159,11 +168,26 @@ export class AgregarComponent implements OnInit {
     this.contentForm.reset();
   }
 
+  deleteIntroBlock(pos: number) {
+    this.ingreso.removeAt(pos);
+  }
+
+  deleteContBlock(pos: number) {
+    this.contenido.removeAt(pos);
+  }
+
+  deleteAllOnChange() {
+    while (this.ingreso.controls.length !== 0) {
+      this.ingreso.removeAt(0);
+    }
+    while (this.contenido.controls.length !== 0) {
+      this.contenido.removeAt(0);
+    }
+  }
+
   send() {
-    if (this.formLogin.get("id")?.value) {
-      console.log("editando")
-    } else {
-      console.log(this.formLogin.value);
+
+    if (!this.formLogin.get("id")?.value) {
       if (this.formLogin.valid) {
         const { id, ...rest } = this.formLogin.value;
 
@@ -174,36 +198,25 @@ export class AgregarComponent implements OnInit {
           if (!cont.imagesUrl) cont.imagesUrl = "";
         })
 
-        console.log(rest)
-        this.adminService.createSection(rest).subscribe(console.log);
-
+        this.adminService.createSection(rest).subscribe();
+        this.formLogin.reset();
+        location.reload();
       } else {
-        console.log("no es valido")
+        this.formLogin.markAllAsTouched();
       }
     }
+  }
 
-
+  deleteSection() {
+    this.activatedRouter.params
+      .pipe(switchMap(({ id }) => this.adminService.deleteSection(id)))
+      .subscribe(resp => {
+        this.route.navigate(["/admin/agregar"])
+        console.log(resp);
+      })
   }
 
 
-  deleteIntroSection(pos: number) {
-    this.ingreso.removeAt(pos);
-  }
-
-  deleteContenidoSection(pos: number) {
-    this.contenido.removeAt(pos);
-  }
-
-  deleteAll() {
-
-    while (this.ingreso.controls.length !== 0) {
-      this.ingreso.removeAt(0);
-    }
-    while (this.contenido.controls.length !== 0) {
-      this.contenido.removeAt(0);
-    }
-
-  }
 
 
 

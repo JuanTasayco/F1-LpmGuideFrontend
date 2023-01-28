@@ -23,22 +23,28 @@ export class AdminService {
         title: sec.titulo,
         title2: sec.titulo2
       }))))
-  }
+  };
 
   async getSectionsAvailable(): Promise<Seccion[] | string[]> {
     return await firstValueFrom(this.http.get<Seccion[]>(`${this.url}/lpm`)
       .pipe(map(results => results.map(block => block.seccion))))
-  }
+  };
 
   getDataByIdForEdit(id: string) { /* antes tenía [] por si algo ocurre */
     return this.http.get<any>(`${this.url}/lpm/${id}`)
-  }
-
+  };
 
   createSection(section: any): Observable<Register> {
     return this.http.post<Register>(`${this.url}/lpm`, section)
   }
 
+  deleteSection(id: string) {
+    return this.http.delete(`${this.url}/lpm/section/${id}`);
+  };
+
+  updateSection(id: string) {
+
+  }
 
   constructor(private http: HttpClient) { }
 }
