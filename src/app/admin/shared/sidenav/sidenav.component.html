@@ -12,20 +12,22 @@
             <h5 class="offcanvas-title" id="sideButtonLabel">Menu Administración</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body" >
+        <div class="offcanvas-body">
             <!-- start body offCanvas -->
-            <div class="Sidenav-accordion accordion" id="accordionExample" >
+            <div class="Sidenav-accordion accordion" id="accordionExample">
                 <ul class="accordion-nav nav flex-column">
                     <li class="accordion-li nav-item">
                         <a routerLink="/admin/agregar" class=" nav-link text-light">Agregar Seccion</a>
                     </li>
                 </ul>
+
+                <!-- block accordion sections for edit-->
                 <div class="accordion-item mt-2">
                     <h2 class="accordion-header" id="headingTwo">
                         <button class="accordion-button collapsed text-light bg-dark" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true"
                             aria-controls="collapseTwo">
-                            Editar
+                            Editar Seccion
                         </button>
                     </h2>
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
@@ -42,6 +44,38 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- block accordion users -->
+                <div class="accordion-item mt-2">
+                    <h2 class="accordion-header" id="headingUser">
+                        <button class="accordion-button collapsed text-light bg-dark" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseUser" aria-expanded="true"
+                            aria-controls="collapseUser">
+                            Usuarios
+                        </button>
+                    </h2>
+                    <div id="collapseUser" class="accordion-collapse collapse" aria-labelledby="headingUser">
+                        <div class="accordion-body">
+
+                            <ul class="accordion-nav nav flex-column">
+                                <li class="accordion-li nav-item">
+                                    <a routerLink="/admin/agregar" class="Sidenav-a nav-link text-dark">Agregar
+                                        Usuario</a>
+                                </li>
+                            </ul>
+                            <ul class="accordion-nav nav flex-column">
+                                <li class="accordion-li nav-item">
+                                    <a routerLink="/admin/agregar" class="Sidenav-a nav-link text-dark">Editar
+                                        Usuario</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
 
             <!-- final body offCanvas-->

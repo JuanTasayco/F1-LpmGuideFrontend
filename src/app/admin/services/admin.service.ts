@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, firstValueFrom, map, Observable } from 'rxjs';
+import { catchError, firstValueFrom, map, Observable, of } from 'rxjs';
 import { Seccion } from 'src/app/lpm/interfaces/secciones.interface';
 import { environment } from 'src/environments/environment';
 import { Register } from '../interfaces/register-interface';
@@ -39,11 +39,11 @@ export class AdminService {
   }
 
   deleteSection(id: string) {
-    return this.http.delete(`${this.url}/lpm/section/${id}`);
+    return this.http.delete(`${this.url}/lpm/section/${id}`)
   };
 
-  updateSection(id: string) {
-
+  updateSection(id: string ,section: any) {
+    return this.http.patch(`${this.url}/lpm/section/${id}`, section)
   }
 
   constructor(private http: HttpClient) { }

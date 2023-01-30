@@ -1,11 +1,11 @@
-import { ThisReceiver } from '@angular/compiler';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, switchMap } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { Content, Register } from '../../interfaces/register-interface';
 import { AdminService } from '../../services/admin.service';
+import Swal from 'sweetalert2';
 
 
 interface AddForm {
@@ -97,7 +97,7 @@ export class AgregarComponent implements OnInit {
       this.activatedRouter.params.
         pipe(switchMap(({ id }) => this.adminService.getDataByIdForEdit(id)))
         .subscribe(section => {
-          this.deleteAllOnChange();
+          this.deleteAlltoChange();
           this.completeSection = section;
           this.formLogin.patchValue({
             id: this.completeSection.id,
@@ -109,8 +109,8 @@ export class AgregarComponent implements OnInit {
           });
           this.editInsertData(this.ingreso, this.completeSection.ingreso);
           this.editInsertData(this.contenido, this.completeSection.contenido);
-        });
 
+        });
     } else {
       this.buttonSection = "Agregar";
     }
@@ -176,7 +176,7 @@ export class AgregarComponent implements OnInit {
     this.contenido.removeAt(pos);
   }
 
-  deleteAllOnChange() {
+  deleteAlltoChange() {
     while (this.ingreso.controls.length !== 0) {
       this.ingreso.removeAt(0);
     }
@@ -185,24 +185,63 @@ export class AgregarComponent implements OnInit {
     }
   }
 
-  send() {
 
+  send() {
+    /* add  */
     if (!this.formLogin.get("id")?.value) {
       if (this.formLogin.valid) {
         const { id, ...rest } = this.formLogin.value;
 
-        rest.ingreso.forEach((ing: Content) => {
-          if (!ing.imagesUrl) ing.imagesUrl = "";
-        });
-        rest.contenido.forEach((cont: Content) => {
-          if (!cont.imagesUrl) cont.imagesUrl = "";
-        })
 
         this.adminService.createSection(rest).subscribe();
         this.formLogin.reset();
-        location.reload();
+
+        Swal.fire(
+          'Agregado exitosamente',
+          'La sección fue añadida correctamente',
+          'success'
+        ).then(() => {
+          location.reload();
+        });
+
       } else {
         this.formLogin.markAllAsTouched();
+      }
+
+      /* edit */
+    } else {
+      let elementsChanged: any = {};
+      Object.keys(this.formLogin.controls).forEach(key => {
+        if (this.formLogin.get(key)?.dirty) {
+          elementsChanged[key] = this.formLogin.get(key)?.value;
+        } else {
+          Swal.fire({
+            title: 'No se han detectado cambios en el formulario',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+            }
+          })
+        };
+      });
+
+      if (Object.keys(elementsChanged).length > 0) {
+
+        this.activatedRouter.params.pipe(switchMap(({ id }) => this.adminService.updateSection(id, elementsChanged)))
+          .subscribe(() => {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'El cambio fue editado correctamente',
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              location.reload();
+            });
+          }
+          )
       }
     }
   }
@@ -210,9 +249,18 @@ export class AgregarComponent implements OnInit {
   deleteSection() {
     this.activatedRouter.params
       .pipe(switchMap(({ id }) => this.adminService.deleteSection(id)))
-      .subscribe(resp => {
-        this.route.navigate(["/admin/agregar"])
-        console.log(resp);
+      .subscribe(() => {
+        Swal.fire(
+          'Borrado exitosamente',
+          'La sección ha sido eliminada',
+          'success'
+        ).then(() => {
+          this.route.navigate(["/admin/agregar"]);
+          /* timeOut permit that location before executed that navigation route*/
+          setTimeout(() => {
+            location.reload();
+          }, 100)
+        })
       })
   }
 
