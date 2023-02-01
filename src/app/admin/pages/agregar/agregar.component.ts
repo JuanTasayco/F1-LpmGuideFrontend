@@ -1,4 +1,4 @@
-import { Component, OnInit, } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -60,12 +60,14 @@ export class AgregarComponent implements OnInit {
   constructor(private adminService: AdminService,
     private activatedRouter: ActivatedRoute,
     private route: Router,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private cdr: ChangeDetectorRef) { }
+
 
   introduContent: SafeHtml[] = [];
   elementsContent: SafeHtml[] = [];
   buttonSection: string = "";
-
+  elementsChanged: any = {};
   /* logic form */
   formLogin: FormGroup = new FormGroup({
     id: new FormControl(),
@@ -111,6 +113,7 @@ export class AgregarComponent implements OnInit {
           this.editInsertData(this.contenido, this.completeSection.contenido);
 
         });
+
     } else {
       this.buttonSection = "Agregar";
     }
@@ -120,12 +123,13 @@ export class AgregarComponent implements OnInit {
   editInsertData(formArrayName: FormArray, nameArrayValue: Content[]) {
     nameArrayValue?.forEach(a => {
       formArrayName.push(new FormGroup({
-        subtitles: new FormControl(a.subtitles),
+        subtitles: new FormControl(a.subtitles, Validators.required),
         imagesUrl: new FormControl("")
       }))
     })
-  }
+  };
 
+  /* puede no ser necesario */
   contentForm: FormGroup = new FormGroup({
     subtitles: new FormControl(""),
     imagesUrl: new FormControl("")
@@ -153,11 +157,13 @@ export class AgregarComponent implements OnInit {
 
 
   addIntroBlock() {
+
     this.ingreso.push(new FormGroup({
       subtitles: new FormControl(this.contentForm.get("subtitles")?.value, Validators.required),
       imagesUrl: new FormControl(this.contentForm.get("imagesUrl")?.value)
     }));
     this.contentForm.reset();
+
   }
 
   addContenidoBlock() {
@@ -168,12 +174,16 @@ export class AgregarComponent implements OnInit {
     this.contentForm.reset();
   }
 
-  deleteIntroBlock(pos: number) {
-    this.ingreso.removeAt(pos);
+  deleteIntroBlock(index: number) {
+    this.ingreso.removeAt(index, {
+      emitEvent: true
+    });
   }
 
-  deleteContBlock(pos: number) {
-    this.contenido.removeAt(pos);
+  deleteContBlock(index: number) {
+    this.contenido.removeAt(index, {
+      emitEvent: true
+    });
   }
 
   deleteAlltoChange() {
@@ -185,13 +195,11 @@ export class AgregarComponent implements OnInit {
     }
   }
 
-
   send() {
     /* add  */
     if (!this.formLogin.get("id")?.value) {
       if (this.formLogin.valid) {
         const { id, ...rest } = this.formLogin.value;
-
 
         this.adminService.createSection(rest).subscribe();
         this.formLogin.reset();
@@ -209,42 +217,49 @@ export class AgregarComponent implements OnInit {
       }
 
       /* edit */
+
     } else {
-      let elementsChanged: any = {};
       Object.keys(this.formLogin.controls).forEach(key => {
         if (this.formLogin.get(key)?.dirty) {
-          elementsChanged[key] = this.formLogin.get(key)?.value;
-        } else {
-          Swal.fire({
-            title: 'No se han detectado cambios en el formulario',
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp'
-            }
-          })
-        };
+          this.elementsChanged[key] = this.formLogin.get(key)?.value;
+        }
       });
 
-      if (Object.keys(elementsChanged).length > 0) {
+      this.ingreso.valueChanges.subscribe((valor) => {
+        this.elementsChanged["ingreso"] = valor;
+      });
+      this.contenido.valueChanges.subscribe((valor) => {
+        this.elementsChanged["contenido"] = valor;
+      });
 
-        this.activatedRouter.params.pipe(switchMap(({ id }) => this.adminService.updateSection(id, elementsChanged)))
-          .subscribe(() => {
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'El cambio fue editado correctamente',
-              showConfirmButton: false,
-              timer: 1500
-            }).then(() => {
-              location.reload();
-            });
+      if (Object.keys(this.elementsChanged).length > 0 && this.formLogin.valid) {
+        console.log(this.elementsChanged);
+        /*    this.activatedRouter.params.pipe(switchMap(({ id }) => this.adminService.updateSection(id, elementsChanged)))
+             .subscribe(() => {
+               Swal.fire({
+                 position: 'top-end',
+                 icon: 'success',
+                 title: 'El cambio fue editado correctamente',
+                 showConfirmButton: false,
+                 timer: 1500
+               }).then(() => {
+                 location.reload();
+               });
+             }
+             ); */
+      } else {
+        Swal.fire({
+          title: 'No se han detectado cambios en el formulario o este no es válido',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
           }
-          )
-      }
-    }
-  }
+        });
+      };
+    };
+  };
 
   deleteSection() {
     this.activatedRouter.params
@@ -261,8 +276,8 @@ export class AgregarComponent implements OnInit {
             location.reload();
           }, 100)
         })
-      })
-  }
+      });
+  };
 
 
 

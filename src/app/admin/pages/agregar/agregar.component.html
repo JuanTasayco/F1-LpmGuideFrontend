@@ -111,9 +111,6 @@
                     <input class="Agregar-input form-control mt-3" type="file" formControlName="imagesUrl">
                 </div>
 
-
-
-
                 <div><small class="Agregar-small ">- Contenidos, agregados </small></div>
 
                 <div formArrayName="contenido">
@@ -134,10 +131,8 @@
                         </div>
                     </div>
                 </div>
+
     </div>
-
-
-
 
     <!-- button send -->
     <div class="Agregar-group d-flex justify-content-center gap-5">
@@ -145,6 +140,5 @@
         <button class="btn btn-danger px-5 py-2" *ngIf="formLogin.get('id')?.value" type="button"
             (click)="deleteSection()">Eliminar</button>
     </div>
-
 
 </form>
