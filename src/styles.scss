@@ -5,7 +5,7 @@
 @use "./app/lpm/components/data/data.component";
 @use "./app/lpm/pages/principal/procesos/procesos.component";
 @use "./app/lpm/pages/principal/valores/valores.component";
-
+@use "./app/lpm/pages/dinamics/dinamics.component" as lpmDinamic;
 
 @use "./app/auth/pages/login/login.component";
 @use "./app/auth/pages/register/register.component";
@@ -14,4 +14,5 @@
 @use "./app/admin/pages/home/home.component" as adminHome;
 @use "./app/admin/shared/sidenav/sidenav.component" as adminSidenav;
 @use "./app/admin/shared/navbar/navbar.component" as adminNavbar;
-@use "./app/admin/pages/agregar/agregar.component" as adminAgregar;
+@use "./app/admin/pages/agregar-section/agregar.component" as adminAgregar;
+@use "./app/admin/pages/agregar-user/agregar-user.component" as adminAgregarUser;

@@ -25,12 +25,15 @@
     }
 
     &-nav {
-        
+        border-right: .5px solid rgba(255, 255, 255, 0.2);
+        border-radius: .3rem;
+
         &--click {
             display: flex;
             align-items: center;
             z-index: 99;
-            background: linear-gradient(90deg, rgba(19, 38, 54, 1) 6%, rgba(57, 111, 161, 1) 47%, rgba(19, 38, 54, 1) 97%);
+            background-color: #396FA1;
+            /* background: linear-gradient(90deg, rgba(19, 38, 54, 1) 6%, rgba(57, 111, 161, 1) 47%, rgba(19, 38, 54, 1) 97%); */
 
             &:hover {
                 opacity: 0.5;

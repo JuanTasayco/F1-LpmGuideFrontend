@@ -1,0 +1,18 @@
+.AddUser {
+
+    &-title {
+        gap: 1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    &-input {
+        &::placeholder {
+            color: white;
+        }
+    }
+
+    &-button {
+        white-space: nowrap;
+    }
+}

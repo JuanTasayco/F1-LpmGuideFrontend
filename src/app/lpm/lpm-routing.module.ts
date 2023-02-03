@@ -4,6 +4,7 @@ import { FaltasComponent } from './pages/asistencia/faltas/faltas.component';
 import { LicenciasComponent } from './pages/asistencia/licencias/licencias.component';
 import { TardanzasComponent } from './pages/asistencia/tardanzas/tardanzas.component';
 import { VacacionesComponent } from './pages/asistencia/vacaciones/vacaciones.component';
+import { DinamicsComponent } from './pages/dinamics/dinamics.component';
 
 import { CtsComponent } from './pages/especiales/cts/cts.component';
 import { GratificacionComponent } from './pages/especiales/gratificacion/gratificacion.component';
@@ -39,25 +40,7 @@ const routes: Routes = [
       { path: "principal/reportes", component: ReportesComponent },
       { path: "principal/valores", component: ValoresComponent },
 
-      { path: "asistencias/faltas", component: FaltasComponent },
-      { path: "asistencias/licencias", component: LicenciasComponent },
-      { path: "asistencias/tardanzas", component: TardanzasComponent },
-      { path: "asistencias/vacaciones", component: VacacionesComponent },
-
-      { path: "especiales/cts", component: CtsComponent },
-      { path: "especiales/gratificacion", component: GratificacionComponent },
-      { path: "especiales/rentaExterna", component: RentaeComponent },
-
-      { path: "mantenimiento/ceses", component: CesesComponent },
-      { path: "mantenimiento/ingresarPersonal", component: IngresarComponent },
-      { path: "mantenimiento/modificar", component: ModificarComponent },
-
-      { path: "registros/adelantos", component: AdelantosComponent },
-      { path: "registros/horasExtras", component: HorextComponent },
-      { path: "registros/otrosConceptos", component: ConceptosComponent },
-      { path: "registros/otrosIngresos", component: IngresosComponent },
-      { path: "registros/reporteRenta", component: RentaComponent },
-
+      { path: ":section/:title", component: DinamicsComponent },
       { path: "**", redirectTo: "principal/procesos" }
     ]
   }

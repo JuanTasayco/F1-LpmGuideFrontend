@@ -112,6 +112,13 @@ export class AgregarComponent implements OnInit {
           this.editInsertData(this.ingreso, this.completeSection.ingreso);
           this.editInsertData(this.contenido, this.completeSection.contenido);
 
+
+          this.ingreso.valueChanges.subscribe((valor) => {
+            this.elementsChanged["ingreso"] = valor;
+          });
+          this.contenido.valueChanges.subscribe((valor) => {
+            this.elementsChanged["contenido"] = valor;
+          });
         });
 
     } else {
@@ -131,7 +138,7 @@ export class AgregarComponent implements OnInit {
 
   /* puede no ser necesario */
   contentForm: FormGroup = new FormGroup({
-    subtitles: new FormControl(""),
+    subtitles: new FormControl("", Validators.required),
     imagesUrl: new FormControl("")
   })
 
@@ -153,6 +160,10 @@ export class AgregarComponent implements OnInit {
 
   errorForm(name: string) {
     return this.formLogin.get(name)?.touched && this.formLogin.get(name)?.invalid;
+  }
+
+  errorContentForm(name: string) {
+    return this.contentForm.get(name)?.invalid && this.contentForm.get(name)?.touched;
   }
 
 
@@ -214,6 +225,7 @@ export class AgregarComponent implements OnInit {
 
       } else {
         this.formLogin.markAllAsTouched();
+        this.contentForm.markAllAsTouched();
       }
 
       /* edit */
@@ -225,31 +237,33 @@ export class AgregarComponent implements OnInit {
         }
       });
 
-      this.ingreso.valueChanges.subscribe((valor) => {
-        this.elementsChanged["ingreso"] = valor;
-      });
-      this.contenido.valueChanges.subscribe((valor) => {
-        this.elementsChanged["contenido"] = valor;
-      });
-
       if (Object.keys(this.elementsChanged).length > 0 && this.formLogin.valid) {
-        console.log(this.elementsChanged);
-        /*    this.activatedRouter.params.pipe(switchMap(({ id }) => this.adminService.updateSection(id, elementsChanged)))
-             .subscribe(() => {
-               Swal.fire({
-                 position: 'top-end',
-                 icon: 'success',
-                 title: 'El cambio fue editado correctamente',
-                 showConfirmButton: false,
-                 timer: 1500
-               }).then(() => {
-                 location.reload();
-               });
-             }
-             ); */
+        this.activatedRouter.params.pipe(switchMap(({ id }) => this.adminService.updateSection(id, this.elementsChanged)))
+          .subscribe(() => {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'El cambio fue editado correctamente',
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              location.reload();
+            });
+          }
+          );
+      } else if (this.formLogin.invalid) {
+        Swal.fire({
+          title: 'Este formulario no es válido, asegurate de haber llenado todos los campos',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          }
+        });
       } else {
         Swal.fire({
-          title: 'No se han detectado cambios en el formulario o este no es válido',
+          title: 'No se detectaron cambios en el formulario',
           showClass: {
             popup: 'animate__animated animate__fadeInDown'
           },
@@ -262,21 +276,34 @@ export class AgregarComponent implements OnInit {
   };
 
   deleteSection() {
-    this.activatedRouter.params
-      .pipe(switchMap(({ id }) => this.adminService.deleteSection(id)))
-      .subscribe(() => {
-        Swal.fire(
-          'Borrado exitosamente',
-          'La sección ha sido eliminada',
-          'success'
-        ).then(() => {
-          this.route.navigate(["/admin/agregar"]);
-          /* timeOut permit that location before executed that navigation route*/
-          setTimeout(() => {
-            location.reload();
-          }, 100)
-        })
-      });
+    Swal.fire({
+      title: 'Estás seguro?',
+      text: "Estos cambios no se podrán revertir!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, borrar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.activatedRouter.params
+          .pipe(switchMap(({ id }) => this.adminService.deleteSection(id)))
+          .subscribe(() => {
+            Swal.fire(
+              'Borrado exitosamente',
+              'La sección ha sido eliminada',
+              'success'
+            ).then(() => {
+              this.route.navigate(["/admin/agregar"]);
+              /* timeOut permit that location before executed that navigation route*/
+              setTimeout(() => {
+                location.reload();
+              }, 100)
+            })
+          });
+      }
+    })
+
   };
 
 

@@ -1,0 +1,146 @@
+<div class="container">
+
+
+    <h1 class="text-dark mt-5 px-2 fw-bold">{{(formLogin.get('id')?.value) ? "Editar" : "Agregar"}}</h1>
+
+    <div class="Banner my-5 text-dark p-5 bg-light rounded-3 shadow-sm">
+        <h1 class="Banner-h1 text-dark fw-bold">Guía</h1>
+        <div class="Banner-content p-3 row row-cols-md-2 gy-2">
+            <div class="Banner-block">
+                <h4 class="text-dark fw-bold ">Título </h4>
+                <p class="Banner-p lead fs-5"> Indica título específico sin espacios, por ejemplo : valores, procesos,
+                    faltas, tardanzas,licencias, etc. </p>
+            </div>
+            <div class="Banner-block">
+                <h4 class="text-dark fw-bold ">Título 2 </h4>
+                <p class="Banner-p lead fs-5">Idéntico al título 1, solo que aquí se aceptan espacios y carácteres
+                    especiales </p>
+            </div>
+            <div class="Banner-block">
+                <h4 class="text-dark fw-bold ">Subtitulo </h4>
+                <p class="Banner-p lead fs-5">Una breve descripción del título y de la sección en sí. </p>
+            </div>
+            <div class="Banner-block">
+                <h4 class="text-dark fw-bold ">Panel</h4>
+                <p class="Banner-p lead fs-5">Es basicamente la palabra panel + el título, por ejemplo Panel Valores,
+                    Panel Faltas </p>
+            </div>
+            <div class="Banner-block">
+                <h4 class="text-dark fw-bold ">Seccion</h4>
+                <p class="Banner-p lead fs-5">Tal vez la parte más importante, permite identificar a que sección
+                    pertenece, por ejemplo: mantenimiento, registros, asistencias etc </p>
+            </div>
+            <div class="Banner-block">
+                <h4 class="text-dark fw-bold ">Introducción </h4>
+                <p class="Banner-p lead fs-5">Descripción e imagen de como llegar a la sección del título
+                    específicamente. </p>
+            </div>
+            <div class="Banner-block">
+                <h4 class="text-dark fw-bold ">Contenido </h4>
+                <p class="Banner-p lead fs-5">Descripción e imagenes de como se llevará a cabo el procedimiento
+                    de
+                    la
+                    sección. </p>
+            </div>
+        </div>
+    </div>
+
+    <form (ngSubmit)="send()" class="Agregar row p-3 gy-4 " [formGroup]="formLogin">
+        <!-- first properties -->
+        <div class="Agregar-group form-group col-md-4" *ngFor="let formgroup of formGroups">
+            <label [for]="formgroup.labelId" class="Agregar-label">{{formgroup.titulo}}</label>
+            <div><small class="Agregar-small">{{formgroup.subtitle}}</small></div>
+            <input class="Agregar-input form-control" type="text" [formControlName]="formgroup.labelId">
+            <small class="text-danger" *ngIf="errorForm(formgroup.labelId)">Esta sección debe tener contenido</small>
+        </div>
+        <!-- introducContent -->
+        <div class="Agregar-group form-group col-11">
+            <label for="" class="Agregar-label">Introducción </label>
+            <svg (click)="addIntroBlock()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="Agregar-svg bi bi-plus-circle-fill mx-2" viewBox="0 0 16 16">
+                <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+            </svg>
+            <small> <---Presiona +, para agregar contenido introductorio</small>
+                    <div [formGroup]="contentForm">
+                        <input class="Agregar-input form-control" type="text" formControlName="subtitles">
+                        <input class="Agregar-input form-control mt-3" type="file" formControlName="imagesUrl">
+
+                    </div>
+                    <small class="text-danger" *ngIf="ingreso.length==0 ">Debe existir al menos un campo
+                        de
+                        descripción insertado</small>
+
+                    <div class="mt-2"><small class="Agregar-small">- Introducciones, agregadas </small></div>
+                    <!-- Lo que tiene que agregarse con cada click en el svg -->
+                    <div formArrayName="ingreso">
+                        <div class="Agregar-adicional mb-3 px-5 py-2"
+                            *ngFor="let element of ingreso.controls.reverse(); let i = index" [formGroupName]="i">
+                            <div><small class="Agregar-small mx-2"> - Introduccion {{i+1}} </small>
+                                <svg (click)="deleteIntroBlock(i)" xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" fill="currentColor" class="Agregar-svg bi bi-dash-circle"
+                                    viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                </svg>
+                            </div>
+                            <input class="Agregar-input form-control" type="text" formControlName="subtitles">
+                            <small class="text-danger" *ngIf="errorArrayIng(i)">Esta sección debe tener
+                                contenido</small>
+                            <input class="Agregar-input form-control mt-3" type="file" formControlName="imagesUrl">
+                        </div>
+                    </div>
+        </div>
+
+
+        <!-- contentC -->
+        <div class="Agregar-group form-group col-11">
+            <label for="" class="Agregar-label">*Contenido</label>
+            <svg (click)="addContenidoBlock()" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                fill="currentColor" class="Agregar-svg bi bi-plus-circle-fill mx-2" viewBox="0 0 16 16">
+                <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+            </svg>
+            <small> <---Presiona +, para agregar contenido </small>
+
+                    <div [formGroup]="contentForm">
+                        <input class="Agregar-input form-control" type="text" formControlName="subtitles">
+                        <input class="Agregar-input form-control mt-3" type="file" formControlName="imagesUrl">
+                    </div>
+
+                    <small class="text-danger" *ngIf="contenido.length==0">Debe existir al menos un campo
+                        de
+                        descripción insertado</small>
+                    <div><small class="Agregar-small ">- Contenidos, agregados </small></div>
+
+                    <div formArrayName="contenido">
+                        <div class="Agregar-adicional mb-3 px-5 py-2"
+                            *ngFor="let element of contenido.controls.reverse(); let i = index" [formGroupName]="i">
+                            <div><small class="Agregar-small mx-2"> - Contenido {{i+1}} </small>
+                                <svg (click)="deleteContBlock(i)" xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" fill="currentColor" class="Agregar-svg bi bi-dash-circle"
+                                    viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                </svg>
+
+                                <input class="Agregar-input form-control" type="text" formControlName="subtitles">
+                                <small class="text-danger" *ngIf="errorArrayCont(i)">Este campo no debe
+                                    estar
+                                    vacío</small>
+                                <input class="Agregar-input form-control mt-3" type="file" formControlName="imagesUrl">
+                            </div>
+                        </div>
+                    </div>
+        </div>
+
+        <!-- button send -->
+        <div class="Agregar-group d-flex justify-content-center gap-5">
+            <button class="btn btn-dark px-5 py-2" type="submit">{{buttonSection}}</button>
+            <button class="btn btn-danger px-5 py-2" *ngIf="formLogin.get('id')?.value" type="button"
+                (click)="deleteSection()">Eliminar</button>
+        </div>
+
+    </form>
+
+</div>

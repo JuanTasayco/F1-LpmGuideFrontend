@@ -32,6 +32,7 @@ import { NgPrimeModule } from '../ng-prime/ng-prime.module';
 import { SharedModule } from '../shared/shared.module';
 import { ResumenComponent } from './pages/principal/resumen/resumen.component';
 import { KeyValuesPipe } from './pipes/key-values.pipe';
+import { DinamicsComponent } from './pages/dinamics/dinamics.component';
 
 
 
@@ -58,7 +59,8 @@ import { KeyValuesPipe } from './pipes/key-values.pipe';
     RentaComponent,
     ScrollingDirective,
     DataComponent,
-    ResumenComponent
+    ResumenComponent,
+    DinamicsComponent
 
   ],
   imports: [
