@@ -10,6 +10,7 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { IdSvgDirective } from './directives/id-svg.directive';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AgregarUserComponent } from './pages/agregar-user/agregar-user.component';
+import { InstructionsBannerComponent } from './shared/instructions-banner/instructions-banner.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { AgregarUserComponent } from './pages/agregar-user/agregar-user.componen
     SidenavComponent,
     SafeHtmlPipe,
     IdSvgDirective,
-    AgregarUserComponent
+    AgregarUserComponent,
+    InstructionsBannerComponent
   ],
   imports: [
     CommonModule,

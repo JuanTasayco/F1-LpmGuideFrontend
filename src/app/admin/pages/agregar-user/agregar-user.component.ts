@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { TitleStrategy } from '@angular/router';
 
 @Component({
   selector: 'app-agregar-user',
@@ -22,12 +23,21 @@ export class AgregarUserComponent implements OnInit {
     this.formUser = this.formBuilder.group({
       nombres: ["", Validators.required],
       username: ["", Validators.required],
-      email: ["", Validators.required],
-      password: ["", Validators.required],
-      passwordRepeat: ["", Validators.required]
+      email: ["", Validators.required, Validators.email],
+      password: ["", [Validators.required, Validators.minLength(3)]],
+      passwordRepeat: ["", [Validators.required]]
     });
   }
 
+  existProblem(name: string): any {
+    return this.formUser.get(name)?.touched && this.formUser.get(name)?.invalid;
+  }
+
+  get emailProblemValidation(): string {
+    const error = this.formUser.get("email")?.errors;
+    console.log(error);
+    return "";
+  }
 
   send() {
     if (this.formUser.invalid) {
@@ -35,8 +45,6 @@ export class AgregarUserComponent implements OnInit {
     } else {
 
     }
-
-
   }
 
 

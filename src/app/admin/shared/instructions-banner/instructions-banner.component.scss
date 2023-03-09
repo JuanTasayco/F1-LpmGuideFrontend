@@ -1,0 +1,39 @@
+@use "src/_custom" as *;
+
+.Banner {
+  background-color: #e4e7eb;
+
+  &-col {
+    border: 1px solid rgba(192, 192, 192, 0.1);
+  }
+
+  &-card {
+  
+    background-color: white;
+    @include media-breakpoint-up(md) {
+      min-height: 20rem;
+    }
+  }
+
+  &-cbody {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &-iconInfo {
+    margin-bottom: 4rem;
+  }
+
+  &-icon {
+    &--absolute {
+      position: absolute;
+      right: 0;
+      opacity: 0.5;
+    }
+  }
+  &-p {
+    font-size: 1.2rem;
+  }
+}

@@ -1,81 +1,114 @@
 <div class="Sign container-fluid h-100">
+  <div class="Sign-row row h-100 m-0 p-0">
+    <!-- whiteSpace -->
+    <div class="Sign-section d-none d-xl-block col-xl-3 col-xxl-4"></div>
+    <!-- end whiteSpace -->
 
-    <div class="Sign-row row h-100 m-0 p-0">
-
-        <!-- whiteSpace -->
-        <div class="Sign-section col-md-4"></div>
-        <!-- end whiteSpace -->
-
-        <!-- Form -->
-        <div class="Sign-section col-md-3 px-5 my-auto">
-
-            <form action="" (ngSubmit)="send()" class="Sign-form" [formGroup]="formRegister">
-
-                <div class="Sign-contImg text-center pb-5">
-                    <img src="assets/logo.jpg" alt="" class="Sign-logo my-2">
-                </div>
-
-                <div class="Sign-descriptions mb-5">
-                    <h2 class="Sign-h2 fw-bold">Iniciar Sesión</h2>
-                    <p>No tienes una cuenta? Crear Cuenta</p>
-                </div>
-
-                <div class="Sign-group">
-                    <label for="user" class="form-label">Usuario *</label>
-                    <input type="text" class="form-control form-control-lg" formControlName="user">
-                    <span class="form-text text-danger" *ngIf="detectErrors('user')"> {{errorUser}}</span>
-                </div>
-
-                <div class="Sign-group mb-3">
-                    <label for="email" class="form-label">Correo Electrónico *</label>
-                    <input type="text" class="form-control form-control-lg" formControlName="email">
-                    <span class="form-text text-danger" *ngIf="detectErrors('email')"> {{errorEmail}}</span>
-                </div>
-
-                <div class="Sign-group">
-                    <label for="password" class="form-label">Contraseña *</label>
-                    <input type="password" class="form-control form-control-lg" formControlName="password">
-                    <span class="form-text text-danger" *ngIf="detectErrors('password')"> {{errorPassword}}</span>
-                </div>
-
-                <div class="Sign-group">
-                    <label for="repeat-password" class="form-label">Confirmar contraseña*</label>
-                    <input type="password" class="form-control form-control-lg" formControlName="confirmPassword">
-                    <span class="form-text text-danger" *ngIf="detectErrors('confirmPassword')">
-                        {{errorPasswordRepeat}}</span>
-                </div>
-
-
-                <div class="row Sign-row m-0 p-0 mt-4">
-                    <div class="Sign-col col-md-6">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" value="" id="check">
-                            <label for="" class="form-check-label" for="check">Recuérdame</label>
-                        </div>
-                    </div>
-
-                    <div class="Sign-col col-md-6">
-                        <p class="lead fs-6"><a routerLink="/auth/login">Ya tienes una cuenta? </a> </p>
-                    </div>
-                </div>
-                <div class="d-flex mt-3">
-                    <button class="Sign-button btn btn-danger py-3 w-100" type="submit">Registrarte</button>
-
-                </div>
-
-            </form>
-
-        </div>
-        <!-- End form -->
-
-
-        <!-- Image -->
-        <div class="Sign-section col-md-5">
-            <img src="" alt="" class="Sign-img">
+    <!-- Form -->
+    <div class="Sign-section col-12 col-xl-4 col-xxl-3 px-5 my-auto">
+      <form
+        action=""
+        (ngSubmit)="send()"
+        class="Sign-form"
+        [formGroup]="formRegister"
+      >
+        <div class="Sign-contImg text-center pb-5">
+          <img src="assets/logo.jpg" alt="" class="Sign-logo my-2" />
         </div>
 
-        <!-- end image -->
+        <div class="Sign-descriptions mb-5">
+          <h2 class="Sign-h2 fw-bold">Registrate</h2>
+          <p>Nos gustaría tenerte como aliado</p>
+        </div>
+
+        <div class="Sign-group">
+          <label for="user" class="form-label">Usuario *</label>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="user"
+          />
+          <span class="form-text text-danger" *ngIf="detectErrors('user')">
+            {{ errorUser }}</span
+          >
+        </div>
+
+        <div class="Sign-group mb-3">
+          <label for="email" class="form-label">Correo Electrónico *</label>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="email"
+          />
+          <span class="form-text text-danger" *ngIf="detectErrors('email')">
+            {{ errorEmail }}</span
+          >
+        </div>
+
+        <div class="Sign-group">
+          <label for="password" class="form-label">Contraseña *</label>
+          <input
+            type="password"
+            class="form-control form-control-lg"
+            formControlName="password"
+          />
+          <span class="form-text text-danger" *ngIf="detectErrors('password')">
+            {{ errorPassword }}</span
+          >
+        </div>
+
+        <div class="Sign-group">
+          <label for="repeat-password" class="form-label"
+            >Confirmar contraseña*</label
+          >
+          <input
+            type="password"
+            class="form-control form-control-lg"
+            formControlName="confirmPassword"
+          />
+          <span
+            class="form-text text-danger"
+            *ngIf="detectErrors('confirmPassword')"
+          >
+            {{ errorPasswordRepeat }}</span
+          >
+        </div>
+
+        <div class="row Sign-row m-0 p-0 mt-4">
+          <div class="Sign-col col-md-6">
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                value=""
+                id="check"
+              />
+              <label for="" class="form-check-label" for="check"
+                >Recuérdame</label
+              >
+            </div>
+          </div>
+
+          <div class="Sign-col col-md-6">
+            <p class="lead fs-6">
+              <a routerLink="/auth/login">Ya tienes una cuenta? </a>
+            </p>
+          </div>
+        </div>
+        <div class="d-flex mt-3">
+          <button class="Sign-button btn btn-danger py-3 w-100" type="submit">
+            Registrarte
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- End form -->
+
+    <!-- Image -->
+    <div class="Sign-section d-none d-xl-block col-xl-5">
+      <img src="assets/loginBg.jpg" alt="" class="Sign-img" />
     </div>
 
-
+    <!-- end image -->
+  </div>
 </div>

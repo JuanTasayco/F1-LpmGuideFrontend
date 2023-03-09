@@ -94,6 +94,7 @@
                         <label class="form-check-label" for="exampleRadios1">
                             Usuario
                         </label>
+
                     </div>
                     <div class="form-check border px-5 py-3 rounded-2">
                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
@@ -104,35 +105,41 @@
                     </div>
                 </div>
 
-
                 <div class="AddUser-group form-group col-md-12">
                     <label class="form-label" for="">Nombres completos</label>
                     <input type="text" placeholder="Ingresa tu usuario" class="AddUser-input form-control"
                         formControlName="nombres">
+                    <small class="text-danger" *ngIf="existProblem('nombres')">Este campo es obligatorio</small>
                 </div>
 
                 <div class="AddUser-group form-group col-md-6">
                     <label class="form-label" for="">Usuario:</label>
                     <input type="text" placeholder="Ingresa tu usuario" class="AddUser-input form-control"
                         formControlName="username">
+                    <small class="text-danger" *ngIf="existProblem('username')">Este campo es obligatorio</small>
                 </div>
 
                 <div class="AddUser-group form-group col-md-6">
                     <label class="AddUser-label form-label" for="username">Correo:</label>
                     <input type="text" placeholder="Ingresa tu email" class="AddUser-input form-control"
                         formControlName="email">
+                    <small class="text-danger" *ngIf="existProblem('email')">Este campo es obligatorio</small>
+
                 </div>
 
                 <div class="AddUser-group form-group col-md-6">
                     <label class="AddUser-label form-label" for="email">Contraseña:</label>
                     <input type="text" placeholder="Ingresa la contraseña" class="AddUser-input form-control"
                         formControlName="password">
+                    <small class="text-danger" *ngIf="existProblem('password')">Este campo es obligatorio</small>
+
                 </div>
 
                 <div class="AddUser-group form-group col-md-6">
                     <label class="AddUser-label form-label" for="password">Repite Contraseña:</label>
                     <input type="text" class="AddUser-input form-control" placeholder="Por favor repite la contraseña"
                         formControlName="passwordRepeat">
+                    <small class="text-danger" *ngIf="existProblem('passwordRepeat')">Este campo es obligatorio</small>
                 </div>
                 <button class="AddUser-button btn btn-danger btn-lg" type="submit">Agregar Usuario</button>
             </form>

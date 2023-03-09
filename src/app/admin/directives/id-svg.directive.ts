@@ -15,7 +15,4 @@ export class IdSvgDirective implements AfterViewInit {
 
 
 
-
-
-
 }

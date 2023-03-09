@@ -16,3 +16,5 @@
 @use "./app/admin/shared/navbar/navbar.component" as adminNavbar;
 @use "./app/admin/pages/agregar-section/agregar.component" as adminAgregar;
 @use "./app/admin/pages/agregar-user/agregar-user.component" as adminAgregarUser;
+@use "./app/admin/shared/instructions-banner/instructions-banner.component" as
+  adminBanner;
