@@ -1,9 +1,20 @@
-<div class="container">
-  <h1 class="text-dark mt-5 px-2 fw-bold">
-    {{ formLogin.get("id")?.value ? "Editar" : "Agregar" }}
+<div class="AddSection container">
+  <h1 class="text-dark mt-5 px-2 fw-bold mb-4 fs-2">
+    {{ formLogin.get("id")?.value ? "Sección Editar" : "Sección Agregar" }}
+    <button class="btn btn-danger">
+      {{ formLogin.get("id")?.value ? "Edit" : "New" }}
+    </button>
   </h1>
 
+  <h5 class="px-2 text-success mb-4" *ngIf="formLogin.get('id')?.value">
+    ---> Editando {{ formLogin.get("titulo")?.value | titlecase }}
+  </h5>
+
   <app-instructions-banner></app-instructions-banner>
+
+  <h4 class="AddSection-description text-dark pt-4 fw-bold px-3">
+    Información :
+  </h4>
   <form
     (ngSubmit)="send()"
     class="Agregar row p-3 gy-4"
@@ -29,6 +40,11 @@
         >Esta sección debe tener contenido</small
       >
     </div>
+
+    <h4 class="AddSection-description text-dark pt-4 fw-bold px-3">
+      Agregar descripciones e imágenes:
+    </h4>
+
     <!-- introducContent -->
     <div class="Agregar-group form-group col-11">
       <label for="" class="Agregar-label">Introducción </label>
@@ -108,11 +124,7 @@
             formControlName="imagesUrl"
           />
           <div class="text-center mt-2">
-            <img
-              [src]="this.prevImgIngreso[this.prevImgIngreso.length - (i + 1)]"
-              alt=""
-              class="Agregar-img"
-            />
+            <img [src]="" alt="" class="Agregar-img" />
           </div>
         </div>
       </div>
@@ -196,13 +208,7 @@
             />
 
             <div class="text-center mt-2">
-              <img
-                [src]="
-                  this.prevImgContent[this.prevImgContent.length - (i + 1)]
-                "
-                alt=""
-                class="Agregar-img"
-              />
+              <img [src]="" alt="" class="Agregar-img" />
             </div>
           </div>
         </div>

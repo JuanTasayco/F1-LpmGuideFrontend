@@ -1,6 +1,8 @@
 @use "src/_custom" as *;
 
-
+.AddSection {
+  background-image: url(../../../../assets/bg-home.jpg);
+}
 
 .Agregar {
   &-svg {

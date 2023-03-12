@@ -181,41 +181,43 @@ export class AgregarComponent implements OnInit {
   }
 
   formdata: FormData = new FormData();
-  prevImgIngreso: string[] = [];
-  prevImgContent: string[] = [];
+  /*   prevImgIngreso: string[] = [];
+  prevImgContent: string[] = []; */
+  fileReader = new FileReader();
 
   private fileIntro!: File | string;
+
   introduChangeFile(event: any) {
-    this.fileIntro = event.target.files[0];
+    this.fileIntro = <File>event.target.files[0];
+    this.fileReader.readAsDataURL(this.fileIntro);
+    this.fileReader.onload = (event) => {
+      this.fileIntro = <string>event.target?.result;
+    };
   }
 
   addIntroBlock() {
-    this.convertToBase64(this.fileIntro).then((img: any) =>
-      this.prevImgIngreso.push(img.base)
-    );
+    if (!this.fileIntro) {
+      this.fileIntro = '';
+    }
 
+    /*  const filesito: string = this.fileIntro.toString().split(',')[1];
+    console.log(filesito); */
     this.ingreso.push(
-      new FormGroup({
-        subtitles: new FormControl(
+      this.formBuilder.group({
+        subtitles: [
           this.contentForm.get('subtitles')?.value,
-          Validators.required
-        ),
-        imagesUrl: new FormControl(''),
+          Validators.required,
+        ],
+        imagesUrl: [''],
       })
     );
 
-    this.formdata.set('imagenIntro', this.fileIntro ? this.fileIntro : '');
-    const lengthArray = this.ingreso.length;
-
-    this.ingreso
-      .at(lengthArray - 1)
-      .get('imagesUrl')
-      ?.setValue(this.formdata.get('imagenIntro'));
-
-    console.log(this.ingreso);
-
-    this.fileIntro = '';
+    this.contentForm.patchValue({
+      imagesUrl: this.fileIntro,
+    });
     this.contentForm.reset();
+    this.fileIntro = '';
+    console.log(this.formLogin);
   }
 
   private fileCont!: File | string;
@@ -224,21 +226,20 @@ export class AgregarComponent implements OnInit {
   }
 
   addContenidoBlock() {
-    this.convertToBase64(this.fileCont).then((img: any) =>
+    /*     this.convertToBase64(this.fileCont).then((img: any) =>
       this.prevImgContent.push(img.base)
-    );
+    ); */
     console.log(this.formLogin.get('contenido')?.value);
     this.formdata.append('imagenContent', this.fileCont ? this.fileCont : '');
 
     this.contenido.push(
-      new FormGroup({
-        subtitles: new FormControl(
-          this.contentForm.get('subtitles'),
-          Validators.required
-        ),
-        imagesUrl: new FormControl(''),
+      this.formBuilder.group({
+        subtitles: ['sadasdsa', Validators.required],
+        imagesUrl: [''],
       })
     );
+
+    console.log(this.contenido);
     this.fileCont = '';
     this.contentForm.reset();
   }
