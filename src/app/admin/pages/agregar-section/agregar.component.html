@@ -10,7 +10,7 @@
     ---> Editando {{ formLogin.get("titulo")?.value | titlecase }}
   </h5>
 
-  <app-instructions-banner></app-instructions-banner>
+  <!--   <app-instructions-banner></app-instructions-banner> -->
 
   <h4 class="AddSection-description text-dark pt-4 fw-bold px-3">
     Información :
@@ -62,6 +62,8 @@
         />
       </svg>
       <small> <---Presiona +, para agregar contenido introductorio</small>
+
+      <!-- contentForm -->
       <div [formGroup]="contentForm">
         <input
           class="Agregar-input form-control"
@@ -71,10 +73,11 @@
         <input
           class="Agregar-input form-control mt-3"
           type="file"
-          (change)="introduChangeFile($event)"
+          (change)="introduChangeFile($event, 'noValue')"
           formControlName="imagesUrl"
         />
       </div>
+
       <small class="text-danger" *ngIf="ingreso.length == 0"
         >Debe existir al menos un campo de descripción insertado</small
       >
@@ -120,8 +123,7 @@
           <input
             class="Agregar-input form-control mt-3"
             type="file"
-            (change)="introduChangeFile($event)"
-            formControlName="imagesUrl"
+            (change)="introduChangeFile($event, i)"
           />
           <div class="text-center mt-2">
             <img [src]="" alt="" class="Agregar-img" />
@@ -204,7 +206,6 @@
               class="Agregar-input form-control mt-3"
               type="file"
               (change)="contentChangeFile($event)"
-              formControlName="imagesUrl"
             />
 
             <div class="text-center mt-2">
@@ -214,7 +215,7 @@
         </div>
       </div>
     </div>
-asdasdasdasdasdasdas21312321
+
     <!-- button send -->
     <div class="Agregar-group d-flex justify-content-center gap-5">
       <button class="btn btn-dark px-5 py-2" type="submit">

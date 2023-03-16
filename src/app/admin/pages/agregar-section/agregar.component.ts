@@ -28,6 +28,11 @@ interface AddForm {
   inputId?: string;
 }
 
+interface Files {
+  subtitles: '';
+  imagesBase64: '';
+}
+
 @Component({
   selector: 'app-agregar',
   templateUrl: './agregar.component.html',
@@ -77,16 +82,8 @@ export class AgregarComponent implements OnInit {
   buttonSection: string = '';
   elementsChanged: any = {};
   /* logic form */
-  formLogin: FormGroup = new FormGroup({
-    id: new FormControl(),
-    titulo: new FormControl(''),
-    titulo2: new FormControl(''),
-    subtitulo: new FormControl(''),
-    panel: new FormControl(''),
-    seccion: new FormControl(''),
-    ingreso: new FormArray([]),
-    contenido: new FormArray([]),
-  });
+  formLogin!: FormGroup;
+  contentForm!: FormGroup;
   completeSection!: Register;
 
   /* method for router, info that fills info and form builder declaration*/
@@ -101,6 +98,12 @@ export class AgregarComponent implements OnInit {
       ingreso: this.formBuilder.array([], Validators.required),
       contenido: this.formBuilder.array([], Validators.required),
     });
+
+    this.contentForm = this.formBuilder.group({
+      subtitles: ['', Validators.required],
+      imagesUrl: [''],
+    });
+
 
     if (this.route.url.includes('editar')) {
       this.buttonSection = 'Editar';
@@ -144,12 +147,6 @@ export class AgregarComponent implements OnInit {
     });
   }
 
-  contentForm: FormGroup = new FormGroup({
-    subtitles: new FormControl('', Validators.required),
-    imagesUrl: new FormControl(''),
-  });
-
-  /* getContentArrays */
   get contenido() {
     return this.formLogin.get('contenido') as FormArray;
   }
@@ -158,7 +155,6 @@ export class AgregarComponent implements OnInit {
     return this.formLogin.get('ingreso') as FormArray;
   }
 
-  /* errorsArray */
   errorArrayIng(pos: number) {
     return this.ingreso.get(pos.toString())?.invalid;
   }
@@ -180,66 +176,62 @@ export class AgregarComponent implements OnInit {
     );
   }
 
-  formdata: FormData = new FormData();
-  /*   prevImgIngreso: string[] = [];
-  prevImgContent: string[] = []; */
   fileReader = new FileReader();
+  private fileIntro!: any;
 
-  private fileIntro!: File | string;
-
-  introduChangeFile(event: any) {
+  introduChangeFile(event: any, valor: number | string) {
     this.fileIntro = <File>event.target.files[0];
     this.fileReader.readAsDataURL(this.fileIntro);
     this.fileReader.onload = (event) => {
       this.fileIntro = <string>event.target?.result;
     };
+
+    if (typeof valor == 'number') {
+      this.ingreso.controls[this.ingreso.length - 1 - valor]
+        .get('imagesUrl')
+        ?.setValue(this.fileIntro);
+    }
   }
 
   addIntroBlock() {
-    if (!this.fileIntro) {
-      this.fileIntro = '';
-    }
-
-    /*  const filesito: string = this.fileIntro.toString().split(',')[1];
-    console.log(filesito); */
+    if (!this.fileIntro) this.fileIntro = '';
     this.ingreso.push(
       this.formBuilder.group({
         subtitles: [
           this.contentForm.get('subtitles')?.value,
           Validators.required,
         ],
-        imagesUrl: [''],
+        imagesUrl: [this.fileIntro],
       })
     );
 
-    this.contentForm.patchValue({
-      imagesUrl: this.fileIntro,
-    });
     this.contentForm.reset();
     this.fileIntro = '';
-    console.log(this.formLogin);
   }
 
-  private fileCont!: File | string;
+  private fileCont!: any;
+
   contentChangeFile(event: any) {
     this.fileCont = event.target.files[0];
+    this.fileReader.readAsDataURL(this.fileCont);
+    this.fileReader.onload = (event) => {
+      this.fileCont = <string>event.target?.result;
+    };
   }
 
   addContenidoBlock() {
-    /*     this.convertToBase64(this.fileCont).then((img: any) =>
-      this.prevImgContent.push(img.base)
-    ); */
-    console.log(this.formLogin.get('contenido')?.value);
-    this.formdata.append('imagenContent', this.fileCont ? this.fileCont : '');
+    if (!this.fileCont) this.fileCont = '';
 
     this.contenido.push(
       this.formBuilder.group({
-        subtitles: ['sadasdsa', Validators.required],
-        imagesUrl: [''],
+        subtitles: [
+          this.contentForm.get('subtitles')?.value,
+          Validators.required,
+        ],
+        imagesUrl: [this.fileCont],
       })
     );
 
-    console.log(this.contenido);
     this.fileCont = '';
     this.contentForm.reset();
   }
@@ -270,13 +262,8 @@ export class AgregarComponent implements OnInit {
 
   send() {
     /* add  */
-    this.formdata.getAll('imagenIntro').forEach((value, index) => {});
-    this.formdata.getAll('imagenContent').forEach((value) => {
-      console.log(value);
-    });
     console.log(this.formLogin.value);
     if (!this.formLogin.get('id')?.value) {
-      console.log(this.formLogin.valid);
       if (this.formLogin.valid) {
         const { id, ...rest } = this.formLogin.value;
         /* quitar comentario para agregar a la base de datos */
@@ -377,30 +364,6 @@ export class AgregarComponent implements OnInit {
               }, 100);
             });
           });
-      }
-    });
-  }
-
-  async convertToBase64($event: any) {
-    return new Promise((resolve, reject) => {
-      try {
-        if (!$event) return resolve('');
-        const unsafeImg = window.URL.createObjectURL($event);
-        const image = this.sanitizer.bypassSecurityTrustUrl(unsafeImg);
-        const reader = new FileReader();
-        reader.readAsDataURL($event);
-        reader.onload = () => {
-          resolve({
-            base: reader.result,
-          });
-        };
-        reader.onerror = (error) => {
-          resolve({
-            base: null,
-          });
-        };
-      } catch (e) {
-        reject(e);
       }
     });
   }
