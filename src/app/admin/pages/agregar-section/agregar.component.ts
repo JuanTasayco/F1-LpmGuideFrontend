@@ -76,7 +76,8 @@ export class AgregarComponent implements OnInit {
     private activatedRouter: ActivatedRoute,
     private route: Router,
     private formBuilder: FormBuilder,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   buttonSection: string = '';
@@ -103,7 +104,6 @@ export class AgregarComponent implements OnInit {
       subtitles: ['', Validators.required],
       imagesUrl: [''],
     });
-
 
     if (this.route.url.includes('editar')) {
       this.buttonSection = 'Editar';
@@ -176,64 +176,95 @@ export class AgregarComponent implements OnInit {
     );
   }
 
-  fileReader = new FileReader();
   private fileIntro!: any;
+  private fileReader = new FileReader();
+
+  imagenesIngreso: string[] = [];
 
   introduChangeFile(event: any, valor: number | string) {
     this.fileIntro = <File>event.target.files[0];
-    this.fileReader.readAsDataURL(this.fileIntro);
+    this.fileReader.readAsDataURL(<File>this.fileIntro);
     this.fileReader.onload = (event) => {
       this.fileIntro = <string>event.target?.result;
     };
 
     if (typeof valor == 'number') {
-      this.ingreso.controls[this.ingreso.length - 1 - valor]
-        .get('imagesUrl')
-        ?.setValue(this.fileIntro);
+      setTimeout(() => {
+        this.updateBlock(
+          valor,
+          this.ingreso,
+          this.fileIntro,
+          this.imagenesIngreso
+        );
+      }, 200);
     }
   }
 
   addIntroBlock() {
-    if (!this.fileIntro) this.fileIntro = '';
+    this.imagenesIngreso.unshift(this.fileIntro ?? '');
+    console.log(this.imagenesIngreso);
     this.ingreso.push(
       this.formBuilder.group({
         subtitles: [
-          this.contentForm.get('subtitles')?.value,
+          this.contentForm.get('subtitles')?.value ?? '',
           Validators.required,
         ],
-        imagesUrl: [this.fileIntro],
+        imagesUrl: [this.fileIntro ?? ''],
       })
     );
 
-    this.contentForm.reset();
     this.fileIntro = '';
+    this.contentForm.reset();
   }
 
   private fileCont!: any;
 
-  contentChangeFile(event: any) {
+  imagenesContenido: string[] = [];
+
+  contentChangeFile(event: any, valor: number | string) {
     this.fileCont = event.target.files[0];
-    this.fileReader.readAsDataURL(this.fileCont);
+    this.fileReader.readAsDataURL(<File>this.fileCont);
     this.fileReader.onload = (event) => {
       this.fileCont = <string>event.target?.result;
     };
+
+    if (typeof valor == 'number') {
+      setTimeout(() => {
+        this.updateBlock(
+          valor,
+          this.ingreso,
+          this.fileIntro,
+          this.imagenesContenido
+        );
+      }, 200);
+    }
   }
 
   addContenidoBlock() {
-    if (!this.fileCont) this.fileCont = '';
-
     this.contenido.push(
       this.formBuilder.group({
         subtitles: [
-          this.contentForm.get('subtitles')?.value,
+          this.contentForm.get('subtitles')?.value ?? '',
           Validators.required,
         ],
-        imagesUrl: [this.fileCont],
+        imagesUrl: [this.fileCont ?? ''],
       })
     );
 
     this.fileCont = '';
     this.contentForm.reset();
+  }
+
+  updateBlock(
+    valor: number,
+    array: FormArray,
+    file: File | string,
+    arrayBase64: string[]
+  ) {
+    /* logic */
+    array.controls[array.length - 1 - valor].get('imagesUrl')?.setValue(file);
+    arrayBase64.splice(valor, 1);
+    arrayBase64.splice(valor, 0, <string>file);
   }
 
   /* deleteBlockContentAditional */
@@ -366,5 +397,13 @@ export class AgregarComponent implements OnInit {
           });
       }
     });
+  }
+
+  converToBase64(file: File | string) {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(<File>file);
+    fileReader.onload = (event) => {
+      file = <string>event.target?.result;
+    };
   }
 }
