@@ -202,7 +202,6 @@ export class AgregarComponent implements OnInit {
 
   addIntroBlock() {
     this.imagenesIngreso.unshift(this.fileIntro ?? '');
-    console.log(this.imagenesIngreso);
     this.ingreso.push(
       this.formBuilder.group({
         subtitles: [
@@ -232,8 +231,8 @@ export class AgregarComponent implements OnInit {
       setTimeout(() => {
         this.updateBlock(
           valor,
-          this.ingreso,
-          this.fileIntro,
+          this.contenido,
+          this.fileCont,
           this.imagenesContenido
         );
       }, 200);
@@ -241,6 +240,7 @@ export class AgregarComponent implements OnInit {
   }
 
   addContenidoBlock() {
+    this.imagenesContenido.unshift(this.fileCont ?? '');
     this.contenido.push(
       this.formBuilder.group({
         subtitles: [
@@ -272,13 +272,15 @@ export class AgregarComponent implements OnInit {
     this.ingreso.removeAt(index, {
       emitEvent: true,
     });
+    this.imagenesIngreso.splice(index, 1);
   }
 
   deleteContBlock(index: number) {
-    console.log(index);
     this.contenido.removeAt(index, {
       emitEvent: true,
     });
+
+    this.imagenesContenido.splice(index, 1);
   }
 
   /* deleteAllToCleanBlocks */
