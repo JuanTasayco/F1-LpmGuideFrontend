@@ -6,39 +6,39 @@ import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: HomeComponent,
     children: [
       {
-        path: "editar/:id",
-        component: AgregarComponent
+        path: 'editar/:id',
+        component: AgregarComponent,
       },
 
       {
-        path: "agregar",
-        component: AgregarComponent
+        path: 'agregar',
+        component: AgregarComponent,
       },
 
       {
-        path: "agregar-user",
-        component: AgregarUserComponent
+        path: 'usuarios',
+        component: AgregarUserComponent,
       },
 
       {
-        path: "editar-user/:id",
-        component: AgregarUserComponent
+        path: 'usuarios/:id',
+        component: AgregarUserComponent,
       },
 
       {
-        path: "**",
-        redirectTo: "agregar"
-      }
-    ]
-  }
+        path: '**',
+        redirectTo: 'usuarios',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

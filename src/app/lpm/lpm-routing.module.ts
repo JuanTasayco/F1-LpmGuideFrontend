@@ -10,29 +10,26 @@ import { ReportesComponent } from './pages/principal/reportes/reportes.component
 import { ResumenComponent } from './pages/principal/resumen/resumen.component';
 import { ValoresComponent } from './pages/principal/valores/valores.component';
 
-
 const routes: Routes = [
-
   {
-    path: "",
+    path: '',
     component: HomeComponent,
     children: [
-      { path: "principal/resumen", component: ResumenComponent },
+      { path: 'principal/resumen', component: ResumenComponent },
 
-      { path: "principal/procesos", component: ProcesosComponent },
-      { path: "principal/reportes", component: ReportesComponent },
-      { path: "principal/valores", component: ValoresComponent },
+      { path: 'principal/procesos', component: ProcesosComponent },
+      { path: 'principal/reportes', component: ReportesComponent },
+      { path: 'principal/valores', component: ValoresComponent },
 
-      { path: ":section/:title", component: DinamicsComponent },
+      { path: ':section/:title', component: DinamicsComponent },
 
-      { path: "**", redirectTo: "principal/procesos" }
-    ]
-  }
-
+      { path: '**', redirectTo: 'principal/procesos' },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class LpmRoutingModule { }
+export class LpmRoutingModule {}

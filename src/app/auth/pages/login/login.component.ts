@@ -1,60 +1,75 @@
-import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-
+import { Component, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  emailRegularExpresion: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  formLogin!: FormGroup;
 
-  emailRegularExpresion: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
-  formulario = new FormBuilder().group({
-    email: ["", [Validators.required, Validators.pattern(this.emailRegularExpresion)]],
-    password: ["", [Validators.required, Validators.minLength(3)]]
-  })
-
+  ngOnInit(): void {
+    this.formLogin = this.formBuilder.group({
+      email: [
+        '',
+        [Validators.required, Validators.pattern(this.emailRegularExpresion)],
+      ],
+      password: ['', [Validators.required, Validators.minLength(3)]],
+    });
+  }
 
   get errorEmail(): string {
-    const error = this.formulario.get("email")?.errors;
+    const error = this.formLogin.get('email')?.errors;
     if (error?.['required']) {
-      return "Email es obligatorio";
+      return 'Email es obligatorio';
     } else if (error?.['pattern']) {
-      return "El formato del email es incorrecto";
+      return 'El formato del email es incorrecto';
     } else {
-      return "";
+      return '';
     }
   }
 
   get errorPassword(): string {
-    const error = this.formulario.get("password")?.errors;
-    if (error?.["required"]) {
-      return "Password es obligatorio"
-    } else if (error?.["minlength"]) {
-      return "Debe haber un mínimo de 3 carácteres"
+    const error = this.formLogin.get('password')?.errors;
+    if (error?.['required']) {
+      return 'Password es obligatorio';
+    } else if (error?.['minlength']) {
+      return 'Debe haber un mínimo de 3 carácteres';
     } else {
-      return "";
+      return '';
     }
   }
-
 
   detectErrors(controlName: any) {
-    return this.formulario.get(controlName)?.invalid && this.formulario.get(controlName)?.touched;
+    return (
+      this.formLogin.get(controlName)?.invalid &&
+      this.formLogin.get(controlName)?.touched
+    );
   }
 
-
-  send() {
-    if (this.formulario.invalid) {
-      this.formulario.markAllAsTouched();
-      console.log(this.formulario.get("password")?.touched)
+  login() {
+    if (this.formLogin.valid) {
+      this.userService
+        .loginUser(this.formLogin.value)
+        .subscribe(({ valor, msg }) => {
+          console.log(valor, msg);
+        });
+      /*   this.formLogin.reset(); */
     } else {
-      this.formulario.reset();
-      console.log("felicidades se envío la información")
+      this.formLogin.markAllAsTouched();
     }
-
   }
 
-  constructor() { }
-
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService
+  ) {}
 }

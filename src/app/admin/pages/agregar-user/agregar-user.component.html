@@ -1,151 +1,202 @@
-<div class="AddUser p-0 " data-bs-theme="light">
-
-    <div class="AddUser-header p-5 d-flex justify-content-between">
-        <div class="AddUser-headerBlock d-flex gap-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="44" height="44"
-                viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round"
-                stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
-            </svg>
-            <h1 class="fw-bold">USUARIOS</h1>
-        </div>
-
-        <div class="AddUser-headerBlock d-flex gap-4 align-items-center">
-            <input type="text" class="AddUser-input form-control" placeholder="Buscar Usuarios...">
-            <button class="AddUser-button btn btn-danger">Filter by</button>
-        </div>
+<div class="AddUser p-0" data-bs-theme="light">
+  <div class="AddUser-header py-4 px-5 border">
+    <div class="container">
+      <h2 class="fw-bold">Menú Perfiles</h2>
     </div>
+  </div>
 
-    <div class="AddUser-row row py-3 px-5 m-0 border-top">
-        <!-- select users for edit -->
-        <div class="col-xl-6 border-end">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Usuario</th>
-                        <th scope="col">Correo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
+  <div class="AddUser-container container">
+    <div class="AddUser-row row m-0 border-top">
+      <!-- select users for edit -->
+      <div class="col-xl-6 border-end px-5 py-3">
+        <h3>Perfiles registrados</h3>
+        <table class="AddUser-table table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">N°</th>
+              <th scope="col">Status</th>
+              <th scope="col">Email</th>
+              <th scope="col">Usuario</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let user of users; let i = index"
+              (click)="getInfoByUser(user.id ?? '')"
+            >
+              <th scope="row">{{ i + 1 }}</th>
+              <td [ngClass]="getUserClass(user)">
+                {{ user.isActive | statusUser | titlecase }}
+              </td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.nombre | titlecase }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-                </tbody>
-            </table>
+      <!-- add User -->
+      <div class="col-xl-6 px-md-5 p-4">
+        <div class="AddUser-title mt-4">
+          <h1 class="fw-bold display-5">Editar perfil</h1>
         </div>
 
-        <!-- add User -->
-        <div class="col-xl-6 px-md-5">
-            <div class="AddUser-title mt-4">
-                <h1 class="fw-bold display-5">Agregar Usuario</h1>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-plus" width="44"
-                    height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                    <path d="M16 11h6m-3 -3v6" />
-                </svg>
+        <form
+          action=""
+          (ngSubmit)="send()"
+          class="AddUser-form row row gy-4 mt-3"
+          [formGroup]="formUser"
+        >
+          <label for="" class="">Elige el tipo de usuario:</label>
+          <div
+            class="AddUser-radioButtons col-md-12 d-flex justify-content-evenly"
+          >
+            <div class="form-check border px-5 py-3 rounded-2">
+              <input
+                class="form-check-input"
+                type="radio"
+                formControlName="roles"
+                id="exampleRadios1"
+                value="user"
+                checked
+              />
+              <label class="form-check-label" for="exampleRadios1">
+                Usuario
+              </label>
             </div>
 
+            <div class="form-check border px-5 py-3 rounded-2">
+              <input
+                class="form-check-input"
+                type="radio"
+                formControlName="roles"
+                id="exampleRadios2"
+                value="admin"
+              />
+              <label class="form-check-label" for="exampleRadios2">
+                Administrador
+              </label>
+            </div>
+          </div>
 
-            <form action="" (ngSubmit)="send()" class="AddUser-row row row gy-4 mt-3" [formGroup]="formUser">
-                <label for="" class="">Elige el tipo de usuario:</label>
-                <div class="AddUser-radioButtons col-md-12 d-flex justify-content-evenly">
-                    <div class="form-check border px-5 py-3 rounded-2">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                            value="option1" checked>
-                        <label class="form-check-label" for="exampleRadios1">
-                            Usuario
-                        </label>
+          <div class="col-md-12 d-flex justify-content-center">
+            <img
+              [src]="
+                this.formUser.get('imagenUrl')?.value || 'assets/loginBg.jpg'
+              "
+              class="AddUser-imgUser"
+              alt=""
+            />
+          </div>
 
-                    </div>
-                    <div class="form-check border px-5 py-3 rounded-2">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                            value="option2">
-                        <label class="form-check-label" for="exampleRadios2">
-                            Administrador
-                        </label>
-                    </div>
-                </div>
+          <div class="AddUser-group form-group col-md-6">
+            <label class="form-label" for="nombre">{{
+              "nombre" | titlecase
+            }}</label>
+            <input
+              type="text"
+              class="AddUser-input form-control"
+              formControlName="nombre"
+            />
+            <small class="text-danger" *ngIf="detectProblem('nombre')"
+              >Este campo es obligatorio</small
+            >
+          </div>
 
-                <div class="AddUser-group form-group col-md-12">
-                    <label class="form-label" for="">Nombres completos</label>
-                    <input type="text" placeholder="Ingresa tu usuario" class="AddUser-input form-control"
-                        formControlName="nombres">
-                    <small class="text-danger" *ngIf="existProblem('nombres')">Este campo es obligatorio</small>
-                </div>
+          <div class="AddUser-group form-group col-md-6">
+            <label class="form-label" for="apellido">{{
+              "apellido" | titlecase
+            }}</label>
+            <input
+              type="text"
+              class="AddUser-input form-control"
+              formControlName="apellido"
+            />
+            <small class="text-danger" *ngIf="detectProblem('apellido')"
+              >Este campo es obligatorio</small
+            >
+          </div>
 
-                <div class="AddUser-group form-group col-md-6">
-                    <label class="form-label" for="">Usuario:</label>
-                    <input type="text" placeholder="Ingresa tu usuario" class="AddUser-input form-control"
-                        formControlName="username">
-                    <small class="text-danger" *ngIf="existProblem('username')">Este campo es obligatorio</small>
-                </div>
+          <div class="AddUser-group form-group col-md-12">
+            <label class="form-label" for="email">{{
+              "email" | titlecase
+            }}</label>
+            <input
+              type="text"
+              class="AddUser-input form-control"
+              formControlName="email"
+            />
+            <small class="text-danger" *ngIf="detectProblem('email')"
+              >Este campo es obligatorio</small
+            >
+          </div>
 
-                <div class="AddUser-group form-group col-md-6">
-                    <label class="AddUser-label form-label" for="username">Correo:</label>
-                    <input type="text" placeholder="Ingresa tu email" class="AddUser-input form-control"
-                        formControlName="email">
-                    <small class="text-danger" *ngIf="existProblem('email')">Este campo es obligatorio</small>
+          <div class="AddUser-group form-group col-md-12">
+            <label class="form-label" for="direccion">{{
+              "dirección" | titlecase
+            }}</label>
+            <input
+              type="text"
+              class="AddUser-input form-control"
+              formControlName="direccion"
+            />
+          </div>
 
-                </div>
+          <div class="AddUser-group form-group col-md-6">
+            <label class="form-label" for="pais">{{
+              "País" | titlecase
+            }}</label>
+            <input
+              type="text"
+              class="AddUser-input form-control"
+              formControlName="pais"
+            />
+          </div>
 
-                <div class="AddUser-group form-group col-md-6">
-                    <label class="AddUser-label form-label" for="email">Contraseña:</label>
-                    <input type="text" placeholder="Ingresa la contraseña" class="AddUser-input form-control"
-                        formControlName="password">
-                    <small class="text-danger" *ngIf="existProblem('password')">Este campo es obligatorio</small>
+          <div class="AddUser-group form-group col-md-6">
+            <label class="form-label" for="">{{ "ciudad" | titlecase }}</label>
+            <input
+              type="text"
+              class="AddUser-input form-control"
+              formControlName="ciudad"
+            />
+          </div>
 
-                </div>
+          <div class="AddUser-group form-group col-md-12">
+            <label class="AddUser-label form-label" for="imagenUrl"
+              >Imagen: *Pegar Url</label
+            >
+            <input
+              type="imagenUrl"
+              class="AddUser-input form-control"
+              formControlName="imagenUrl"
+            />
+          </div>
 
-                <div class="AddUser-group form-group col-md-6">
-                    <label class="AddUser-label form-label" for="password">Repite Contraseña:</label>
-                    <input type="text" class="AddUser-input form-control" placeholder="Por favor repite la contraseña"
-                        formControlName="passwordRepeat">
-                    <small class="text-danger" *ngIf="existProblem('passwordRepeat')">Este campo es obligatorio</small>
-                </div>
-                <button class="AddUser-button btn btn-danger btn-lg" type="submit">Agregar Usuario</button>
-            </form>
-        </div>
+          <div class="AddUser-group form-group col-md-12">
+            <label class="AddUser-label form-label" for="password"
+              >Contraseña:</label
+            >
+            <input
+              type="password"
+              class="AddUser-input form-control"
+              formControlName="password"
+            />
+            <small class="text-danger" *ngIf="detectProblem('password')"
+              >Este campo es obligatorio</small
+            >
+          </div>
+
+          <div class="d-flex justify-content-center justify-content-md-start">
+            <button
+              class="AddUser-button btn btn-danger px-4 py-3"
+              type="submit"
+            >
+              Guardar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-
-
-
+  </div>
 </div>

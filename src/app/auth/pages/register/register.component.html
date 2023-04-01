@@ -9,7 +9,7 @@
       <form
         action=""
         (ngSubmit)="send()"
-        class="Sign-form"
+        class="Sign-form row"
         [formGroup]="formRegister"
       >
         <div class="Sign-contImg text-center pb-5">
@@ -21,15 +21,27 @@
           <p>Nos gustaría tenerte como aliado</p>
         </div>
 
-        <div class="Sign-group">
-          <label for="user" class="form-label">Usuario *</label>
+        <div class="Sign-group mb-3 col-md-6">
+          <label for="nombre" class="form-label">Nombre*</label>
           <input
             type="text"
             class="form-control form-control-lg"
-            formControlName="user"
+            formControlName="nombre"
           />
-          <span class="form-text text-danger" *ngIf="detectErrors('user')">
-            {{ errorUser }}</span
+          <span class="form-text text-danger" *ngIf="detectErrors('nombre')">
+            {{ errorEmail }}</span
+          >
+        </div>
+
+        <div class="Sign-group mb-3 col-md-6">
+          <label for="apellido" class="form-label">Apellido*</label>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="apellido"
+          />
+          <span class="form-text text-danger" *ngIf="detectErrors('apellido')">
+            {{ errorEmail }}</span
           >
         </div>
 
@@ -43,6 +55,15 @@
           <span class="form-text text-danger" *ngIf="detectErrors('email')">
             {{ errorEmail }}</span
           >
+        </div>
+
+        <div class="Sign-group mb-3">
+          <label for="direccion" class="form-label">Dirección</label>
+          <input
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="direccion"
+          />
         </div>
 
         <div class="Sign-group">

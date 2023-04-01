@@ -11,7 +11,8 @@ import { IdSvgDirective } from './directives/id-svg.directive';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AgregarUserComponent } from './pages/agregar-user/agregar-user.component';
 import { InstructionsBannerComponent } from './shared/instructions-banner/instructions-banner.component';
-
+import { NgPrimeModule } from '../ng-prime/ng-prime.module';
+import { StatusUserPipe } from './pipes/status-user.pipe';
 
 @NgModule({
   declarations: [
@@ -22,12 +23,14 @@ import { InstructionsBannerComponent } from './shared/instructions-banner/instru
     SafeHtmlPipe,
     IdSvgDirective,
     AgregarUserComponent,
-    InstructionsBannerComponent
+    InstructionsBannerComponent,
+    StatusUserPipe,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    NgPrimeModule,
+  ],
 })
-export class AdminModule { }
+export class AdminModule {}

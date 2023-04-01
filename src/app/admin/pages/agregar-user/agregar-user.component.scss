@@ -1,18 +1,28 @@
 .AddUser {
+  &-title {
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+  }
 
-    &-title {
-        gap: 1rem;
-        display: flex;
-        align-items: center;
-    }
+  &-imgUser {
+    width: 9rem;
+    height: 8rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 
-    &-input {
-        &::placeholder {
-            color: white;
-        }
-    }
+  &-table {
+    cursor: pointer;
+  }
 
-    &-button {
-        white-space: nowrap;
+  &-input {
+    &::placeholder {
+      color: white;
     }
+  }
+
+  &-button {
+    white-space: nowrap;
+  }
 }

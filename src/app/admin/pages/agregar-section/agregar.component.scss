@@ -2,6 +2,11 @@
 
 .AddSection {
   background-image: url(../../../../assets/bg-home.jpg);
+
+  &-banner {
+    max-height: 24rem;
+    overflow-y: auto;
+  }
 }
 
 .Agregar {

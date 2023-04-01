@@ -1,15 +1,12 @@
 import {
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
-  HostListener,
   OnInit,
 } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormControl,
-  FormControlName,
   FormGroup,
   Validators,
 } from '@angular/forms';
@@ -26,11 +23,6 @@ interface AddForm {
   labelId: string;
   attribute: string;
   inputId?: string;
-}
-
-interface Files {
-  subtitles: '';
-  imagesBase64: '';
 }
 
 @Component({
@@ -87,6 +79,9 @@ export class AgregarComponent implements OnInit {
   contentForm!: FormGroup;
   completeSection!: Register;
 
+  imagenesIngreso: string[] = [];
+  imagenesContenido: string[] = [];
+
   /* method for router, info that fills info and form builder declaration*/
   ngOnInit(): void {
     this.formLogin = this.formBuilder.group({
@@ -103,6 +98,7 @@ export class AgregarComponent implements OnInit {
     this.contentForm = this.formBuilder.group({
       subtitles: ['', Validators.required],
       imagesUrl: [''],
+      publicIdImage: [''],
     });
 
     if (this.route.url.includes('editar')) {
@@ -120,12 +116,23 @@ export class AgregarComponent implements OnInit {
             panel: this.completeSection.panel,
             seccion: this.completeSection.seccion,
           });
-          this.editInsertData(this.ingreso, this.completeSection.ingreso);
-          this.editInsertData(this.contenido, this.completeSection.contenido);
+
+          this.editInsertData(
+            this.ingreso,
+            this.completeSection.ingreso,
+            this.imagenesIngreso
+          );
+
+          this.editInsertData(
+            this.contenido,
+            this.completeSection.contenido,
+            this.imagenesContenido
+          );
 
           this.ingreso.valueChanges.subscribe((valor) => {
             this.elementsChanged['ingreso'] = valor;
           });
+
           this.contenido.valueChanges.subscribe((valor) => {
             this.elementsChanged['contenido'] = valor;
           });
@@ -136,14 +143,21 @@ export class AgregarComponent implements OnInit {
   }
 
   /* Fill the arrays obtained from http request  */
-  editInsertData(formArrayName: FormArray, nameArrayValue: Content[]) {
+  editInsertData(
+    formArrayName: FormArray,
+    nameArrayValue: Content[],
+    arrayImagenesCloudinary: string[]
+  ) {
     nameArrayValue?.forEach((a) => {
       formArrayName.push(
         new FormGroup({
           subtitles: new FormControl(a.subtitles, Validators.required),
-          imagesUrl: new FormControl(),
+          imagesUrl: new FormControl(a.imagesUrl),
+          publicIdImage: new FormControl(a.publicIdImage ?? ''),
         })
       );
+
+      arrayImagenesCloudinary.unshift(<string>a.imagesUrl);
     });
   }
 
@@ -179,15 +193,12 @@ export class AgregarComponent implements OnInit {
   private fileIntro!: any;
   private fileReader = new FileReader();
 
-  imagenesIngreso: string[] = [];
-
   introduChangeFile(event: any, valor: number | string) {
     this.fileIntro = <File>event.target.files[0];
     this.fileReader.readAsDataURL(<File>this.fileIntro);
     this.fileReader.onload = (event) => {
       this.fileIntro = <string>event.target?.result;
     };
-
     if (typeof valor == 'number') {
       setTimeout(() => {
         this.updateBlock(
@@ -196,6 +207,7 @@ export class AgregarComponent implements OnInit {
           this.fileIntro,
           this.imagenesIngreso
         );
+        this.fileIntro = '';
       }, 200);
     }
   }
@@ -218,8 +230,6 @@ export class AgregarComponent implements OnInit {
 
   private fileCont!: any;
 
-  imagenesContenido: string[] = [];
-
   contentChangeFile(event: any, valor: number | string) {
     this.fileCont = event.target.files[0];
     this.fileReader.readAsDataURL(<File>this.fileCont);
@@ -236,6 +246,7 @@ export class AgregarComponent implements OnInit {
           this.imagenesContenido
         );
       }, 200);
+      this.fileCont = '';
     }
   }
 
@@ -295,25 +306,38 @@ export class AgregarComponent implements OnInit {
 
   send() {
     /* add  */
-    console.log(this.formLogin.value);
     if (!this.formLogin.get('id')?.value) {
       if (this.formLogin.valid) {
         const { id, ...rest } = this.formLogin.value;
-        /* quitar comentario para agregar a la base de datos */
-        /*  this.adminService.createSection(rest).subscribe(); */
 
-        /*   this.formLogin.reset(); */
-
-        Swal.fire(
-          'Agregado exitosamente',
-          'La sección fue añadida correctamente',
-          'success'
-        ).then(() => {
-          location.reload();
+        this.adminService.createSection(rest).subscribe((resp) => {
+          if (resp.val == false) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: resp.msg,
+            });
+          } else {
+            this.formLogin.reset();
+            Swal.fire(
+              'Agregado exitosamente',
+              'La sección fue añadida correctamente',
+              'success'
+            ).then(() => {
+              this.deleteAlltoChange();
+              location.reload();
+            });
+          }
         });
       } else {
-        this.formLogin.markAllAsTouched();
-        this.contentForm.markAllAsTouched();
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Falta lllenar algunos campos, por favor verifica el formulario',
+        }).then(() => {
+          this.formLogin.markAllAsTouched();
+          this.contentForm.markAllAsTouched();
+        });
       }
 
       /* edit */
@@ -343,7 +367,7 @@ export class AgregarComponent implements OnInit {
               showConfirmButton: false,
               timer: 1500,
             }).then(() => {
-              location.reload();
+              /*   location.reload(); */
             });
           });
       } else if (this.formLogin.invalid) {

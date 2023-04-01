@@ -1,84 +1,103 @@
 <div class="Asidenav bg-dark h-100">
-    <button class="Asidenav-button btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#sideButton">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="Header-svg bi bi-list" viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-        </svg>
-    </button>
+  <button
+    class="Asidenav-button btn btn-dark"
+    type="button"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#sideButton"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      class="Header-svg bi bi-list"
+      viewBox="0 0 16 16"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+      />
+    </svg>
+  </button>
 
-    <div class="Asidenav-offcanvas offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="sideButton"
-        aria-labelledby="sideButtonLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="sideButtonLabel">Menu Administración</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <!-- start body offCanvas -->
-            <div class="Sidenav-accordion accordion" id="accordionExample">
-                <ul class="accordion-nav nav flex-column">
-                    <li class="accordion-li nav-item">
-                        <a routerLink="/admin/agregar" class=" nav-link text-light">Agregar Seccion</a>
-                    </li>
-                </ul>
-
-                <!-- block accordion sections for edit-->
-                <div class="accordion-item mt-2">
-                    <h2 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed text-light bg-dark" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true"
-                            aria-controls="collapseTwo">
-                            Editar Seccion
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
-                        <div class="accordion-body">
-                            <!-- accordion body -->
-                            <ul class="nav flex-column" *ngFor="let seccion of resultsBySeccion; let i = index">
-                                Seccion {{i+1}}
-                                <li class="accordion-li nav-item" *ngFor="let sec of seccion">
-                                    <a [routerLink]="['/admin/editar/', sec.id]"
-                                        class="Sidenav-a nav-link text-dark">{{sec.title}}</a>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!-- block accordion users -->
-                <div class="accordion-item mt-2">
-                    <h2 class="accordion-header" id="headingUser">
-                        <button class="accordion-button collapsed text-light bg-dark" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#collapseUser" aria-expanded="true"
-                            aria-controls="collapseUser">
-                            Usuarios
-                        </button>
-                    </h2>
-                    <div id="collapseUser" class="accordion-collapse collapse" aria-labelledby="headingUser">
-                        <div class="accordion-body">
-
-                            <ul class="accordion-nav nav flex-column">
-                                <li class="accordion-li nav-item">
-                                    <a routerLink="/admin/agregar-user" class="Sidenav-a nav-link text-dark">Agregar
-                                        Usuario</a>
-                                </li>
-                            </ul>
-                            <ul class="accordion-nav nav flex-column">
-                                <li class="accordion-li nav-item">
-                                    <a routerLink="/admin/agregar" class="Sidenav-a nav-link text-dark">Editar
-                                        Usuario</a>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div>
-
-            <!-- final body offCanvas-->
-        </div>
+  <div
+    class="Asidenav-offcanvas offcanvas offcanvas-start"
+    data-bs-scroll="true"
+    tabindex="-1"
+    id="sideButton"
+    aria-labelledby="sideButtonLabel"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="sideButtonLabel">Menu Administración</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
     </div>
+    <div class="offcanvas-body">
+      <!-- start body offCanvas -->
+      <div class="Sidenav-accordion accordion" id="accordionExample">
+        <ul class="accordion-nav nav flex-column">
+          <li class="accordion-li nav-item">
+            <a routerLink="/admin/agregar" class="nav-link text-light"
+              >Agregar Seccion</a
+            >
+          </li>
+        </ul>
+
+        <!-- block accordion sections for edit-->
+        <div class="accordion-item mt-2">
+          <h2 class="accordion-header" id="headingTwo">
+            <button
+              class="accordion-button collapsed text-light bg-dark"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseTwo"
+              aria-expanded="true"
+              aria-controls="collapseTwo"
+            >
+              Editar Seccion
+            </button>
+          </h2>
+          <div
+            id="collapseTwo"
+            class="accordion-collapse collapse"
+            aria-labelledby="headingTwo"
+          >
+            <div class="accordion-body">
+              <!-- accordion body -->
+              <ul
+                class="nav flex-column"
+                *ngFor="let seccion of resultsBySeccion; let i = index"
+              >
+                Seccion
+                {{
+                  i + 1
+                }}
+                <li class="accordion-li nav-item" *ngFor="let sec of seccion">
+                  <a
+                    [routerLink]="['/admin/editar/', sec.id]"
+                    class="Sidenav-a nav-link text-dark"
+                    >{{ sec.title }}</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- block accordion users -->
+
+        <ul class="accordion-nav nav flex-column mt-2">
+          <li class="accordion-li nav-item">
+            <a routerLink="/admin/agregar-user" class="nav-link text-light"
+              >Perfiles</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <!-- final body offCanvas-->
+    </div>
+  </div>
 </div>

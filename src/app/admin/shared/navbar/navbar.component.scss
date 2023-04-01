@@ -1,16 +1,21 @@
 .Aheader {
-
-    &-collapse {
-        justify-content: end;
-    }
-
-
-    &-li {
-        &:hover {
-            cursor: pointer;
-        }
-    }
-
-
-
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  &-row {
+   justify-content: center;
+  }
+  &-contentUser {
+    display: flex;
+    margin-right: 1rem;
+    align-items: center;
+  }
+  &-img {
+    width: 2.5rem;
+    max-height: 2.2rem;
+    cursor: pointer;
+    object-fit: cover;
+    border-radius: 50%;
+  }
 }

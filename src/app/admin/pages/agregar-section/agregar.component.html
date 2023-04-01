@@ -10,11 +10,12 @@
     ---> Editando {{ formLogin.get("titulo")?.value | titlecase }}
   </h5>
 
-  <!--   <app-instructions-banner></app-instructions-banner> -->
+  <div class="AddSection-banner">
+    <h4 class="AddSection-description text-dark pt-4 fw-bold px-3">Ayuda</h4>
+    <app-instructions-banner></app-instructions-banner>
+  </div>
 
-  <h4 class="AddSection-description text-dark pt-4 fw-bold px-3">
-    Información :
-  </h4>
+  <h4 class="AddSection-description text-dark pt-4 fw-bold px-3">Campos:</h4>
   <form
     (ngSubmit)="send()"
     class="Agregar row p-3 gy-4"
@@ -126,10 +127,25 @@
             (change)="introduChangeFile($event, i)"
           />
           <div class="text-center mt-2">
-            <img [src]="imagenesIngreso[i]" alt="" class="Agregar-img" />
+            <p-image
+              [src]="imagenesIngreso[i]"
+              class="Agregar-img"
+              alt="Image"
+              [preview]="true"
+              width="200"
+              height="200"
+            >
+              <ng-template pTemplate="indicator">
+                Presiona para Ver </ng-template
+              >x
+            </p-image>
           </div>
         </div>
       </div>
+    </div>
+
+    <div>
+      <h1>Separación</h1>
     </div>
 
     <!-- contentC -->
@@ -199,6 +215,7 @@
               type="text"
               formControlName="subtitles"
             />
+
             <small class="text-danger" *ngIf="errorArrayCont(i)"
               >Este campo no debe estar vacío</small
             >
@@ -209,7 +226,18 @@
             />
 
             <div class="text-center mt-2">
-              <img [src]="imagenesContenido[i]" alt="" class="Agregar-img" />
+              <p-image
+                [src]="imagenesContenido[i]"
+                class="Agregar-img"
+                alt="Image"
+                [preview]="true"
+                width="200"
+                height="200"
+              >
+                <ng-template pTemplate="indicator">
+                  Presiona para Ver </ng-template
+                >x
+              </p-image>
             </div>
           </div>
         </div>

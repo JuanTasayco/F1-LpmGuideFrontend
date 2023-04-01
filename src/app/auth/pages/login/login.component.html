@@ -1,70 +1,92 @@
-<div class="Login container-fluid ">
+<div class="Login container-fluid">
+  <div class="Login-row row h-100 m-0 p-0">
+    <!-- whiteSpace md-4 -->
+    <div class="Login-section d-none d-xl-block col-xl-3 col-xxl-4"></div>
+    <!-- end whiteSpace -->
 
-    <div class="Login-row row h-100 m-0 p-0">
-
-        <!-- whiteSpace md-4 -->
-        <div class="Login-section d-none d-xl-block col-xl-3 col-xxl-4"></div>
-        <!-- end whiteSpace -->
-
-        <!-- Form md-3 -->
-        <div class="Login-section col-12 col-xl-4 col-xxl-3 px-5 my-auto">
-            <form action="" (ngSubmit)="send()" class="Login-form" [formGroup]="formulario">
-
-                <div class="Login-contImg text-center pb-5">
-                    <img src="assets/logo.jpg" alt="" class="Login-logo my-2 img-fluid">
-                </div>
-
-                <div class="Login-descriptions mb-5">
-                    <h2 class="Login-h2 fw-bold">Iniciar Sesión</h2>
-                    <p>Esta sección solo es para administradores.</p>
-                </div>
-
-                <!-- INPUTS  -->
-                <div class="Login-group mb-3">
-                    <label for="email" class="form-label">Correo Electrónico *</label>
-                    <input type="text" id="email" class="form-control form-control-lg" formControlName="email">
-                    <span class="form-text text-danger" *ngIf="detectErrors('email')"> {{errorEmail}}</span>
-                </div>
-
-                <div class="Login-group">
-                    <label for="password" class="form-label">Contraseña *</label>
-                    <input type="password" id="password" class="form-control form-control-lg"
-                        formControlName="password">
-                    <span class="form-text text-danger" *ngIf="detectErrors('password')"> {{errorPassword}}</span>
-                </div>
-
-                <div class="row Login-row m-0 p-0 mt-4">
-                    <div class="Login-col col-md-6">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" value="" id="check">
-                            <label for="" class="form-check-label" for="check">Recuérdame</label>
-                        </div>
-                    </div>
-
-                    <div class="Login-col col-md-6">
-                        <p class="lead fs-6"> <a routerLink="/auth/register">Aún no tienes una cuenta?</a> </p>
-                    </div>
-                </div>
-                <!-- END INPUTS -->
-
-                <!-- BUTTON SUBMIT -->
-                <div class="d-flex mt-3">
-                    <button class="Login-button btn btn-danger py-3 w-100" type="submit">Ingresar</button>
-                </div>
-
-            </form>
-            <a routerLink="/admin/agregar">url</a>
-        </div>
-        <!-- End form -->
-
-        <!-- Image -->
-        <div class="Login-section d-none d-xl-block col-xl-5">
-              <img src="assets/loginBg.jpg" alt="" class="Login-img">
-    
+    <!-- Form md-3 -->
+    <div class="Login-section col-12 col-xl-4 col-xxl-3 px-5 my-auto">
+      <form
+        action=""
+        (ngSubmit)="login()"
+        class="Login-form"
+        [formGroup]="formLogin"
+      >
+        <div class="Login-contImg text-center pb-5">
+          <img src="assets/logo.jpg" alt="" class="Login-logo my-2 img-fluid" />
         </div>
 
-        <!-- end image -->
+        <div class="Login-descriptions mb-5">
+          <h2 class="Login-h2 fw-bold">Iniciar Sesión</h2>
+          <p>Esta sección solo es para administradores.</p>
+        </div>
+
+        <!-- INPUTS  -->
+        <div class="Login-group mb-3">
+          <label for="email" class="form-label">Correo Electrónico *</label>
+          <input
+            type="text"
+            id="email"
+            class="form-control form-control-lg"
+            formControlName="email"
+          />
+          <span class="form-text text-danger" *ngIf="detectErrors('email')">
+            {{ errorEmail }}</span
+          >
+        </div>
+
+        <div class="Login-group">
+          <label for="password" class="form-label">Contraseña *</label>
+          <input
+            type="password"
+            id="password"
+            class="form-control form-control-lg"
+            formControlName="password"
+          />
+          <span class="form-text text-danger" *ngIf="detectErrors('password')">
+            {{ errorPassword }}</span
+          >
+        </div>
+
+        <div class="row Login-row m-0 p-0 mt-4">
+          <div class="Login-col col-md-6">
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                value=""
+                id="check"
+              />
+              <label for="" class="form-check-label" for="check"
+                >Recuérdame</label
+              >
+            </div>
+          </div>
+
+          <div class="Login-col col-md-6">
+            <p class="lead fs-6">
+              <a routerLink="/auth/register">Aún no tienes una cuenta?</a>
+            </p>
+          </div>
+        </div>
+        <!-- END INPUTS -->
+
+        <!-- BUTTON SUBMIT -->
+        <div class="d-flex mt-3">
+          <button class="Login-button btn btn-danger py-3 w-100" type="submit">
+            Ingresar
+          </button>
+        </div>
+      </form>
+      <a routerLink="/admin/agregar">url</a>
+    </div>
+    <!-- End form -->
+
+    <!-- Image -->
+    <div class="Login-section d-none d-xl-block col-xl-5">
+      <img src="assets/loginBg.jpg" alt="" class="Login-img" />
     </div>
 
-
+    <!-- end image -->
+  </div>
 </div>

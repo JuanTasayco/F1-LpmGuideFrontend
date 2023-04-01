@@ -15,8 +15,6 @@ import { SharedModule } from '../shared/shared.module';
 import { ResumenComponent } from './pages/principal/resumen/resumen.component';
 import { DinamicsComponent } from './pages/dinamics/dinamics.component';
 
-
-
 @NgModule({
   declarations: [
     HomeComponent,
@@ -26,14 +24,8 @@ import { DinamicsComponent } from './pages/dinamics/dinamics.component';
     ScrollingDirective,
     DataComponent,
     ResumenComponent,
-    DinamicsComponent
-
+    DinamicsComponent,
   ],
-  imports: [
-    CommonModule,
-    LpmRoutingModule,
-    NgPrimeModule,
-    SharedModule
-  ]
+  imports: [CommonModule, LpmRoutingModule, NgPrimeModule, SharedModule],
 })
-export class LpmModule { }
+export class LpmModule {}
