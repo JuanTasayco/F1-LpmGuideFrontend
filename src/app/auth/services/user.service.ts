@@ -1,33 +1,60 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { User } from 'src/app/admin/interfaces/user-interface';
 import { environment } from 'src/environments/environment';
 import { UserAuth } from '../interfaces/userLog-interface';
 
+export interface ResponseError {
+  valor: boolean;
+  msg: any;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   constructor(private http: HttpClient) {}
-  user!: UserAuth;
+  private _user!: UserAuth;
   baseUrl: string = environment.url;
 
   createUser(formUser: User): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/register`, formUser);
   }
 
-  loginUser(credenciales: any): Observable<any> {
+  get user() {
+    return this._user;
+  }
+
+  loginUser(credenciales: any): Observable<boolean | ResponseError> {
     return this.http
       .post<UserAuth>(`${this.baseUrl}/auth/login`, credenciales)
       .pipe(
         tap((userResponse) => {
-          /* asignamos la respuesta a nuestra propiedad user */
-          this.user = userResponse;
-          localStorage.setItem('key-token', this.user.token);
+          localStorage.setItem('token', userResponse.token);
         }),
-        map(() => ({ valor: true, msg: '' })),
-        catchError((err) => of({ valor: false, msg: err.error.message }))
+        map(() => true),
+        catchError((err) => of(err.error.message))
+      );
+  }
+
+  verifyTokenForAccess() {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + token,
+    });
+    return this.http
+      .get<UserAuth>(`${this.baseUrl}/auth/verify`, { headers })
+      .pipe(
+        tap((result) => {
+          this._user = result;
+        }),
+        map(() => true),
+        catchError(() => of(false))
       );
   }
 

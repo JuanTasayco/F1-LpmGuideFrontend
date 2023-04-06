@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthLoginGuard } from './auth/guards/auth-login.guard';
 
 const routes: Routes = [
   {
@@ -14,10 +15,12 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
+    canLoad: [AuthLoginGuard],
+    canActivate: [AuthLoginGuard],
   },
   {
     path: '**',
-    redirectTo: 'admin',
+    redirectTo: 'lpm',
   },
 ];
 

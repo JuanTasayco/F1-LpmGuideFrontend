@@ -6,7 +6,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { UserService } from '../../services/user.service';
+import { ResponseError, UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -59,10 +60,13 @@ export class LoginComponent implements OnInit {
     if (this.formLogin.valid) {
       this.userService
         .loginUser(this.formLogin.value)
-        .subscribe(({ valor, msg }) => {
-          console.log(valor, msg);
+        .subscribe((response: boolean | ResponseError) => {
+          if (typeof response === 'boolean') {
+            this.route.navigateByUrl('/admin/usuarios');
+          } else {
+            console.log(response);
+          }
         });
-      /*   this.formLogin.reset(); */
     } else {
       this.formLogin.markAllAsTouched();
     }
@@ -70,6 +74,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private route: Router
   ) {}
 }

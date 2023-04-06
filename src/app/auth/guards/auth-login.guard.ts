@@ -1,19 +1,48 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import {
+  ActivatedRouteSnapshot,
+  CanLoad,
+  Route,
+  Router,
+  RouterStateSnapshot,
+  UrlSegment,
+} from '@angular/router';
+import { Observable, tap } from 'rxjs';
+import { UserService } from '../services/user.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthLoginGuard implements CanActivate, CanLoad {
+export class AuthLoginGuard {
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+    state: RouterStateSnapshot
+  ): Observable<boolean> | boolean {
+    return this.userService.verifyTokenForAccess().pipe(
+      tap((valid) => {
+        if (!valid) {
+          /* falta controlar el mensaje que se envía acá y a donde redirige  */
+          console.log('usuario inválido');
+          this.router.navigateByUrl('./');
+        }
+      })
+    );
   }
   canLoad(
     route: Route,
-    segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+    segments: UrlSegment[]
+  ): Observable<boolean> | Promise<boolean> | boolean {
+    return this.userService.verifyTokenForAccess().pipe(
+      tap((valid) => {
+        if (!valid) {
+          console.log(valid);
+        }
+      })
+    );
   }
+
+  get statusActiveUser(): boolean {
+    return this.userService.user.isActive ?? false;
+  }
+  constructor(private userService: UserService, private router: Router) {}
 }
