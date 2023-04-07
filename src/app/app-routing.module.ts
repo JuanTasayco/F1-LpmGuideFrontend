@@ -4,6 +4,11 @@ import { AuthLoginGuard } from './auth/guards/auth-login.guard';
 
 const routes: Routes = [
   {
+    path: 'front',
+    loadChildren: () =>
+      import('./front-lpm/front-lpm.module').then((m) => m.FrontLpmModule),
+  },
+  {
     path: 'lpm',
     loadChildren: () => import('./lpm/lpm.module').then((m) => m.LpmModule),
   },
@@ -20,7 +25,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'lpm',
+    redirectTo: 'front',
   },
 ];
 

@@ -19,4 +19,5 @@
 @use "./app/admin/shared/instructions-banner/instructions-banner.component" as
   adminBanner;
 
-
+@use "./app/front-lpm/pages/home-design/home-design.component";
+@use "./app/front-lpm/shared/nav-principal/nav-principal.component";

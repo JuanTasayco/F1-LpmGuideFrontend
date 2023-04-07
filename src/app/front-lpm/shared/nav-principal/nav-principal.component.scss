@@ -1,0 +1,44 @@
+/* Definimos nuestras propias clases personalizadas */
+
+.Np-collapse {
+  border: "2px solid red";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navb {
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+
+  .nav-item {
+    margin-left: 24px;
+
+    .links {
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.2s ease-in-out;
+
+      &:hover {
+        color: #2b95d6;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 100%;
+        background-color: #2b95d6;
+        transform: scaleX(0);
+        transform-origin: bottom left;
+        transition: transform 0.2s ease-in-out;
+      }
+
+      &:hover::after {
+        transform: scaleX(1);
+      }
+    }
+  }
+}
