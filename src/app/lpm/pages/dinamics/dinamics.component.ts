@@ -6,23 +6,25 @@ import { LpmService } from '../../services/lpm.service';
 
 @Component({
   selector: 'app-dinamics',
-  templateUrl: './dinamics.component.html'
+  templateUrl: './dinamics.component.html',
 })
 export class DinamicsComponent implements OnInit {
-
-  constructor(private route: Router,
+  constructor(
+    private route: Router,
     private activatedRoute: ActivatedRoute,
-    private lpmService: LpmService) { }
+    private lpmService: LpmService
+  ) {}
 
   sectionContent!: Seccion;
 
   ngOnInit(): void {
     this.activatedRoute.params
-      .pipe(switchMap(({ title }) => this.lpmService.getSectionesByTitle(title)))
-      .subscribe(infoSection => {
+      .pipe(
+        switchMap(({ title }) => this.lpmService.getSectionesByTitle(title))
+      )
+      .subscribe((infoSection) => {
+ 
         this.sectionContent = infoSection;
-      })
-
-  };
-
+      });
+  }
 }

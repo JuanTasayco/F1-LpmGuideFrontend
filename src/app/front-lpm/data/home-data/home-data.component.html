@@ -1,0 +1,13 @@
+<div class="miniSidenav">
+  <div
+    class="miniSidenav-item"
+    #block
+    *ngFor="let data of dataSidenav; let i = index"
+    (click)="selectOption(i, block)"
+  >
+    <h5 class="text-light">{{ data.title }}</h5>
+    <p class="mt-3">{{ data.description }}</p>
+  </div>
+</div>
+
+<!-- activeMiniSidenav para activar estilo de click -->

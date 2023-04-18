@@ -7,7 +7,7 @@
     <h2 class="Resumen-h2 text-muted my-2 fs-4 mt-5">Flujo principal del sistema</h2>
 
     <div class="my-4">
-        <p-timeline [value]="cardsDescription" align="alternate">
+        <p-timeline [value]="cardsDescription" align="alternate" class="timeline">
             <ng-template pTemplate="marker" let-event>
                 <span class="custom-marker shadow-2" [style.backgroundColor]="event.color">
                     <i [ngClass]="event.icon"></i>

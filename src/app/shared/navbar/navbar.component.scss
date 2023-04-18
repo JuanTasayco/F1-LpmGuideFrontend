@@ -1,46 +1,42 @@
 @use "src/_custom" as *;
 
-
 .Header {
+  font-size: $font-mayuscula;
+  /*     background-color: red; */
+  background-color: #396fa1;
 
-    font-size: $font-mayuscula;
-    /*     background-color: red; */
-    background-color: #396FA1;
+  &-logo {
+    height: 2rem;
+    filter: brightness(1.1);
+    background-color: white;
+    opacity: 0.8;
+    border-radius: 0.2rem;
 
-    &-logo {
-        height: 2.0rem;
-        filter: brightness(1.1);
-        background-color: white;
-        opacity: .8;
-        border-radius: .2rem;
-
-        &.hamburguer {
-            border-radius: 50%;
-        }
+    &.hamburguer {
+      border-radius: 50%;
     }
+  }
 
-    &-svg {
-        width: 5rem;
-        height: 2rem;
+  &-svg {
+    width: 5rem;
+    height: 2rem;
+  }
+
+  &-nav {
+    border-right: 0.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.3rem;
+
+    &--click {
+      display: flex;
+      align-items: center;
+      z-index: 99;
+      background-color: #396fa1;
+      /* background: linear-gradient(90deg, rgba(19, 38, 54, 1) 6%, rgba(57, 111, 161, 1) 47%, rgba(19, 38, 54, 1) 97%); */
+
+      &:hover {
+        opacity: 0.5;
+        cursor: pointer;
+      }
     }
-
-    &-nav {
-        border-right: .5px solid rgba(255, 255, 255, 0.2);
-        border-radius: .3rem;
-
-        &--click {
-            display: flex;
-            align-items: center;
-            z-index: 99;
-            background-color: #396FA1;
-            /* background: linear-gradient(90deg, rgba(19, 38, 54, 1) 6%, rgba(57, 111, 161, 1) 47%, rgba(19, 38, 54, 1) 97%); */
-
-            &:hover {
-                opacity: 0.5;
-                cursor: pointer;
-            }
-
-        }
-
-    }
+  }
 }

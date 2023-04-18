@@ -1,0 +1,31 @@
+.Footfront {
+
+  &-line {
+    width: 50%;
+    margin: auto;
+  }
+  &-descriptions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &-socials{
+    display: flex;
+    gap:15px
+  }
+}
+
+#mi-linea {
+  height: 2px;
+  background-image: linear-gradient(to right, black, #00c4ff);
+  animation: animate 2s ease-in-out infinite;
+}
+
+@keyframes animate {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

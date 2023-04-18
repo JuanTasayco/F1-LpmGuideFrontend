@@ -1,21 +1,31 @@
 @use "src/_custom" as *;
 
-
 .Data {
-    &-img {}
+  &-p {
+    font-size: 16px;
+  }
 
-    &-p {
-        font-size: 16px;
-    }
+  &-cspinner {
+    max-height: 20rem;
+    max-width: 20rem;
+    position: relative;
+  }
 
-    &-cspinner {
-        max-height: 20rem;
-        max-width: 20rem;
-        position: relative;
-    }
+  &-spinner {
+    height: 10rem;
+    width: 10rem;
+  }
 
-    &-spinner {
-        height: 10rem;
-        width: 10rem;
+  &-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+  &-images {
+    width: 50%;
+    @include media-breakpoint-down(lg) {
+      width: 100%;
     }
+  }
 }

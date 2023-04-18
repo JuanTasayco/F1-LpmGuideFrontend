@@ -18,7 +18,7 @@ interface timeLineDesc {
 @Component({
   selector: 'app-resumen',
   templateUrl: './resumen.component.html',
-  styleUrls: ['./resumen.component.scss']
+  styleUrls: []
 })
 export class ResumenComponent implements OnInit {
 

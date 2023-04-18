@@ -1,17 +1,17 @@
-@use 'src/_custom' as *;
+@use "src/_custom" as *;
 
 .Sidenav {
-    background-color: #F5F5F5;
+  /*    background-color: #F5F5F5; */
 
-    &-button {
-        font-size: 13px;
-        text-transform: uppercase;
-        font-weight: bolder;
-    }
+  &-button {
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: bolder;
+  }
 
-    &-a{
-        font-size: 13px;
-        text-transform: capitalize;
-    }
+  &-a {
+    font-size: 13px;
+    text-transform: capitalize;
 
+  }
 }

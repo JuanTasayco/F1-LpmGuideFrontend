@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { ResponseError, UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { SwalFireService } from 'src/app/admin/services/swal-fire.service';
 
 @Component({
   selector: 'app-login',
@@ -64,10 +65,11 @@ export class LoginComponent implements OnInit {
           if (typeof response === 'boolean') {
             this.route.navigateByUrl('/admin/usuarios');
           } else {
-            console.log(response);
+            this.SwalService.errorMessage(response);
           }
         });
     } else {
+      this.SwalService.formularyNotValid();
       this.formLogin.markAllAsTouched();
     }
   }
@@ -75,6 +77,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private route: Router
+    private route: Router,
+    private SwalService: SwalFireService
   ) {}
 }

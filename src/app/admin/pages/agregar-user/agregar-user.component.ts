@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/auth/services/user.service';
 import { User } from '../../interfaces/user-interface';
 import Swal from 'sweetalert2';
+import { switchMap } from 'rxjs';
+import { SwalFireService } from '../../services/swal-fire.service';
 
 @Component({
   selector: 'app-agregar-user',
@@ -13,7 +15,9 @@ export class AgregarUserComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private route: Router
+    private route: Router,
+    private activateRoute: ActivatedRoute,
+    private swalService: SwalFireService
   ) {}
 
   formUser!: FormGroup;
@@ -68,7 +72,7 @@ export class AgregarUserComponent implements OnInit {
         roles: dataUser.roles,
         ciudad: dataUser.ciudad,
         imagenUrl: dataUser.imagenUrl,
-        password: 'contraseñaEncriptada',
+        password: '',
       });
     });
   }
@@ -94,20 +98,32 @@ export class AgregarUserComponent implements OnInit {
         const id = this.formUser.get('id')?.value;
         this.userService
           .updateUserById(id, this.elementsChanged)
-          .subscribe(console.log);
+          .subscribe(() => {
+            this.swalService.changeEditSuccess();
+          });
       } else {
-        Swal.fire({
-          title: 'No se detectaron cambios en el formulario',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown',
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp',
-          },
-        });
+        this.swalService.noDetectChangesForm();
       }
     } else {
+      this.swalService.formularyNotValid();
       this.formUser.markAllAsTouched();
     }
+  }
+
+  deleteUser() {
+    this.swalService.questionBeforeDelete().then((result) => {
+      if (result.isConfirmed) {
+        this.activateRoute.params
+          .pipe(switchMap(({ id }) => this.userService.deleteUser(id)))
+          .subscribe(() => {
+            this.swalService.messageDelete().then(() => {
+              this.route.navigate(['/admin/usuarios']);
+              setTimeout(() => {
+                location.reload();
+              }, 100);
+            });
+          });
+      }
+    });
   }
 }

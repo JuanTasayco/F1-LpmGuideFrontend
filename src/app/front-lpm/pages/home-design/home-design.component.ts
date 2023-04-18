@@ -13,8 +13,9 @@ import Typed from 'typed.js';
   styleUrls: [],
 })
 export class HomeDesignComponent implements OnInit, AfterViewInit {
-  @ViewChildren('img') imagenesTitle!: QueryList<ElementRef>;
+  posEventSidenav: number = 0;
 
+  @ViewChildren('img') imagenesTitle!: QueryList<ElementRef>;
   ngOnInit(): void {
     /* animacion escritura */
     const options = {
@@ -23,7 +24,6 @@ export class HomeDesignComponent implements OnInit, AfterViewInit {
       startDelay: 1000,
       loop: true,
     };
-
     const typed = new Typed('#code', options);
     /* final animación escritura */
     this.animationImagesTitle();
@@ -32,7 +32,6 @@ export class HomeDesignComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {}
 
   animationImagesTitle() {
-    console.log('hola');
     let i: number = 0;
     setInterval(() => {
       i++;
@@ -45,5 +44,8 @@ export class HomeDesignComponent implements OnInit, AfterViewInit {
 
       this.imagenesTitle.toArray()[i].nativeElement.classList.add('active');
     }, 1000);
+  }
+  getEventSidenav(event: any) {
+    this.posEventSidenav = event;
   }
 }

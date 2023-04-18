@@ -1,8 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -10,12 +6,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { Content, Register } from '../../interfaces/register-interface';
 import { AdminService } from '../../services/admin.service';
 import Swal from 'sweetalert2';
+import { SwalFireService } from '../../services/swal-fire.service';
 
 interface AddForm {
   titulo: string;
@@ -68,8 +64,7 @@ export class AgregarComponent implements OnInit {
     private activatedRouter: ActivatedRoute,
     private route: Router,
     private formBuilder: FormBuilder,
-    private sanitizer: DomSanitizer,
-    private changeDetector: ChangeDetectorRef
+    private swalService: SwalFireService
   ) {}
 
   buttonSection: string = '';
@@ -319,22 +314,14 @@ export class AgregarComponent implements OnInit {
             });
           } else {
             this.formLogin.reset();
-            Swal.fire(
-              'Agregado exitosamente',
-              'La sección fue añadida correctamente',
-              'success'
-            ).then(() => {
+            this.swalService.changeAddSuccess().then(() => {
               this.deleteAlltoChange();
               location.reload();
             });
           }
         });
       } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Falta lllenar algunos campos, por favor verifica el formulario',
-        }).then(() => {
+        this.swalService.formularyNotValid().then(() => {
           this.formLogin.markAllAsTouched();
           this.contentForm.markAllAsTouched();
         });
@@ -360,60 +347,25 @@ export class AgregarComponent implements OnInit {
             )
           )
           .subscribe(() => {
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'El cambio fue editado correctamente',
-              showConfirmButton: false,
-              timer: 1500,
-            }).then(() => {
-              /*   location.reload(); */
+            this.swalService.changeEditSuccess().then(() => {
+              location.reload();
             });
           });
       } else if (this.formLogin.invalid) {
-        Swal.fire({
-          title:
-            'Este formulario no es válido, asegurate de haber llenado todos los campos',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown',
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp',
-          },
-        });
+        this.swalService.formularyNotValid();
       } else {
-        Swal.fire({
-          title: 'No se detectaron cambios en el formulario',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown',
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp',
-          },
-        });
+        this.swalService.noDetectChangesForm();
       }
     }
   }
 
   deleteSection() {
-    Swal.fire({
-      title: 'Estás seguro?',
-      text: 'Estos cambios no se podrán revertir!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, borrar!',
-    }).then((result) => {
+    this.swalService.questionBeforeDelete().then((result) => {
       if (result.isConfirmed) {
         this.activatedRouter.params
           .pipe(switchMap(({ id }) => this.adminService.deleteSection(id)))
           .subscribe(() => {
-            Swal.fire(
-              'Borrado exitosamente',
-              'La sección ha sido eliminada',
-              'success'
-            ).then(() => {
+            this.swalService.messageDelete().then(() => {
               this.route.navigate(['/admin/agregar']);
               /* timeOut permit that location before executed that navigation route*/
               setTimeout(() => {

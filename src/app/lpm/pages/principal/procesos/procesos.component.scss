@@ -1,15 +1,22 @@
 @use "src/_custom" as *;
 
-
 .Procesos {
+  &-col {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    &-col {
-        padding: 1rem;
+  &-img {
+    height: 100%;
+  }
 
+  &-images {
+    width: 50%;
+    @include media-breakpoint-down(lg) {
+      width: 100%;
     }
-
-    &-img {
-        height: 100%;
-
-    }
+  }
 }

@@ -1,33 +1,46 @@
-<div class="Sidenav m-0 h-100 " #sidenav>
-    <div class="accordion p-2" id="accordionSidenav">
-
-
-        <div class="accordion-item" *ngFor="let itemKeys of a | keyvalue ; let i = index">
-            <h2 class="accordion-header" [id]="itemKeys.key"> <!-- id button -->
-                <button class="Sidenav-button accordion-button rounded-2" type="button" data-bs-toggle="collapse"
-                    [attr.data-bs-target]="'#collapseOne'+i" aria-expanded="true"
-                    [attr.aria-controls]="'collapseOne'+i">
-                    <!-- 2 collapseOne +i+idata-bs aria-controls -->
-                    {{itemKeys.key}}
-
-                </button>
-            </h2>
-            <!-- collapse one -->
-            <div [id]="'collapseOne'+i" class="accordion-collapse collapse show" [attr.aria-labelledby]="itemKeys.key">
-                <div class="accordion-body">
-                    <ul class="nav flex-column">
-                        <li class="nav-item" *ngFor="let seccion of itemKeys.value | keyVal">
-                            <a [routerLink]="['/lpm/',seccion.section ,seccion.title]"
-                                class="Sidenav-a nav-link text-dark">{{seccion.title2}}</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
+<div class="Sidenav m-0 h-100" #sidenav>
+  <div class="accordion p-2" id="accordionSidenav">
+    <div
+      class="accordion-item"
+      *ngFor="let itemKeys of a | keyvalue; let i = index"
+    >
+      <h2 class="accordion-header" [id]="itemKeys.key">
+        <!-- id button -->
+        <button
+          class="Sidenav-button accordion-button rounded-2"
+          type="button"
+          data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#collapseOne' + i"
+          aria-expanded="true"
+          [attr.aria-controls]="'collapseOne' + i"
+        >
+          <!--  -->
+          <!-- itemKeys -> 'asistencias': {id,section,title,title2}, 'vacaciones': {} -->
+          <!-- get sections  : asistencias, vacaciones, ...-->
+          {{ itemKeys.key }}
+        </button>
+      </h2>
+      <!-- collapse one -->
+      <div
+        [id]="'collapseOne' + i"
+        class="accordion-collapse collapse show"
+        [attr.aria-labelledby]="itemKeys.key"
+      >
+        <div class="accordion-body">
+          <ul class="nav flex-column">
+            <li
+              class="nav-item"
+              *ngFor="let seccion of itemKeys.value | removeRef"
+            >
+              <a
+                [routerLink]="['/lpm/', seccion.section, seccion.title]"
+                class="Sidenav-a nav-link text-dark"
+                >{{ seccion.title2 }}</a
+              >
+            </li>
+          </ul>
         </div>
-
-
+      </div>
     </div>
-
-
+  </div>
 </div>

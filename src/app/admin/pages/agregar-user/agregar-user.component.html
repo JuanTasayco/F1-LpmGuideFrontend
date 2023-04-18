@@ -187,12 +187,20 @@
             >
           </div>
 
-          <div class="d-flex justify-content-center justify-content-md-start">
+          <div class="d-flex justify-content-evenly justify-content-md-evenly">
             <button
-              class="AddUser-button btn btn-danger px-4 py-3"
+              class="AddUser-button btn btn-info px-4 py-3 text-light"
               type="submit"
             >
-              Guardar
+              Actualizar
+            </button>
+
+            <button
+              class="AddUser-button btn btn-danger px-4 py-3"
+              type="button"
+              (click)="deleteUser()"
+            >
+              Borrar
             </button>
           </div>
         </form>

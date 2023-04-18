@@ -20,6 +20,8 @@ export interface ResponseError {
 export class UserService {
   constructor(private http: HttpClient) {}
   private _user!: UserAuth;
+  errorAuthorization: string = '';
+
   baseUrl: string = environment.url;
 
   createUser(formUser: User): Observable<any> {
@@ -54,8 +56,15 @@ export class UserService {
           this._user = result;
         }),
         map(() => true),
-        catchError(() => of(false))
+        catchError((err) => {
+          this.errorAuthorization = err.error.message;
+          return of(false);
+        })
       );
+  }
+
+  deleteUser(id: string): Observable<string> {
+    return this.http.delete<string>(`${this.baseUrl}/auth/delete/${id}`);
   }
 
   getAllUsers(): Observable<User[]> {

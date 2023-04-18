@@ -27,11 +27,10 @@
     <p>{{ contIntro.subtitles }}</p>
     <p-image
       [src]="contIntro.imagesUrl"
-      class="Data-img img-fluid"
+      class="Data-images"
       alt="Image"
       [preview]="true"
       width="100%"
-      height="100%"
     >
       <ng-template pTemplate="indicator"> Presiona para Ver </ng-template>x
     </p-image>
@@ -44,13 +43,13 @@
       <h5 class="Data-h5 fw-bold fs-4 text-md-start">Procedimiento</h5>
 
       <div
-        class="Data-col col-lg-12 m-auto pt-4"
+        class="Data-section col-lg-12 pt-4 mt-4"
         *ngFor="let contenido of content.contenido"
       >
         <p>{{ contenido.subtitles }}</p>
         <p-image
           [src]="contenido.imagesUrl"
-          class="Data-img"
+          class="Data-images"
           alt="Image"
           [preview]="true"
           #image

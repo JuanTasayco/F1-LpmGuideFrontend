@@ -3,7 +3,6 @@
     <!-- whiteSpace -->
     <div class="Sign-section d-none d-xl-block col-xl-3 col-xxl-4"></div>
     <!-- end whiteSpace -->
-
     <!-- Form -->
     <div class="Sign-section col-12 col-xl-4 col-xxl-3 px-5 my-auto">
       <form
@@ -13,7 +12,7 @@
         [formGroup]="formRegister"
       >
         <div class="Sign-contImg text-center pb-5">
-          <img src="assets/logo.jpg" alt="" class="Sign-logo my-2" />
+          <img src="assets/logo.jpg" alt="" class="Login-logo my-2" />
         </div>
 
         <div class="Sign-descriptions mb-5">
@@ -112,7 +111,9 @@
 
           <div class="Sign-col col-md-6">
             <p class="lead fs-6">
-              <a routerLink="/auth/login">Ya tienes una cuenta? </a>
+              <a routerLink="/auth/login" class="text-decoration-none"
+                >Ya tienes una cuenta?
+              </a>
             </p>
           </div>
         </div>

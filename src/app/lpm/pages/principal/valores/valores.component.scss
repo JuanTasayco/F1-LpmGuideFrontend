@@ -1,12 +1,17 @@
 @use "src/_custom" as *;
 
 .Valores {
+  &-col {
+    padding: 1rem;
+  }
 
-    &-col {
-        padding: 1rem
+  &-img {
+    height: 100%;
+  }
+  &-images {
+    width: 50%;
+    @include media-breakpoint-down(lg) {
+      width: 100%;
     }
-
-    &-img {
-        height: 100%;
-    }
+  }
 }

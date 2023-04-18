@@ -4,11 +4,13 @@
     src="assets/logo.jpg"
     routerLink="/lpm/principal/resumen"
   />
-  <div class="Aheader-contentUser">
-    <small class="text-light me-3">Bienvenido {{ "Juan José" }}</small>
+  <div class="Aheader-contentUser" *ngIf="user">
+    <small class="text-light me-3" 
+      >Bienvenido {{ user.nombre ?? "" }} {{ user.apellido ?? "" }}</small
+    >
     <div class="Aheader-userAvatar dropdown">
       <img
-        src="assets/loginBg.jpg"
+        [src]="user.imagenUrl"
         alt="User avatar"
         class="Aheader-img img-fluid"
         data-bs-toggle="dropdown"
