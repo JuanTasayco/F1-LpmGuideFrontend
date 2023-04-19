@@ -89,7 +89,7 @@
       <div formArrayName="ingreso">
         <div
           class="Agregar-adicional mb-3 px-5 py-2"
-          *ngFor="let element of ingreso.controls.reverse(); let i = index"
+          *ngFor="let element of ingreso.controls; let i = index"
           [formGroupName]="i"
         >
           <div>
@@ -188,7 +188,7 @@
       <div formArrayName="contenido">
         <div
           class="Agregar-adicional mb-3 px-5 py-2"
-          *ngFor="let element of contenido.controls.reverse(); let i = index"
+          *ngFor="let element of contenido.controls; let i = index"
           [formGroupName]="i"
         >
           <div>

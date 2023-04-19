@@ -101,6 +101,7 @@ export class AgregarComponent implements OnInit {
       this.activatedRouter.params
         .pipe(switchMap(({ id }) => this.adminService.getDataByIdForEdit(id)))
         .subscribe((section) => {
+          console.log(section);
           this.deleteAlltoChange();
           this.completeSection = section;
           this.formLogin.patchValue({
@@ -151,8 +152,7 @@ export class AgregarComponent implements OnInit {
           publicIdImage: new FormControl(a.publicIdImage ?? ''),
         })
       );
-
-      arrayImagenesCloudinary.unshift(<string>a.imagesUrl);
+      arrayImagenesCloudinary.push(<string>a.imagesUrl);
     });
   }
 
@@ -208,7 +208,7 @@ export class AgregarComponent implements OnInit {
   }
 
   addIntroBlock() {
-    this.imagenesIngreso.unshift(this.fileIntro ?? '');
+    this.imagenesIngreso.push(this.fileIntro ?? '');
     this.ingreso.push(
       this.formBuilder.group({
         subtitles: [
@@ -246,7 +246,7 @@ export class AgregarComponent implements OnInit {
   }
 
   addContenidoBlock() {
-    this.imagenesContenido.unshift(this.fileCont ?? '');
+    this.imagenesContenido.push(this.fileCont ?? '');
     this.contenido.push(
       this.formBuilder.group({
         subtitles: [
@@ -268,7 +268,7 @@ export class AgregarComponent implements OnInit {
     arrayBase64: string[]
   ) {
     /* logic */
-    array.controls[array.length - 1 - valor].get('imagesUrl')?.setValue(file);
+    array.controls[valor].get('imagesUrl')?.setValue(file);
     arrayBase64.splice(valor, 1);
     arrayBase64.splice(valor, 0, <string>file);
   }
@@ -327,6 +327,8 @@ export class AgregarComponent implements OnInit {
         });
       }
 
+      /* problema del front al eliminar */
+
       /* edit */
     } else {
       /* filterElementsChanged */
@@ -335,11 +337,12 @@ export class AgregarComponent implements OnInit {
           this.elementsChanged[key] = this.formLogin.get(key)?.value;
         }
       });
-
+      console.log('elementos cambiados', this.elementsChanged);
       if (
         Object.keys(this.elementsChanged).length > 0 &&
         this.formLogin.valid
       ) {
+        console.log('form actual', this.formLogin.value);
         this.activatedRouter.params
           .pipe(
             switchMap(({ id }) =>
@@ -348,7 +351,7 @@ export class AgregarComponent implements OnInit {
           )
           .subscribe(() => {
             this.swalService.changeEditSuccess().then(() => {
-              location.reload();
+              /*  location.reload(); */
             });
           });
       } else if (this.formLogin.invalid) {
