@@ -54,5 +54,9 @@ export class AdminService {
     return this.http.patch(`${this.url}/lpm/section/${id}`, section);
   }
 
+  deleteImagesCloudinary(publicIds: string[]) {
+    return this.http.post(`${this.url}/lpm/delete/cloudimage`, publicIds);
+  }
+
   constructor(private http: HttpClient) {}
 }

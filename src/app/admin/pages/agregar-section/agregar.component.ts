@@ -76,6 +76,7 @@ export class AgregarComponent implements OnInit {
 
   imagenesIngreso: string[] = [];
   imagenesContenido: string[] = [];
+  publicIdDeleteCloudinary: string[] = [];
 
   /* method for router, info that fills info and form builder declaration*/
   ngOnInit(): void {
@@ -101,7 +102,6 @@ export class AgregarComponent implements OnInit {
       this.activatedRouter.params
         .pipe(switchMap(({ id }) => this.adminService.getDataByIdForEdit(id)))
         .subscribe((section) => {
-          console.log(section);
           this.deleteAlltoChange();
           this.completeSection = section;
           this.formLogin.patchValue({
@@ -275,17 +275,23 @@ export class AgregarComponent implements OnInit {
 
   /* deleteBlockContentAditional */
   deleteIntroBlock(index: number) {
+    this.publicIdDeleteCloudinary.push(
+      this.ingreso.value[index]?.publicIdImage ?? ''
+    );
     this.ingreso.removeAt(index, {
       emitEvent: true,
     });
+
     this.imagenesIngreso.splice(index, 1);
   }
 
   deleteContBlock(index: number) {
+    this.publicIdDeleteCloudinary.push(
+      this.contenido.value[index]?.publicIdImage ?? ''
+    );
     this.contenido.removeAt(index, {
       emitEvent: true,
     });
-
     this.imagenesContenido.splice(index, 1);
   }
 
@@ -337,12 +343,21 @@ export class AgregarComponent implements OnInit {
           this.elementsChanged[key] = this.formLogin.get(key)?.value;
         }
       });
-      console.log('elementos cambiados', this.elementsChanged);
       if (
         Object.keys(this.elementsChanged).length > 0 &&
         this.formLogin.valid
       ) {
-        console.log('form actual', this.formLogin.value);
+        /* borrarImagenes independiente de cloudinary */
+        /* uso filter Boolean para borrar los posibles falsy values en caso agregue y borre */
+        if (this.publicIdDeleteCloudinary.filter(Boolean).length > 0) {
+          this.adminService
+            .deleteImagesCloudinary(
+              this.publicIdDeleteCloudinary.filter(Boolean)
+            )
+            .subscribe();
+        }
+
+        /* procedo a enviar la información actualizada al backend */
         this.activatedRouter.params
           .pipe(
             switchMap(({ id }) =>
@@ -351,7 +366,7 @@ export class AgregarComponent implements OnInit {
           )
           .subscribe(() => {
             this.swalService.changeEditSuccess().then(() => {
-              /*  location.reload(); */
+              location.reload();
             });
           });
       } else if (this.formLogin.invalid) {

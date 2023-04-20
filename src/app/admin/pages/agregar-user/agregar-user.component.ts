@@ -52,7 +52,6 @@ export class AgregarUserComponent implements OnInit {
 
   get emailProblemValidation(): string {
     const error = this.formUser.get('email')?.errors;
-    console.log(error);
     return '';
   }
 
