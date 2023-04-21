@@ -102,8 +102,11 @@ export class AgregarComponent implements OnInit {
       this.activatedRouter.params
         .pipe(switchMap(({ id }) => this.adminService.getDataByIdForEdit(id)))
         .subscribe((section) => {
+          this.imagenesIngreso = [];
+          this.imagenesContenido = [];
           this.deleteAlltoChange();
           this.completeSection = section;
+          console.log('valuesTraidos', this.completeSection);
           this.formLogin.patchValue({
             id: this.completeSection.id,
             titulo: this.completeSection.titulo,
@@ -125,6 +128,8 @@ export class AgregarComponent implements OnInit {
             this.imagenesContenido
           );
 
+          console.log('imagenesIngresoActual', this.imagenesIngreso);
+          console.log('imagenesContenidoActual', this.imagenesContenido);
           this.ingreso.valueChanges.subscribe((valor) => {
             this.elementsChanged['ingreso'] = valor;
           });
@@ -133,6 +138,8 @@ export class AgregarComponent implements OnInit {
             this.elementsChanged['contenido'] = valor;
           });
         });
+
+      console.log('formulario actual', this.formLogin.value);
     } else {
       this.buttonSection = 'Agregar';
     }
@@ -152,6 +159,7 @@ export class AgregarComponent implements OnInit {
           publicIdImage: new FormControl(a.publicIdImage ?? ''),
         })
       );
+
       arrayImagenesCloudinary.push(<string>a.imagesUrl);
     });
   }
