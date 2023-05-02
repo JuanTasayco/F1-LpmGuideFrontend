@@ -6,9 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class StatusUserPipe implements PipeTransform {
   transform(value: boolean = false): string {
     if (value == true) {
-      return 'activo';
+      return 'Activo';
     } else {
-      return 'inactivo';
+      return 'Inactivo';
     }
   }
 }

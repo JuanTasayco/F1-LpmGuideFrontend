@@ -1,210 +1,114 @@
 <div class="AddUser p-0" data-bs-theme="light">
-  <div class="AddUser-header py-4 px-5 border">
-    <div class="container">
+  <div class="AddUser-header py-2 px-5 border">
+    <div class="AddUser-menu container">
       <h2 class="fw-bold">Menú Perfiles</h2>
-    </div>
-  </div>
-
-  <div class="AddUser-container container">
-    <div class="AddUser-row row m-0 border-top">
-      <!-- select users for edit -->
-      <div class="col-xl-6 border-end px-5 py-3">
-        <h3>Perfiles registrados</h3>
-        <table class="AddUser-table table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">N°</th>
-              <th scope="col">Status</th>
-              <th scope="col">Email</th>
-              <th scope="col">Usuario</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              *ngFor="let user of users; let i = index"
-              (click)="getInfoByUser(user.id ?? '')"
-            >
-              <th scope="row">{{ i + 1 }}</th>
-              <td [ngClass]="getUserClass(user)">
-                {{ user.isActive | statusUser | titlecase }}
-              </td>
-              <td>{{ user.email }}</td>
-              <td>{{ user.nombre | titlecase }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- add User -->
-      <div class="col-xl-6 px-md-5 p-4">
-        <div class="AddUser-title mt-4">
-          <h1 class="fw-bold display-5">Editar perfil</h1>
-        </div>
-
-        <form
-          action=""
-          (ngSubmit)="send()"
-          class="AddUser-form row row gy-4 mt-3"
-          [formGroup]="formUser"
+      <div class="AddUser-search position-relative">
+        <input
+          type="name"
+          class="AddUser-input form-control"
+          (input)="getText($event)"
+          placeholder="Buscar usuario"
+        />
+        <ul
+          #menuV
+          *ngIf="usersFilter && menuVisible"
+          class="AddUser-ul position-absolute w-100 list-group"
         >
-          <label for="" class="">Elige el tipo de usuario:</label>
-          <div
-            class="AddUser-radioButtons col-md-12 d-flex justify-content-evenly"
+          <li
+            *ngFor="let userFilter of usersFilter"
+            class="AddUser-li list-group-item"
+            (click)="prueba(userFilter.id)"
           >
-            <div class="form-check border px-5 py-3 rounded-2">
-              <input
-                class="form-check-input"
-                type="radio"
-                formControlName="roles"
-                id="exampleRadios1"
-                value="user"
-                checked
-              />
-              <label class="form-check-label" for="exampleRadios1">
-                Usuario
-              </label>
-            </div>
-
-            <div class="form-check border px-5 py-3 rounded-2">
-              <input
-                class="form-check-input"
-                type="radio"
-                formControlName="roles"
-                id="exampleRadios2"
-                value="admin"
-              />
-              <label class="form-check-label" for="exampleRadios2">
-                Administrador
-              </label>
-            </div>
-          </div>
-
-          <div class="col-md-12 d-flex justify-content-center">
-            <img
-              [src]="
-                this.formUser.get('imagenUrl')?.value || 'assets/loginBg.jpg'
-              "
-              class="AddUser-imgUser"
-              alt=""
-            />
-          </div>
-
-          <div class="AddUser-group form-group col-md-6">
-            <label class="form-label" for="nombre">{{
-              "nombre" | titlecase
-            }}</label>
-            <input
-              type="text"
-              class="AddUser-input form-control"
-              formControlName="nombre"
-            />
-            <small class="text-danger" *ngIf="detectProblem('nombre')"
-              >Este campo es obligatorio</small
-            >
-          </div>
-
-          <div class="AddUser-group form-group col-md-6">
-            <label class="form-label" for="apellido">{{
-              "apellido" | titlecase
-            }}</label>
-            <input
-              type="text"
-              class="AddUser-input form-control"
-              formControlName="apellido"
-            />
-            <small class="text-danger" *ngIf="detectProblem('apellido')"
-              >Este campo es obligatorio</small
-            >
-          </div>
-
-          <div class="AddUser-group form-group col-md-12">
-            <label class="form-label" for="email">{{
-              "email" | titlecase
-            }}</label>
-            <input
-              type="text"
-              class="AddUser-input form-control"
-              formControlName="email"
-            />
-            <small class="text-danger" *ngIf="detectProblem('email')"
-              >Este campo es obligatorio</small
-            >
-          </div>
-
-          <div class="AddUser-group form-group col-md-12">
-            <label class="form-label" for="direccion">{{
-              "dirección" | titlecase
-            }}</label>
-            <input
-              type="text"
-              class="AddUser-input form-control"
-              formControlName="direccion"
-            />
-          </div>
-
-          <div class="AddUser-group form-group col-md-6">
-            <label class="form-label" for="pais">{{
-              "País" | titlecase
-            }}</label>
-            <input
-              type="text"
-              class="AddUser-input form-control"
-              formControlName="pais"
-            />
-          </div>
-
-          <div class="AddUser-group form-group col-md-6">
-            <label class="form-label" for="">{{ "ciudad" | titlecase }}</label>
-            <input
-              type="text"
-              class="AddUser-input form-control"
-              formControlName="ciudad"
-            />
-          </div>
-
-          <div class="AddUser-group form-group col-md-12">
-            <label class="AddUser-label form-label" for="imagenUrl"
-              >Imagen: *Pegar Url</label
-            >
-            <input
-              type="imagenUrl"
-              class="AddUser-input form-control"
-              formControlName="imagenUrl"
-            />
-          </div>
-
-          <div class="AddUser-group form-group col-md-12">
-            <label class="AddUser-label form-label" for="password"
-              >Contraseña:</label
-            >
-            <input
-              type="password"
-              class="AddUser-input form-control"
-              formControlName="password"
-            />
-            <small class="text-danger" *ngIf="detectProblem('password')"
-              >Este campo es obligatorio</small
-            >
-          </div>
-
-          <div class="d-flex justify-content-evenly justify-content-md-evenly">
-            <button
-              class="AddUser-button btn btn-info px-4 py-3 text-light"
-              type="submit"
-            >
-              Actualizar
-            </button>
-
-            <button
-              class="AddUser-button btn btn-danger px-4 py-3"
-              type="button"
-              (click)="deleteUser()"
-            >
-              Borrar
-            </button>
-          </div>
-        </form>
+            <a class="AddUser-a">{{
+              userFilter.nombre + " " + userFilter.apellido
+            }}</a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
+  <!--  -->
+  <div class="container mb-5">
+    <div
+      *ngIf="usersFilter.length == 0"
+      class="alert alert-danger mt-5"
+      role="alert"
+    >
+      No hay usuarios para mostrar.
+    </div>
+
+    <section
+      class="AddUser-section SectionU card my-2"
+      *ngFor="let user of usersFilter"
+    >
+      <div class="SectionU-header card-header">
+        <small> User Details</small>
+        <div class="SectionU-options SectionU-options--select dropdown">
+          <svg
+            viewBox="0 0 4 12"
+            width="8"
+            height="12"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <circle cx="2" cy="2" r="2" fill="#255" />
+            <circle cx="2" cy="6" r="2" fill="#034" />
+            <circle cx="2" cy="10" r="2" fill="#000" />
+          </svg>
+
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" (click)="goToEditPerfil(user.id ?? '')"
+                >Editar perfil</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="deleteUser(user.id ?? '')"
+                >Eliminar perfil</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="SectionU-row row">
+          <div class="SectionU-col col-md-2 SectionU-col--images">
+            <img
+              [src]="user.imagenUrl | image"
+              alt="identifierImg"
+              class="SectionU-img img-fluid rounded-2"
+            />
+          </div>
+          <div class="SectionU-col col-md-4">
+            <div class="">
+              <small>Name:</small>
+              <h6>{{ user.nombre + " " + user.apellido | titlecase }}</h6>
+            </div>
+
+            <div class="mt-4">
+              <small>Email:</small>
+              <h6>{{ user.email }}</h6>
+            </div>
+          </div>
+          <div class="SectionU-col col-md-6">
+            <div class="">
+              <small>Roles:</small>
+              <h6>{{ user.roles | titlecase }}</h6>
+            </div>
+
+            <div class="">
+              <small>Status:</small>
+              <h6>{{ user.isActive | statusUser }}</h6>
+            </div>
+
+            <div class="">
+              <small>Id:</small>
+              <h6>{{ user.id }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--  -->
 </div>

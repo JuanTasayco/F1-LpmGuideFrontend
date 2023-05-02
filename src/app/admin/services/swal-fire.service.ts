@@ -26,6 +26,14 @@ export class SwalFireService {
     );
   }
 
+  messageNotDelete(): Promise<any> {
+    return Swal.fire(
+      'No se pudo completar la eliminación',
+      `Comunicate con un administrador`,
+      'error'
+    );
+  }
+
   formularyNotValid(): Promise<any> {
     return Swal.fire({
       title:

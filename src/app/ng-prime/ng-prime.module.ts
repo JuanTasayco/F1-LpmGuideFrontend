@@ -9,10 +9,6 @@ import { ButtonModule } from 'primeng/button';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 
 import { ImageModule } from 'primeng/image';
-import { DividerModule } from 'primeng/divider';
-import { FieldsetModule } from 'primeng/fieldset';
-import { ScrollPanelModule } from 'primeng/scrollpanel';
-
 
 
 @NgModule({

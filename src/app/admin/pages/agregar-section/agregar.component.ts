@@ -106,7 +106,6 @@ export class AgregarComponent implements OnInit {
           this.imagenesContenido = [];
           this.deleteAlltoChange();
           this.completeSection = section;
-          console.log('valuesTraidos', this.completeSection);
           this.formLogin.patchValue({
             id: this.completeSection.id,
             titulo: this.completeSection.titulo,
@@ -128,8 +127,6 @@ export class AgregarComponent implements OnInit {
             this.imagenesContenido
           );
 
-          console.log('imagenesIngresoActual', this.imagenesIngreso);
-          console.log('imagenesContenidoActual', this.imagenesContenido);
           this.ingreso.valueChanges.subscribe((valor) => {
             this.elementsChanged['ingreso'] = valor;
           });
@@ -138,8 +135,6 @@ export class AgregarComponent implements OnInit {
             this.elementsChanged['contenido'] = valor;
           });
         });
-
-      console.log('formulario actual', this.formLogin.value);
     } else {
       this.buttonSection = 'Agregar';
     }

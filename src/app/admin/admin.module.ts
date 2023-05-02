@@ -13,6 +13,8 @@ import { AgregarUserComponent } from './pages/agregar-user/agregar-user.componen
 import { InstructionsBannerComponent } from './shared/instructions-banner/instructions-banner.component';
 import { NgPrimeModule } from '../ng-prime/ng-prime.module';
 import { StatusUserPipe } from './pipes/status-user.pipe';
+import { ImagePipe } from './pipes/image.pipe';
+import { EditarUsuarioComponent } from './pages/editar-usuario/editar-usuario.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { StatusUserPipe } from './pipes/status-user.pipe';
     AgregarUserComponent,
     InstructionsBannerComponent,
     StatusUserPipe,
+    ImagePipe,
+    EditarUsuarioComponent,
   ],
   imports: [
     CommonModule,

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AgregarComponent } from './pages/agregar-section/agregar.component';
 import { AgregarUserComponent } from './pages/agregar-user/agregar-user.component';
 import { HomeComponent } from './pages/home/home.component';
+import { EditarUsuarioComponent } from './pages/editar-usuario/editar-usuario.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
 
       {
         path: 'usuarios/:id',
-        component: AgregarUserComponent,
+        component: EditarUsuarioComponent,
       },
 
       {

@@ -1,10 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/auth/services/user.service';
 import { User } from '../../interfaces/user-interface';
-import Swal from 'sweetalert2';
-import { switchMap } from 'rxjs';
+import { Subject, debounceTime, switchMap } from 'rxjs';
 import { SwalFireService } from '../../services/swal-fire.service';
 
 @Component({
@@ -12,68 +19,50 @@ import { SwalFireService } from '../../services/swal-fire.service';
   templateUrl: './agregar-user.component.html',
 })
 export class AgregarUserComponent implements OnInit {
-  constructor(
-    private formBuilder: FormBuilder,
-    private userService: UserService,
-    private route: Router,
-    private activateRoute: ActivatedRoute,
-    private swalService: SwalFireService
-  ) {}
-
-  formUser!: FormGroup;
   users: User[] = [];
-  user!: User;
+  usersFilter: User[] = [];
+  menuVisible: boolean = false;
+  @ViewChild('menuV') menu!: ElementRef;
 
   ngOnInit(): void {
     this.userService.getAllUsers().subscribe((dataUsers) => {
       this.users = dataUsers;
+      this.usersFilter = dataUsers;
     });
 
-    this.formUser = this.formBuilder.group({
-      id: [''],
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      roles: ['user', Validators.required],
-      direccion: [''],
-      pais: [''],
-      ciudad: [''],
-      imagenUrl: [''],
-      password: ['', [Validators.required, Validators.minLength(3)]],
+    this.textDebounceOb.pipe(debounceTime(200)).subscribe((valueTextUser) => {
+      let valueTextUserLower = valueTextUser.toLocaleLowerCase();
+
+      this.usersFilter = this.users.filter(
+        (users) =>
+          users.nombre.toLocaleLowerCase().startsWith(valueTextUserLower) ||
+          users.apellido.toLocaleLowerCase().startsWith(valueTextUserLower)
+      );
     });
   }
 
-  detectProblem(name: string): boolean {
-    return (
-      (this.formUser.get(name)?.touched && this.formUser.get(name)?.invalid) ??
-      false
-    );
+  textDebounceOb: Subject<string> = new Subject<string>();
+  getText(event: any) {
+    this.menuVisible = true;
+    const text = event.target.value;
+    this.textDebounceOb.next(text);
   }
 
-  get emailProblemValidation(): string {
-    const error = this.formUser.get('email')?.errors;
-    return '';
+  prueba(id: string = '') {
+    this.menuVisible = false;
+    this.usersFilter = this.users.filter((user) => user.id == id);
   }
 
-  elementsChanged: any = {};
-  getInfoByUser(id: string) {
-    this.elementsChanged = {};
-    this.formUser.markAsPristine();
+  goToEditPerfil(id: string) {
     this.route.navigate(['/admin/usuarios', id]);
-    this.userService.getUserById(id).subscribe((dataUser) => {
-      this.formUser.patchValue({
-        id: dataUser.id,
-        nombre: dataUser.nombre,
-        apellido: dataUser.apellido,
-        email: dataUser.email,
-        direccion: dataUser.direccion,
-        pais: dataUser.pais,
-        roles: dataUser.roles,
-        ciudad: dataUser.ciudad,
-        imagenUrl: dataUser.imagenUrl,
-        password: '',
-      });
-    });
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutMenuVisible(event: MouseEvent) {
+    const target = event.target;
+    if (this.menuVisible == true) {
+      this.menuVisible = false;
+    }
   }
 
   getUserClass(user: User) {
@@ -83,46 +72,28 @@ export class AgregarUserComponent implements OnInit {
       return 'text-danger';
     }
   }
-
   /* sendInfoForUpdate */
-  send() {
-    if (this.formUser.valid) {
-      Object.keys(this.formUser.controls).forEach((control) => {
-        if (this.formUser.get(control)?.dirty) {
-          this.elementsChanged[control] = this.formUser.get(control)?.value;
-        }
-      });
-
-      if (Object.keys(this.elementsChanged).length > 0) {
-        const id = this.formUser.get('id')?.value;
-        this.userService
-          .updateUserById(id, this.elementsChanged)
-          .subscribe(() => {
-            this.swalService.changeEditSuccess();
-          });
-      } else {
-        this.swalService.noDetectChangesForm();
-      }
-    } else {
-      this.swalService.formularyNotValid();
-      this.formUser.markAllAsTouched();
-    }
-  }
-
-  deleteUser() {
+  deleteUser(id: string) {
     this.swalService.questionBeforeDelete().then((result) => {
       if (result.isConfirmed) {
-        this.activateRoute.params
-          .pipe(switchMap(({ id }) => this.userService.deleteUser(id)))
-          .subscribe(() => {
-            this.swalService.messageDelete().then(() => {
-              this.route.navigate(['/admin/usuarios']);
-              setTimeout(() => {
-                location.reload();
-              }, 100);
-            });
-          });
+        this.userService.deleteUser(id).subscribe((resp) => {
+          if (resp) {
+            this.swalService.messageDelete();
+            location.reload();
+          } else {
+            this.swalService.messageNotDelete();
+          }
+        });
       }
     });
   }
+
+  constructor(
+    private userService: UserService,
+    private route: Router,
+    private activateRoute: ActivatedRoute,
+    private swalService: SwalFireService,
+    private formBuilder: FormBuilder,
+    private detectorRef: ChangeDetectorRef
+  ) {}
 }

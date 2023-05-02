@@ -63,8 +63,10 @@ export class UserService {
       );
   }
 
-  deleteUser(id: string): Observable<string> {
-    return this.http.delete<string>(`${this.baseUrl}/auth/delete/${id}`);
+  deleteUser(id: string): Observable<boolean> {
+    return this.http
+      .delete<boolean>(`${this.baseUrl}/auth/delete/${id}`)
+      .pipe(catchError(() => of(false)));
   }
 
   getAllUsers(): Observable<User[]> {

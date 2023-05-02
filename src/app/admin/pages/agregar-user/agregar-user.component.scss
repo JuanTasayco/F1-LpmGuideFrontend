@@ -4,7 +4,12 @@
     display: flex;
     align-items: center;
   }
-
+  &-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
   &-imgUser {
     width: 9rem;
     height: 8rem;
@@ -12,6 +17,21 @@
     object-fit: cover;
   }
 
+  &-ul {
+    z-index: 9;
+    border-radius: 5px;
+    background-color: white;
+  }
+
+  &-li {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  &-a {
+    text-decoration: none;
+    color: black;
+  }
   &-table {
     cursor: pointer;
   }
@@ -24,5 +44,23 @@
 
   &-button {
     white-space: nowrap;
+  }
+}
+
+.SectionU {
+  &-img {
+    max-height: 6rem;
+  }
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &-col {
+    &--images {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }
