@@ -1,62 +1,55 @@
 @use "src/_custom" as *;
 
-
 .Home {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &-container {
+    flex-grow: 1;
+    position: relative;
     display: flex;
-    flex-direction: column;
+    transition: transform 20s ease;
+  }
+
+  &-sidenav {
     height: 100%;
-
-    &-container {
-        flex-grow: 1;
-        position: relative;
-        display: flex;
-        transition: transform 20s ease;
+    width: 16rem;
+    z-index: 99;
+    @include media-breakpoint-down(lg) {
+      position: absolute;
+      width: 50%;
+      inset: 0;
     }
+  }
 
-    &-sidenav {
-        height: 100%;
-        width: 16rem;
-        z-index: 99;
+  &-content {
+    flex-grow: 1;
+    height: 100vh;
+    transition: all 2s;
 
-        @include media-breakpoint-down(md) {
-            position: absolute;
-            width: 70%;
-            inset: 0;
-        }
-
+    @include media-breakpoint-down(md) {
+      flex-grow: 0;
+      width: 100%;
     }
+  }
 
-    &-content {
-        flex-grow: 1;
-        height: 100vh;
-        transition: all 2s;
-
-        @include media-breakpoint-down(md) {
-            /*   z-index: -1; */
-            flex-grow: 0;
-            width: 100%;
-        }
-    }
-
-    .expand {
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        inset: 0;
-        transition: transform 2s;
-    }
-
+  .expand {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    inset: 0;
+    transition: transform 2s;
+  }
 }
 
 .Button-over {
-    right: 0;
+  right: 0;
 }
 
 .activeOffCanvas {
-
-    position: absolute;
-    inset: 0;
-    height: 100%;
-    width: 100%;
-
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
 }

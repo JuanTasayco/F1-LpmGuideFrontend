@@ -20,7 +20,7 @@ export class NavbarComponent implements AfterViewInit {
   @Input() widthSidenav!: number;
 
 
-  menuOpenIsActive: boolean = false;
+  menuOpenIsActive: boolean = true;
   private tl = gsap.timeline({ duration: 0 });
 
 

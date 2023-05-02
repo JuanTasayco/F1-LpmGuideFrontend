@@ -26,7 +26,7 @@ export class HomeComponent implements AfterViewInit {
     /* reference to sidenav */
     this.tl.to(this.sidenav.nativeElement, {
       xPercent: -100,
-      duration: 0.3,
+      duration: 0.2,
       ease: 'none',
     });
   }
@@ -39,11 +39,9 @@ export class HomeComponent implements AfterViewInit {
     this.lpmService.getsharingObservableEvent().subscribe(() => {
       this.sidenavOpenIsActive = !this.sidenavOpenIsActive;
       this.content.nativeElement.classList.toggle('expand');
-
       if (this.sidenavOpenIsActive) {
         this.tl.play();
       } else {
-        console.log('play');
         this.tl.reverse();
       }
       this.openSidenav();
