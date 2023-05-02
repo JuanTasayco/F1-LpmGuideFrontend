@@ -2,7 +2,7 @@
   <img
     class="Header-logo"
     src="assets/logo.jpg"
-    routerLink="/lpm/principal/resumen"
+    routerLink="/admin/agregar"
   />
   <div class="Aheader-contentUser" *ngIf="user">
     <small class="text-light me-3"
@@ -18,9 +18,27 @@
       />
 
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="">Perfiles</a></li>
-        <li><a class="dropdown-item" href="">Añadir Secciones</a></li>
-        <li><a class="dropdown-item" href="">Editar Secciones</a></li>
+        <li>
+          <a class="dropdown-item" routerLink="/admin/usuarios/{{ user.id }}"
+            >Mi perfil</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" routerLink="/admin/agregar"
+            >Añadir Secciones</a
+          >
+        </li>
+        <li>
+          <a
+            class="dropdown-item"
+            routerLink="/admin/editar/2da6b635-27bd-4d5f-bac6-6ccbf0b2eda5"
+            >Editar Secciones</a
+          >
+        </li>
+
+        <li>
+          <a class="dropdown-item" (click)="salir()">Salir</a>
+        </li>
       </ul>
     </div>
   </div>

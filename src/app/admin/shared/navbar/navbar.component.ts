@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserAuth } from 'src/app/auth/interfaces/userLog-interface';
 import { UserService } from 'src/app/auth/services/user.service';
 
@@ -9,9 +10,13 @@ import { UserService } from 'src/app/auth/services/user.service';
 export class NavbarComponent implements OnInit {
   user!: UserAuth;
   ngOnInit(): void {
-    /* in this point , user is available */
     this.user = this.authService.user;
   }
 
-  constructor(private authService: UserService) {}
+  salir() {
+    this.authService.logout();
+    this.route.navigate(['/lpm/principal/valores']);
+  }
+
+  constructor(private authService: UserService, private route: Router) {}
 }

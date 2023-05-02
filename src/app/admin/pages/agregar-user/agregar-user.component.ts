@@ -1,17 +1,14 @@
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/auth/services/user.service';
 import { User } from '../../interfaces/user-interface';
-import { Subject, debounceTime, switchMap } from 'rxjs';
+import { Subject, debounceTime } from 'rxjs';
 import { SwalFireService } from '../../services/swal-fire.service';
 
 @Component({
@@ -59,7 +56,6 @@ export class AgregarUserComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   onClickOutMenuVisible(event: MouseEvent) {
-    const target = event.target;
     if (this.menuVisible == true) {
       this.menuVisible = false;
     }
@@ -91,9 +87,6 @@ export class AgregarUserComponent implements OnInit {
   constructor(
     private userService: UserService,
     private route: Router,
-    private activateRoute: ActivatedRoute,
-    private swalService: SwalFireService,
-    private formBuilder: FormBuilder,
-    private detectorRef: ChangeDetectorRef
+    private swalService: SwalFireService
   ) {}
 }

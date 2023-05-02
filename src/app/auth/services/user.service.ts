@@ -25,7 +25,10 @@ export class UserService {
   baseUrl: string = environment.url;
 
   createUser(formUser: User): Observable<any> {
-    return this.http.post(`${this.baseUrl}/auth/register`, formUser);
+    return this.http.post(`${this.baseUrl}/auth/register`, formUser).pipe(
+      map(() => true),
+      catchError((err) => of(err.error.message))
+    );
   }
 
   get user() {
@@ -61,6 +64,10 @@ export class UserService {
           return of(false);
         })
       );
+  }
+
+  logout() {
+    localStorage.clear();
   }
 
   deleteUser(id: string): Observable<boolean> {

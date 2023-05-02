@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { ValidRepeatPassService } from '../../services/valid-repeat-pass.service';
+import { SwalFireService } from 'src/app/admin/services/swal-fire.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -9,12 +11,6 @@ import { ValidRepeatPassService } from '../../services/valid-repeat-pass.service
 })
 export class RegisterComponent implements OnInit {
   emailRegularExpresion: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
-  constructor(
-    private validatorService: ValidRepeatPassService,
-    private formBuilder: FormBuilder,
-    private userService: UserService
-  ) {}
-
   formRegister!: FormGroup;
 
   ngOnInit(): void {
@@ -44,7 +40,15 @@ export class RegisterComponent implements OnInit {
   send() {
     if (this.formRegister.valid) {
       const { confirmPassword, ...restValues } = this.formRegister.value;
-      this.userService.createUser(restValues).subscribe(console.log);
+      this.userService.createUser(restValues).subscribe((value) => {
+        if (value == true) {
+          this.swalFire.createUserSuccess().then(() => {
+            this.route.navigate(['/auth/login']);
+          });
+        } else {
+          this.swalFire.errorMessage(value);
+        }
+      });
     } else {
       this.formRegister.markAllAsTouched();
     }
@@ -98,4 +102,12 @@ export class RegisterComponent implements OnInit {
       return '';
     }
   }
+
+  constructor(
+    private validatorService: ValidRepeatPassService,
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private swalFire: SwalFireService,
+    private route: Router
+  ) {}
 }

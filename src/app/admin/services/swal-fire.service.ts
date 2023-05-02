@@ -76,6 +76,14 @@ export class SwalFireService {
     );
   }
 
+  createUserSuccess(): Promise<any> {
+    return Swal.fire(
+      'Usuario creado',
+      'El usuario fue registrado correctamente',
+      'success'
+    );
+  }
+
   errorMessage(message: any): Promise<any> {
     return Swal.fire({
       icon: 'error',
