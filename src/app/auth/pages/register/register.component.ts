@@ -63,9 +63,18 @@ export class RegisterComponent implements OnInit {
   }
 
   get errorUser(): string {
-    const error = this.formRegister.get('user')?.errors;
+    const error = this.formRegister.get('nombre')?.errors;
     if (error?.['required']) {
-      return 'El usuario es necesario';
+      return 'El nombre es necesario';
+    } else {
+      return '';
+    }
+  }
+
+  get errorApellido() {
+    const error = this.formRegister.get('apellido')?.errors;
+    if (error?.['required']) {
+      return 'El apellido es necesario';
     } else {
       return '';
     }
